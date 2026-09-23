@@ -4,7 +4,8 @@ window.SGC_CONFIG = {
 
   // Admins see ALL offices and can switch between them (owner + you).
   admins: [
-    "aasumalik890@gmail.com"
+    "aasumalik890@gmail.com",
+    "vinitsharma6433@gmail.com"
   ],
 
   // Each office has its own GRs and its own GR number series (SGC-BC10-2026-000001).

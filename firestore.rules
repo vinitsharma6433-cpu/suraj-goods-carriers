@@ -3,7 +3,7 @@ service cloud.firestore {
   match /databases/{database}/documents {
 
     // Keep these lists the same as firebase-config.js
-    function admins()  { return ['aasumalik890@gmail.com']; }
+    function admins()  { return ['aasumalik890@gmail.com', 'vinitsharma6433@gmail.com']; }
     function staff()   { return {
       'BC10': ['aasumalik890@gmail.com'],
       'BC38': ['aasumalik890@gmail.com']
