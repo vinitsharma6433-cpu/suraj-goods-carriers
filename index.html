@@ -207,6 +207,24 @@ body.locked #view-backup .backup-grid{grid-template-columns:minmax(0,420px)}
 .billpage .bt2{font-size:11px}
 /* ---- Billty print (Party + Driver copy) ---- */
 .printdoc{display:none}
+.pv-bar{display:none}
+@media screen{
+.printdoc.open{display:block;position:fixed;inset:0;z-index:60;overflow:auto;background:#5b6576;padding:0 12px 24px}
+.printdoc.open .pv-bar{position:sticky;top:0;z-index:1;display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;background:var(--navy-900);color:var(--on-navy);padding:10px 14px;margin:0 -12px 16px}
+.pv-hint{font-size:12px;opacity:.9;flex:1 1 280px;line-height:1.4}
+.pv-actions{display:flex;gap:8px}
+.pv-actions .btn{color:var(--ink);opacity:1}
+.printdoc.open .pv-page{width:210mm;max-width:100%;margin:0 auto;background:#fff;padding:6mm 7mm;box-shadow:0 4px 18px rgba(0,0,0,.35)}
+.printdoc.open.thermal .pv-page{width:80mm;padding:1mm 2mm}
+.printdoc.open .bt2{height:139mm;overflow:hidden}
+.printdoc.open .billty{height:139mm;display:flex;flex-direction:column;font-size:9.6px;line-height:1.2;padding:4px;margin:0;overflow:hidden}
+.printdoc.open .billty td,.printdoc.open .billty th{padding:2px 5px}
+.printdoc.open .billty .bt-charges{flex:1}
+.printdoc.open .cutline{margin:2.5mm 0}
+}
+.pv-edit{outline:2px solid var(--sun-500);outline-offset:2px;cursor:text}
+.pv-edit:focus{outline-color:var(--sun-500)}
+.pv-edit *:hover{background-color:#fff7db}
 .billty{border:1.3px solid #111;padding:3px;margin:0 auto 2px;max-width:100%;font-size:7.2px;line-height:1.15;color:#111;background:#fff;font-family:Arial,Helvetica,sans-serif}
 .billty *{box-sizing:border-box}
 .billty .headrow{display:grid;grid-template-columns:1.1fr 2.2fr 1fr;gap:3px;border-bottom:1px solid #111;padding-bottom:2px;margin-bottom:2px}
@@ -225,6 +243,9 @@ body.locked #view-backup .backup-grid{grid-template-columns:minmax(0,420px)}
   body,html{background:#fff}
   .app,.toast{display:none!important}
   .printdoc{display:block}
+  .pv-bar{display:none!important}
+  .pv-edit{outline:none}
+  .pv-edit *:hover{background-color:inherit}
   /* Two copies fill one A4 page: each copy is ~half the printable height */
   .billty{height:139mm;display:flex;flex-direction:column;font-size:9.6px;line-height:1.2;padding:4px;margin:0;page-break-inside:avoid;break-inside:avoid;overflow:hidden}
   .billty td,.billty th{padding:2px 5px}
@@ -491,7 +512,18 @@ body.locked #view-backup .backup-grid{grid-template-columns:minmax(0,420px)}
   </main>
 </div>
 <div class="toast" id="toast" hidden></div>
-<div class="printdoc" id="printDoc"><div id="printContent"></div></div>
+<div class="printdoc" id="printDoc" role="dialog" aria-label="Bilti preview">
+  <div class="pv-bar">
+    <b>Bilti Preview</b>
+    <span class="pv-hint">Galti ho to Bilti ke text par click karke yahin theek karein — Driver Copy apne aap same ho jayegi. Ye badlav sirf is print mein aata hai, GR data nahi badalta. Pakka badlav ke liye GR ka <b>Edit</b> use karein.</span>
+    <span class="pv-actions">
+      <button type="button" class="btn" id="pvReset">Reset</button>
+      <button type="button" class="btn" id="pvClose">Close</button>
+      <button type="button" class="btn primary" id="pvPrint">Print</button>
+    </span>
+  </div>
+  <div class="pv-page" id="printContent"></div>
+</div>
 
 <script src="firebase-config.js"></script>
 <script>
@@ -1399,11 +1431,34 @@ function billtyNew(g,label){
 }
 const billtyAny=(g,label)=>billtyDesign()==='old'?billtyCopy(g,label):billtyNew(g,label);
 function printBillty(g){printBilltyNow(g);}
+/* ---------- Bilti preview: check / fix on screen, then print ---------- */
+let pv=null;
+function openPreview(html,kind){
+  if(typeof window.print!=='function'){toast('Print sirf real browser mein chalta hai');return;}
+  pv={html,kind};renderPreview();
+  const d=$('printDoc');d.classList.add('open');d.classList.toggle('thermal',kind==='thermal');
+  document.body.style.overflow='hidden';$('pvPrint').focus();
+}
+function renderPreview(){
+  $('printContent').innerHTML=pv.html;
+  const copies=[...$('printContent').children].filter(e=>!e.classList.contains('cutline'));
+  const first=copies[0],second=copies[1];if(!first)return;
+  first.contentEditable='true';first.spellcheck=false;first.classList.add('pv-edit');
+  first.oninput=()=>{if(second)second.innerHTML=first.innerHTML.replace(/CONSIGNEE COPY/g,'DRIVER COPY');};
+}
+function closePreview(){const d=$('printDoc');d.classList.remove('open','thermal');document.body.style.overflow='';pv=null;}
+$('pvClose').onclick=closePreview;
+$('pvReset').onclick=()=>{if(pv){renderPreview();toast('Bilti wapas original ho gayi');}};
+$('pvPrint').onclick=()=>{
+  if(!pv)return;
+  document.activeElement&&document.activeElement.blur();
+  setPageStyle(pv.kind,$('printContent').innerHTML);setTimeout(()=>window.print(),60);
+};
 function printBilltyNow(g){
   const m=printMode();
-  if(m==='t80'||m==='t58'){printHtml(billtyThermal(g,'CONSIGNEE COPY',m==='t58')+'<div class="cutline"></div>'+billtyThermal(g,'DRIVER COPY',m==='t58'),'thermal');return;}
+  if(m==='t80'||m==='t58'){openPreview(billtyThermal(g,'CONSIGNEE COPY',m==='t58')+'<div class="cutline"></div>'+billtyThermal(g,'DRIVER COPY',m==='t58'),'thermal');return;}
   const html=billtyAny(g,'CONSIGNEE COPY')+(m==='a4-1'?'':'<div class="cutline"></div>'+billtyAny(g,'DRIVER COPY'));
-  printHtml(billtyDesign()==='old'?html:fitHalfPage(html),'billty');
+  openPreview(billtyDesign()==='old'?html:fitHalfPage(html),'billty');
 }
 // Each copy must fit its half of the A4 page. Long invoice / e-way bill lists make it taller,
 // so measure it off-screen at the real print width and step the text size down until it fits.
@@ -1584,6 +1639,11 @@ $('restoreFile').onchange=e=>{
 
 /* ================= keys ================= */
 document.addEventListener('keydown',e=>{
+  if($('printDoc').classList.contains('open')){
+    if(e.key==='Escape'){e.preventDefault();closePreview();}
+    if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='p'){e.preventDefault();$('pvPrint').click();}
+    return;
+  }
   if(locked)return;
   if(e.key==='F2'){e.preventDefault();if(editingNo)resetForm();show('gr');}
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'&&curView==='gr'){e.preventDefault();$('grForm').requestSubmit();}
