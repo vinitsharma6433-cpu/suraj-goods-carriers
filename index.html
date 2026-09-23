@@ -136,21 +136,28 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
 .billty{border:1.3px solid #111;padding:3px;margin:0 auto 2px;max-width:100%;font-size:7.2px;line-height:1.15;color:#111;background:#fff;font-family:Arial,Helvetica,sans-serif}
 .billty *{box-sizing:border-box}
 .billty .headrow{display:grid;grid-template-columns:1.1fr 2.2fr 1fr;gap:3px;border-bottom:1px solid #111;padding-bottom:2px;margin-bottom:2px}
-.billty .brand{text-align:center;font-size:13px;font-weight:900;margin:1px 0;letter-spacing:.2px}
+.billty .brand{text-align:center;font-size:1.8em;font-weight:900;margin:1px 0;letter-spacing:.2px}
 .billty .company{text-align:center}
-.billty table{width:100%;border-collapse:collapse;margin-top:1px}
-.billty td,.billty th{border:1px solid #111;padding:2px 3px;vertical-align:top;text-align:left;font-weight:400}
+.billty table{width:100%;border-collapse:collapse;margin-top:1px;font-size:inherit}
+.billty td,.billty th{border:1px solid #111;padding:2px 3px;vertical-align:top;text-align:left;font-weight:400;font-size:inherit;color:#111;white-space:normal;text-transform:none;letter-spacing:0}
 .billty th{font-weight:700;background:#f6f6f6;white-space:nowrap}
 .billty td.num{text-align:right;font-variant-numeric:tabular-nums}
 .billty .section{background:#eee;text-align:center}
 .billty .remarks td{height:20px}
-.billty .copy{text-align:center;font-size:9px;font-weight:800;padding:2px;border:1px solid #111;border-top:0;margin-top:0}
+.billty .copy{text-align:center;font-size:1.15em;font-weight:800;padding:2px;border:1px solid #111;border-top:0;margin-top:0}
 .cutline{border-top:1px dashed #333;margin:4px 0}
 @media print{
   @page{size:A4 portrait;margin:6mm}
   body,html{background:#fff}
   .app,.toast{display:none!important}
   .printdoc{display:block}
+  /* Two copies fill one A4 page: each copy is ~half the printable height */
+  .billty{height:139mm;display:flex;flex-direction:column;font-size:9.6px;line-height:1.2;padding:4px;margin:0;page-break-inside:avoid;break-inside:avoid;overflow:hidden}
+  .billty td,.billty th{padding:2px 5px}
+  .billty .headrow>div:first-child{font-size:.88em;line-height:1.1}
+  .billty .bt-charges{flex:1}
+  .billty .remarks td{height:22px}
+  .cutline{margin:2.5mm 0}
 }
 </style></head><body>
 
@@ -795,14 +802,14 @@ function billtyCopy(g,label){
     <div class="headrow">
       <div>${branchBoxesHtml()}</div>
       <div class="company">
-        <div style="font-size:6px;font-weight:400;text-align:left">GSTIN : ${esc(COMPANY_INFO.gstin)}</div>
-        <div style="font-size:6px;font-weight:400">${esc(COMPANY_INFO.tagline)}</div>
+        <div style="font-size:.82em;font-weight:400;text-align:left">GSTIN : ${esc(COMPANY_INFO.gstin)}</div>
+        <div style="font-size:.82em;font-weight:400">${esc(COMPANY_INFO.tagline)}</div>
         <div class="brand">THE SURAJ GOODS CARRIERS</div>
-        <div style="font-size:6px;font-weight:400">${esc(COMPANY_INFO.hoAddress)}</div>
-        <div style="font-size:6px;font-weight:400">For Quality Transport Service &bull; SGC</div>
+        <div style="font-size:.82em;font-weight:400">${esc(COMPANY_INFO.hoAddress)}</div>
+        <div style="font-size:.82em;font-weight:400">For Quality Transport Service &bull; SGC</div>
       </div>
-      <div style="font-size:6px">
-        <div style="font-weight:900;font-size:12px;text-align:center">SGC</div>
+      <div style="font-size:.82em">
+        <div style="font-weight:900;font-size:1.7em;text-align:center">SGC</div>
         <div>${esc(b.name||'')} : ${esc(COMPANY_INFO.phone)}</div>
         <div>E-mail: ${esc(COMPANY_INFO.email)}</div>
         <div style="border:1px solid #b42318;color:#b42318;padding:1px;margin-top:2px;text-align:center">GST Will be Paid by -<br>Consignor's Or Consignee's</div>
@@ -816,7 +823,7 @@ function billtyCopy(g,label){
       <tr><th>Delivery At</th><td>${esc(g.deliveryAt||g.to)}</td><th>E-Way Bill No.</th><td colspan="5">${esc(g.ewb||'')}</td></tr>
       <tr><th>No. of Articles</th><td>${g.articles||0}</td><th>Contents</th><td colspan="5">AS SAID TO BE CONTAINED: ${esc(g.contents||'')}</td></tr>
     </table>
-    <table>
+    <table class="bt-charges">
       <tr>
         <td rowspan="9" style="width:30%">No Responsibility of Leakage &amp; Breakage. We have accepted &amp; booked consignment, terms &amp; conditions printed overleaf. Goods carried at the owner's risk. We are not responsible for illegal goods, Declaration of Goods, Octroi, Enroute Taxes etc. हम माल के मालिक नहीं हैं।</td>
         <th>Actual Weight (Kg)</th><td>${g.actWt||0}</td><th>Charge Weight (Kg)</th><td>${g.chWt||0}</td>
