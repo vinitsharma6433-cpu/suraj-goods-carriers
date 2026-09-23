@@ -56,7 +56,13 @@ Open the live link → **Login with Google**. Every GR now backs up to the cloud
 
 ## Using the app
 
-- **F2** — New GR, **Ctrl+S** — Save GR.
+- **F2** — New GR, **Ctrl+S** — Save GR, **F3** — GR Register, **F4** — Customers, **F6** — Accounts, **Esc** — Dashboard, **Ctrl+F** — search box focus (Register/Customers).
+- **Customers** — party master: save a customer once, it stays in a growing list (name, GSTIN, mobile, city, address) with GR count + total amount, searchable. Same list is shared across offices.
+- **Goods / Items master** (bottom of Customers screen) — add item names once; they build a running chip-list and power the "Contents" autosuggest on the GR form.
+- **Accounts** — customer-wise or city-wise hisaab (totals, pending count) for the current office, toggle from the dropdown.
+- **Delivery / POD** — list of pending consignments; type receiver's name + date and click "Delivered mark karein" to close it out.
+- **Autosuggest** — State/City names suggest while typing in From/To/Delivery At; GSTIN suggests from previously used GST numbers; party names suggest from Customers.
+- **↺ Repeat last party** (on the New GR screen) — fills Consignor/Consignee/From/To from your last saved GR in this office.
 - **Print Billty** — after saving, or from any row on the dashboard. Prints Party Copy + Driver Copy on one A4 page with your GSTIN, branch office boxes and GST calculation. This only works on the real live link opened in a browser (not inside a chat preview) — Chrome's print dialog then lets you print or "Save as PDF".
 - After saving, use **WhatsApp Consignor / Consignee** to send GR details (needs a 10-digit mobile number). The same buttons are on every row of the dashboard.
 - **Company letterhead** (GSTIN, branch office boxes, phone, email) and **Booking Code / address per office** are in `firebase-config.js` — edit and re-commit to update the Billty.

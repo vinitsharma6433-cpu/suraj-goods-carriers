@@ -160,14 +160,14 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
     <div class="branch-side"><small>Office</small><b id="sideBranch">—</b></div>
     <button class="nav active" data-view="dash">⌂ Dashboard</button>
     <button class="nav" data-view="gr">＋ New GR / Booking <small>F2</small></button>
-    <button class="nav" data-view="soon">▣ GR Register</button>
+    <button class="nav" data-view="register">▣ GR Register <small>F3</small></button>
     <button class="nav" data-view="soon">⇢ Manifest</button>
-    <button class="nav" data-view="soon">✓ Delivery / POD</button>
-    <button class="nav" data-view="soon">▤ Customers</button>
-    <button class="nav" data-view="soon">₹ Accounts</button>
+    <button class="nav" data-view="delivery">✓ Delivery / POD</button>
+    <button class="nav" data-view="customers">▤ Customers <small>F4</small></button>
+    <button class="nav" data-view="accounts">₹ Accounts <small>F6</small></button>
     <button class="nav" data-view="soon">▥ Reports</button>
     <button class="nav" data-view="backup">⟲ Backup &amp; Login</button>
-    <div class="side-bottom"><small>Quick Keys</small><div><kbd>F2</kbd> New GR &nbsp;<kbd>Ctrl</kbd>+<kbd>S</kbd> Save</div></div>
+    <div class="side-bottom"><small>Quick Keys</small><div><kbd>F2</kbd> New GR &nbsp;<kbd>Ctrl</kbd>+<kbd>S</kbd> Save</div><div><kbd>F3</kbd> Register &nbsp;<kbd>F4</kbd> Customers</div><div><kbd>F6</kbd> Accounts &nbsp;<kbd>Esc</kbd> Dashboard</div><div><kbd>Ctrl</kbd>+<kbd>F</kbd> Search</div></div>
   </aside>
 
   <main>
@@ -220,31 +220,35 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
 
         <div class="party-grid">
           <div class="party">
-            <div class="party-title"><h3>Consignor / From</h3><span class="chip sample" id="cnrHint" hidden>Saved party</span></div>
+            <div class="party-title"><h3>Consignor / From</h3><button type="button" class="btn small" id="repeatLast">↺ Repeat last party</button></div>
+            <span class="chip sample" id="cnrHint" hidden>Saved party</span>
             <label>Party Name *<input id="cnrName" list="partyList" placeholder="Consignor name"></label>
-            <div class="two"><label>GST No.<input id="cnrGst" class="mono" placeholder="GSTIN" maxlength="15"></label><label>Mobile<input id="cnrMob" inputmode="tel" placeholder="Mobile number" maxlength="10"></label></div>
+            <div class="two"><label>GST No.<input id="cnrGst" class="mono" list="gstList" placeholder="GSTIN" maxlength="15"></label><label>Mobile<input id="cnrMob" inputmode="tel" placeholder="Mobile number" maxlength="10"></label></div>
             <label>Address<textarea id="cnrAddr" placeholder="Full address"></textarea></label>
           </div>
           <div class="party">
             <div class="party-title"><h3>Consignee / To</h3><span class="chip sample" id="cneHint" hidden>Saved party</span></div>
             <label>Party Name *<input id="cneName" list="partyList" placeholder="Consignee name"></label>
-            <div class="two"><label>GST No.<input id="cneGst" class="mono" placeholder="GSTIN" maxlength="15"></label><label>Mobile<input id="cneMob" inputmode="tel" placeholder="Mobile number" maxlength="10"></label></div>
+            <div class="two"><label>GST No.<input id="cneGst" class="mono" list="gstList" placeholder="GSTIN" maxlength="15"></label><label>Mobile<input id="cneMob" inputmode="tel" placeholder="Mobile number" maxlength="10"></label></div>
             <label>Address<textarea id="cneAddr" placeholder="Full address"></textarea></label>
           </div>
         </div>
         <datalist id="partyList"></datalist>
+        <datalist id="gstList"></datalist>
+        <datalist id="itemsList"></datalist>
+        <datalist id="cityList"></datalist>
 
         <div class="section-title">Shipment Details</div>
         <div class="form-grid">
           <label>GR / Docket No.<input id="grNo" class="mono" readonly></label>
           <label>Invoice No.<input id="invoice" placeholder="Optional"></label>
           <label>Booking Date<input id="grDate" type="date"></label>
-          <label>From *<input id="from" placeholder="City"></label>
-          <label>To *<input id="to" placeholder="City"></label>
-          <label>Delivery At<input id="deliveryAt" placeholder="Delivery location"></label>
+          <label>From *<input id="from" list="cityList" placeholder="City"></label>
+          <label>To *<input id="to" list="cityList" placeholder="City"></label>
+          <label>Delivery At<input id="deliveryAt" list="cityList" placeholder="Delivery location"></label>
           <label>E-Way Bill No.<input id="ewb" class="mono" placeholder="Optional" maxlength="12"></label>
           <label>No. of Articles<input id="articles" type="number" min="0" placeholder="0"></label>
-          <label>Contents<input id="contents" placeholder="Goods / material"></label>
+          <label>Contents<input id="contents" list="itemsList" placeholder="Goods / material"></label>
           <label>Actual Weight (kg)<input id="actWt" type="number" min="0" placeholder="0"></label>
           <label>Charge Weight (kg)<input id="chWt" type="number" min="0" placeholder="0"></label>
           <label>Payment<select id="payMode"><option>To Pay</option><option>Paid</option><option>TBB</option></select></label>
@@ -263,6 +267,62 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
         </div>
         <label>Remarks / Special Instructions<textarea id="remarks" placeholder="Special instructions..."></textarea></label>
       </form>
+    </section>
+
+    <!-- GR REGISTER -->
+    <section id="view-register" class="panel" hidden>
+      <div class="panel-head"><div><h2>GR Register</h2><p>Is office ke saare GR — search karke Billty dobara print ya WhatsApp kar sakte hain.</p></div></div>
+      <div class="actions" style="margin:-4px 0 4px">
+        <input id="regSearch" placeholder="GR no. / consignor / consignee / route se search karein" style="max-width:360px">
+        <select id="regStatus" style="max-width:160px"><option value="">Sab status</option><option>Pending</option><option>Delivered</option></select>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>GR No.</th><th>Date</th><th>Consignor</th><th>Consignee</th><th>Route</th><th>Articles</th><th class="num">Total</th><th>Status</th><th></th></tr></thead>
+        <tbody id="regRows"></tbody>
+      </table></div>
+    </section>
+
+    <!-- DELIVERY / POD -->
+    <section id="view-delivery" class="panel" hidden>
+      <div class="panel-head"><div><h2>Delivery / POD</h2><p>Pending consignments — delivery mark karte waqt receiver ka naam aur date daal dein.</p></div></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>GR No.</th><th>Date</th><th>Consignee</th><th>Route</th><th class="num">Total</th><th>Received By</th><th>Delivery Date</th><th></th></tr></thead>
+        <tbody id="delRows"></tbody>
+      </table></div>
+    </section>
+
+    <!-- CUSTOMERS + GOODS MASTER -->
+    <section id="view-customers" class="panel" hidden>
+      <div class="panel-head"><div><h2>Customers</h2><p>Party master — saari offices mein saanjha, GR banate waqt naam se apne aap bhar jaata hai.</p></div></div>
+      <form id="custForm" class="grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;align-items:end">
+        <label>Name *<input id="custName" placeholder="Party name"></label>
+        <label>GSTIN<input id="custGst" class="mono" maxlength="15" placeholder="GSTIN"></label>
+        <label>Mobile<input id="custMob" inputmode="tel" maxlength="10" placeholder="Mobile"></label>
+        <label>City<input id="custCity" list="cityList" placeholder="City"></label>
+        <label>Address<input id="custAddr" placeholder="Address"></label>
+        <div class="full" style="grid-column:1/-1"><button type="submit" class="btn primary">Save Customer</button></div>
+      </form>
+      <div class="actions" style="margin:8px 0 -4px"><input id="custSearch" placeholder="Customer search karein" style="max-width:320px"></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Name</th><th>GSTIN</th><th>Mobile</th><th>City</th><th>Address</th><th class="num">GRs</th><th class="num">Total</th></tr></thead>
+        <tbody id="custRows"></tbody>
+      </table></div>
+      <div class="section-title" style="margin-top:8px">Goods / Items Master</div>
+      <div class="actions"><input id="itemNew" placeholder="Naya item / goods ka naam" style="max-width:280px"><button type="button" class="btn" id="itemAddBtn">＋ Add Item</button></div>
+      <div class="actions" id="itemChips" style="margin-top:4px"></div>
+    </section>
+
+    <!-- ACCOUNTS -->
+    <section id="view-accounts" class="panel" hidden>
+      <div class="panel-head">
+        <div><h2>Accounts</h2><p>Customer-wise aur city-wise hisaab — is office ke GR par based.</p></div>
+        <div class="actions"><select id="acctBy"><option value="customer">Customer-wise</option><option value="city">City-wise (To)</option></select></div>
+      </div>
+      <div class="cards" id="acctCards"></div>
+      <div class="table-wrap"><table>
+        <thead id="acctHead"></thead>
+        <tbody id="acctRows"></tbody>
+      </table></div>
     </section>
 
     <section id="view-backup" class="panel" hidden>
@@ -357,7 +417,7 @@ function switchBranch(id,silent){
   const b=branchById(id);if(!b||b.id===branch.id)return;
   if(user&&!isAdmin()&&userBranch()&&userBranch().id!==b.id)return;
   save();branch=b;lsSet(BKEY,b.id);db=loadBranchDb(b.id);
-  resetForm();$('savedStrip').hidden=true;renderBranch();renderDash();renderCloud();
+  resetForm();$('savedStrip').hidden=true;renderBranch();renderDash();if(!$('view-register').hidden)renderRegister();renderCloud();
   if(!silent)toast(b.name+' khula');
   if(user)fullSync();
 }
@@ -373,10 +433,14 @@ $('branchPick').onchange=e=>switchBranch(e.target.value);
 /* ================= views ================= */
 let lastSoon=null;
 function show(v){
-  ['dash','gr','backup','soon'].forEach(x=>$('view-'+x).hidden=x!==v);
+  ['dash','gr','register','delivery','customers','accounts','backup','soon'].forEach(x=>$('view-'+x).hidden=x!==v);
   document.querySelectorAll('.nav').forEach(b=>b.classList.toggle('active',b.dataset.view===v&&(v!=='soon'||b===lastSoon)));
-  $('pageTitle').textContent={dash:'Dashboard',gr:'New GR / Booking',backup:'Backup & Login'}[v]||(lastSoon?lastSoon.textContent.replace(/^\S+\s/,''):'');
+  $('pageTitle').textContent={dash:'Dashboard',gr:'New GR / Booking',register:'GR Register',delivery:'Delivery / POD',customers:'Customers',accounts:'Accounts',backup:'Backup & Login'}[v]||(lastSoon?lastSoon.textContent.replace(/^\S+\s/,''):'');
   if(v==='dash')renderDash();
+  if(v==='register')renderRegister();
+  if(v==='delivery')renderDelivery();
+  if(v==='customers')renderCustomers();
+  if(v==='accounts')renderAccounts();
   if(v==='backup')renderCloud();
   if(v==='gr'){if(!$('grNo').value)resetForm();setTimeout(()=>$('cnrName').focus(),0);}
 }
@@ -403,15 +467,9 @@ function setWa(a,href){if(href){a.href=href;a.removeAttribute('aria-disabled');a
 const amtOf=g=>g.gTotal!=null?g.gTotal:(g.total||0);
 function stats(d){const t=today(),m=t.slice(0,7),real=d.grs;
   return {today:real.filter(g=>g.date===t).length,pending:real.filter(g=>g.status==='Pending').length,freight:real.filter(g=>String(g.date).slice(0,7)===m).reduce((s,g)=>s+amtOf(g),0),sample:!!d.sample};}
-function renderDash(){
-  const s=stats(db);
-  $('cToday').textContent=s.today;$('cPending').textContent=s.pending;$('cFreight').textContent=inr(s.freight);
-  $('cParties').textContent=parties.length;
-  $('sampleNote').hidden=$('clearSample').hidden=!db.sample;
-  const rows=db.grs.slice().reverse().slice(0,20);
-  $('grRows').innerHTML=rows.length?rows.map(g=>{
-    const c=waHref(g,'cnr'),e=waHref(g,'cne');
-    return `<tr>
+function grRowHtml(g){
+  const c=waHref(g,'cnr'),e=waHref(g,'cne');
+  return `<tr>
     <td class="mono">${esc(g.no)}</td><td>${fmtDate(g.date)}</td><td>${esc(g.cnr.name)}</td><td>${esc(g.cne.name)}</td>
     <td>${esc(g.from)} → ${esc(g.to)}</td><td class="num">${g.articles||0}</td><td class="num">${inr(amtOf(g))}</td>
     <td>${g.sample?'<span class="chip sample">Sample</span> ':''}<span class="chip ${g.status==='Delivered'?'ok':''}">${g.status}</span></td>
@@ -420,7 +478,15 @@ function renderDash(){
       <a class="btn small wa" ${c?`href="${esc(c)}"`:'aria-disabled="true"'} target="_blank" rel="noopener">WA Consignor</a>
       <a class="btn small wa" ${e?`href="${esc(e)}"`:'aria-disabled="true"'} target="_blank" rel="noopener">WA Consignee</a>
       ${g.status==='Pending'&&!g.sample?`<button class="btn small" data-deliver="${esc(g.no)}">Mark delivered</button>`:''}
-    </div></td></tr>`}).join('')
+    </div></td></tr>`;
+}
+function renderDash(){
+  const s=stats(db);
+  $('cToday').textContent=s.today;$('cPending').textContent=s.pending;$('cFreight').textContent=inr(s.freight);
+  $('cParties').textContent=parties.length;
+  $('sampleNote').hidden=$('clearSample').hidden=!db.sample;
+  const rows=db.grs.slice().reverse().slice(0,20);
+  $('grRows').innerHTML=rows.length?rows.map(grRowHtml).join('')
     :'<tr><td colspan="9" class="empty">Is office mein abhi koi GR nahi hai. F2 dabayein ya "New GR" par click karein.</td></tr>';
   // all offices (admin)
   const showAll=isAdmin()&&BRANCHES.length>1;$('allOffices').hidden=!showAll;
@@ -433,12 +499,115 @@ function renderDash(){
   renderBanner();
 }
 $('officeCards').addEventListener('click',e=>{const c=e.target.closest('[data-branch]');if(c)switchBranch(c.dataset.branch);});
-$('grRows').addEventListener('click',e=>{
+function onGrRowClick(e){
   const n=e.target.dataset.deliver;
-  if(n){const g=db.grs.find(x=>x.no===n);if(g){g.status='Delivered';g.savedAt=new Date().toISOString();save();pushGr(g);renderDash();toast(n+' delivered mark ho gaya');}return;}
+  if(n){const g=db.grs.find(x=>x.no===n);if(g){g.status='Delivered';g.savedAt=new Date().toISOString();save();pushGr(g);renderDash();if(!$('view-register').hidden)renderRegister();toast(n+' delivered mark ho gaya');}return;}
   const pn=e.target.dataset.print;if(pn){const g=db.grs.find(x=>x.no===pn);if(g)printBillty(g);}
-});
+}
+$('grRows').addEventListener('click',onGrRowClick);
+$('regRows').addEventListener('click',onGrRowClick);
 $('clearSample').onclick=()=>{db.grs=db.grs.filter(g=>!g.sample);db.seq=seqFromGrs();db.sample=false;save();renderDash();toast('Sample data hata diya');};
+
+/* ================= GR register (search + reprint) ================= */
+function renderRegister(){
+  const q=($('regSearch').value||'').trim().toLowerCase(),st=$('regStatus').value;
+  let rows=db.grs.slice().reverse();
+  if(st)rows=rows.filter(g=>g.status===st);
+  if(q)rows=rows.filter(g=>[g.no,g.cnr.name,g.cne.name,g.from,g.to,g.invoice].some(v=>String(v||'').toLowerCase().includes(q)));
+  $('regRows').innerHTML=rows.length?rows.map(grRowHtml).join('')
+    :'<tr><td colspan="9" class="empty">Kuch nahi mila. Search ya status badal kar dekhein.</td></tr>';
+}
+$('regSearch').addEventListener('input',renderRegister);
+$('regStatus').addEventListener('change',renderRegister);
+
+/* ================= Delivery / POD ================= */
+function renderDelivery(){
+  const rows=db.grs.filter(g=>!g.sample&&g.status==='Pending').slice().reverse();
+  $('delRows').innerHTML=rows.length?rows.map(g=>`<tr>
+    <td class="mono">${esc(g.no)}</td><td>${fmtDate(g.date)}</td><td>${esc(g.cne.name)}</td><td>${esc(g.from)} → ${esc(g.to)}</td>
+    <td class="num">${inr(amtOf(g))}</td>
+    <td><input data-pod-by="${esc(g.no)}" placeholder="Receiver ka naam"></td>
+    <td><input type="date" data-pod-date="${esc(g.no)}" value="${today()}"></td>
+    <td><button type="button" class="btn small" data-pod-mark="${esc(g.no)}">Delivered mark karein</button></td>
+  </tr>`).join(''):'<tr><td colspan="8" class="empty">Sab consignment deliver ho gaye hain.</td></tr>';
+}
+$('delRows').addEventListener('click',e=>{
+  const n=e.target.dataset.podMark;if(!n)return;
+  const g=db.grs.find(x=>x.no===n);if(!g)return;
+  const byEl=document.querySelector(`[data-pod-by="${n}"]`),dateEl=document.querySelector(`[data-pod-date="${n}"]`);
+  g.status='Delivered';g.pod={by:(byEl&&byEl.value.trim())||'',date:(dateEl&&dateEl.value)||today()};g.savedAt=new Date().toISOString();
+  save();pushGr(g);renderDelivery();renderDash();if(!$('view-register').hidden)renderRegister();toast(n+' delivered mark ho gaya');
+});
+
+/* ================= Customers + Goods/Items master ================= */
+const IKEY='sgc_items_v1';
+let items=lsGet(IKEY)||[];
+function saveItems(){lsSet(IKEY,items);}
+function upsertItem(name){
+  name=(name||'').trim();if(!name)return;
+  if(!items.some(x=>x.toLowerCase()===name.toLowerCase())){items.push(name);saveItems();refreshItems();}
+}
+function refreshItems(){
+  $('itemsList').innerHTML=items.map(x=>`<option value="${esc(x)}">`).join('');
+  const wrap=$('itemChips');if(!wrap)return;
+  wrap.innerHTML=items.length?items.map(x=>`<span class="chip" data-item="${esc(x)}" style="cursor:pointer">${esc(x)} ✕</span>`).join(''):'<span class="empty">Koi item nahi — neeche se add karein</span>';
+}
+if($('itemChips'))$('itemChips').addEventListener('click',e=>{
+  const c=e.target.closest('[data-item]');if(!c)return;
+  items=items.filter(x=>x!==c.dataset.item);saveItems();refreshItems();
+});
+if($('itemAddBtn'))$('itemAddBtn').onclick=()=>{upsertItem($('itemNew').value);$('itemNew').value='';$('itemNew').focus();};
+if($('itemNew'))$('itemNew').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('itemAddBtn').click();}});
+
+function custStats(name){
+  const n=(name||'').toLowerCase();let grs=0,total=0;
+  if(!n)return{grs,total};
+  BRANCHES.forEach(b=>{
+    const d=b.id===branch.id?db:loadBranchDb(b.id);
+    d.grs.forEach(g=>{if(!g.sample&&(g.cnr.name.toLowerCase()===n||g.cne.name.toLowerCase()===n)){grs++;total+=amtOf(g);}});
+  });
+  return {grs,total};
+}
+function renderCustomers(){
+  const q=(($('custSearch')&&$('custSearch').value)||'').trim().toLowerCase();
+  let list=parties.slice().sort((a,b)=>a.name.localeCompare(b.name));
+  if(q)list=list.filter(p=>[p.name,p.gst,p.mob,p.city,p.addr].some(v=>String(v||'').toLowerCase().includes(q)));
+  $('custRows').innerHTML=list.length?list.map(p=>{
+    const s=custStats(p.name);
+    return `<tr><td>${esc(p.name)}</td><td class="mono">${esc(p.gst||'')}</td><td>${esc(p.mob||'')}</td><td>${esc(p.city||'')}</td><td>${esc(p.addr||'')}</td><td class="num">${s.grs}</td><td class="num">${inr(s.total)}</td></tr>`;
+  }).join(''):'<tr><td colspan="7" class="empty">Koi customer nahi mila.</td></tr>';
+  refreshItems();
+}
+if($('custForm'))$('custForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const name=$('custName').value.trim();
+  if(!name){toast('Naam zaroori hai');$('custName').focus();return;}
+  const p={name,gst:$('custGst').value.trim().toUpperCase(),mob:$('custMob').value.trim(),city:$('custCity').value.trim(),addr:$('custAddr').value.trim()};
+  upsertParty(p);saveParties();refreshParties();
+  $('custForm').reset();toast(name+' save ho gaya, list mein aa gaya');renderCustomers();$('custName').focus();
+});
+if($('custSearch'))$('custSearch').addEventListener('input',renderCustomers);
+
+/* ================= Accounts (customer-wise / city-wise hisaab) ================= */
+function renderAccounts(){
+  const by=($('acctBy')&&$('acctBy').value)||'customer';
+  const map={};
+  db.grs.filter(g=>!g.sample).forEach(g=>{
+    const key=by==='city'?g.to:g.cne.name;
+    if(!key)return;
+    if(!map[key])map[key]={key,grs:0,total:0,pending:0};
+    map[key].grs++;map[key].total+=amtOf(g);if(g.status==='Pending')map[key].pending++;
+  });
+  const rows=Object.values(map).sort((a,b)=>b.total-a.total);
+  $('acctHead').innerHTML=`<tr><th>${by==='city'?'City (To)':'Customer'}</th><th class="num">GRs</th><th class="num">Pending</th><th class="num">Total</th></tr>`;
+  $('acctRows').innerHTML=rows.length?rows.map(r=>`<tr><td>${esc(r.key)}</td><td class="num">${r.grs}</td><td class="num">${r.pending}</td><td class="num">${inr(r.total)}</td></tr>`).join('')
+    :'<tr><td colspan="4" class="empty">Is office mein abhi koi GR nahi hai.</td></tr>';
+  const totalAll=rows.reduce((s,r)=>s+r.total,0);
+  $('acctCards').innerHTML=`<div class="card"><span>Total ${by==='city'?'Cities':'Customers'}</span><strong>${rows.length}</strong></div>
+    <div class="card"><span>Total Amount</span><strong>${inr(totalAll)}</strong></div>
+    <div class="card"><span>Total GRs</span><strong>${rows.reduce((s,r)=>s+r.grs,0)}</strong></div>`;
+}
+if($('acctBy'))$('acctBy').addEventListener('change',renderAccounts);
 
 /* ================= GR form ================= */
 const charges=['chFreight','chDD','chStat','chCod','chRisk'];
@@ -459,7 +628,23 @@ function resetForm(){
   document.querySelectorAll('.err').forEach(x=>x.classList.remove('err'));calc();
 }
 $('resetBtn').onclick=()=>{resetForm();$('savedStrip').hidden=true;};
-function refreshParties(){$('partyList').innerHTML=parties.map(p=>`<option value="${esc(p.name)}">`).join('');}
+const CITY_LIST=['Meerut','Delhi','Ghaziabad','Noida','Greater Noida','Bangalore','Mumbai','Chennai','Kolkata','Hyderabad','Pune','Ahmedabad','Surat','Jaipur','Lucknow','Kanpur','Nagpur','Indore','Bhopal','Patna','Ludhiana','Agra','Nashik','Vadodara','Faridabad','Gurugram','Varanasi','Amritsar','Chandigarh','Guwahati','Coimbatore','Vijayawada','Madurai','Raipur','Ranchi','Jodhpur','Gwalior','Dehradun','Jammu','Shimla','Panipat','Karnal','Muzaffarnagar','Saharanpur','Moradabad','Bareilly','Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Delhi NCR','Jammu & Kashmir'];
+function refreshCityList(){if($('cityList'))$('cityList').innerHTML=CITY_LIST.map(x=>`<option value="${esc(x)}">`).join('');}
+function refreshGstList(){
+  if(!$('gstList'))return;
+  const set=new Set(parties.map(p=>p.gst).filter(Boolean));
+  $('gstList').innerHTML=[...set].map(x=>`<option value="${esc(x)}">`).join('');
+}
+function refreshParties(){$('partyList').innerHTML=parties.map(p=>`<option value="${esc(p.name)}">`).join('');refreshGstList();}
+$('repeatLast').onclick=()=>{
+  const last=db.grs.filter(g=>!g.sample).slice(-1)[0];
+  if(!last){toast('Is office mein pichla koi GR nahi mila');return;}
+  $('cnrName').value=last.cnr.name;$('cnrGst').value=last.cnr.gst||'';$('cnrMob').value=last.cnr.mob||'';$('cnrAddr').value=last.cnr.addr||'';
+  $('cneName').value=last.cne.name;$('cneGst').value=last.cne.gst||'';$('cneMob').value=last.cne.mob||'';$('cneAddr').value=last.cne.addr||'';
+  $('from').value=last.from;$('to').value=last.to;
+  $('cnrHint').hidden=false;$('cneHint').hidden=false;
+  toast('Pichli party bhar di gayi');
+};
 function wireParty(pre){
   $(pre+'Name').addEventListener('change',()=>{
     const p=parties.find(x=>x.name.toLowerCase()===$(pre+'Name').value.trim().toLowerCase());
@@ -490,7 +675,7 @@ $('grForm').addEventListener('submit',e=>{
     charges:{freight:+$('chFreight').value||0,dd:+$('chDD').value||0,stat:+$('chStat').value||0,cod:+$('chCod').value||0,risk:+$('chRisk').value||0},
     gstRate:+$('gstRate').value||0,gst:amt.gst,total:amt.sub,gTotal:amt.gTotal,
     remarks:$('remarks').value.trim(),status:'Pending',savedAt:new Date().toISOString(),by:email()};
-  db.grs.push(gr);db.seq=Math.max(db.seq||0,seqFromGrs());upsertParty(cnr);upsertParty(cne);saveParties();save();pushGr(gr);refreshParties();
+  db.grs.push(gr);db.seq=Math.max(db.seq||0,seqFromGrs());upsertParty(cnr);upsertParty(cne);upsertItem(gr.contents);saveParties();save();pushGr(gr);refreshParties();
   $('savedText').textContent=gr.no+' saved:';
   setWa($('waCnr'),waHref(gr,'cnr'));setWa($('waCne'),waHref(gr,'cne'));$('savedStrip').hidden=false;
   $('printBilltyBtn').onclick=()=>printBillty(gr);
@@ -553,7 +738,7 @@ async function fullSync(){
     const bid=branch.id;
     await Promise.all([mergeBranch(bid,db),mergeParties()]);
     if(bid===branch.id){save();if(!$('view-gr').hidden&&!$('cnrName').value)$('grNo').value=nextNo();}
-    refreshParties();markSynced();renderDash();
+    refreshParties();markSynced();renderDash();if(!$('view-register').hidden)renderRegister();
   }catch(e){syncFail(e);}
 }
 async function syncOtherBranches(){
@@ -674,7 +859,7 @@ $('restoreFile').onchange=e=>{
     d.grs.forEach(g=>{g.branch=g.branch||branch.id;if(!m[g.no]||newer(g,m[g.no])){m[g.no]=g;added++;}});
     db.grs=Object.values(m).sort((a,b)=>String(a.no).localeCompare(String(b.no)));
     (d.parties||[]).forEach(p=>{if(!parties.some(x=>x.name.toLowerCase()===p.name.toLowerCase()))parties.push(p);});
-    db.seq=Math.max(db.seq||0,seqFromGrs());save();saveParties();refreshParties();renderDash();toast(added+' GR restore hue');if(user)fullSync();
+    db.seq=Math.max(db.seq||0,seqFromGrs());save();saveParties();refreshParties();renderDash();if(!$('view-register').hidden)renderRegister();toast(added+' GR restore hue');if(user)fullSync();
   }catch(_){toast('Ye SGC backup file nahi hai');}e.target.value='';};
   r.readAsText(f);
 };
@@ -683,6 +868,15 @@ $('restoreFile').onchange=e=>{
 document.addEventListener('keydown',e=>{
   if(e.key==='F2'){e.preventDefault();show('gr');}
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'&&!$('view-gr').hidden){e.preventDefault();$('grForm').requestSubmit();}
+  if(e.key==='F3'){e.preventDefault();show('register');}
+  if(e.key==='F4'){e.preventDefault();show('customers');}
+  if(e.key==='F6'){e.preventDefault();show('accounts');}
+  if(e.key==='Escape'){e.preventDefault();show('dash');}
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='f'){
+    const map={register:'regSearch',customers:'custSearch'};
+    const cur=Object.keys(map).find(v=>!$('view-'+v).hidden);
+    if(cur){e.preventDefault();$(map[cur]).focus();$(map[cur]).select();}
+  }
 });
 
 /* ================= utils ================= */
@@ -691,9 +885,11 @@ function fmtDate(d){const [y,m,dd]=String(d).split('-');return dd+'/'+m+'/'+y;}
 let tt;function toast(m){const t=$('toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,3000);}
 
 if('serviceWorker' in navigator&&location.protocol==='https:'&&CFG)navigator.serviceWorker.register('sw.js').catch(()=>{});
-refreshParties();renderBranch();show('dash');initCloud();
+refreshParties();refreshItems();refreshCityList();renderBranch();show('dash');initCloud();
 })();
 </script>
+
+
 
 
 
