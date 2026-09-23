@@ -16,7 +16,7 @@ Offline-first transport management app: GR booking, dashboard, WhatsApp sharing,
 
 ## Offices (one software, separate work)
 
-- Each office has its **own GRs, own dashboard and own GR number series**: `SGC-MRT-2026-000001`, `SGC-DEL-2026-000001`.
+- Each office has its **own GRs, own dashboard and own GR number series** — plain numbers like the office GR book (e.g. 4501, 4502…). Set the first number once in *Backup & Login → GR Number*.
 - Staff log in with Google and the app opens **only their office** — they cannot see the other office.
 - **Admins** (owner) see an *All Offices* summary and can switch offices from the top bar.
 - The **party list is shared**, so a party saved in one office auto-fills in the other.
@@ -63,15 +63,34 @@ Open the live link → **Login with Google**. Every GR now backs up to the cloud
 - **Delivery / POD** — list of pending consignments; type receiver's name + date and click "Delivered mark karein" to close it out.
 - **Autosuggest** — State/City names suggest while typing in From/To/Delivery At; GSTIN suggests from previously used GST numbers; party names suggest from Customers.
 - **↺ Repeat last party** (on the New GR screen) — fills Consignor/Consignee/From/To from your last saved GR in this office.
-- **Print Billty** — after saving, or from any row on the dashboard. Prints Party Copy + Driver Copy on one A4 page with your GSTIN, branch office boxes and GST calculation. This only works on the real live link opened in a browser (not inside a chat preview) — Chrome's print dialog then lets you print or "Save as PDF".
+- **Print Bilti** — after saving, or from any row on the dashboard. Prints Consignee Copy + Driver Copy on one A4 page with your GSTIN, branch office boxes and GST calculation. This only works on the real live link opened in a browser (not inside a chat preview) — Chrome's print dialog then lets you print or "Save as PDF".
 - After saving, use **WhatsApp Consignor / Consignee** to send GR details (needs a 10-digit mobile number). The same buttons are on every row of the dashboard.
-- **Company letterhead** (GSTIN, branch office boxes, phone, email) and **Booking Code / address per office** are in `firebase-config.js` — edit and re-commit to update the Billty.
+- **Company letterhead** (GSTIN, branch office boxes, phone, email) and **Booking Code / address per office** are in `firebase-config.js` — edit and re-commit to update the Bilti.
 - **Backup & Login** screen:
   - Cloud backup status and **Sync now**.
   - **Download backup** — full data as a `.json` file (keep a copy in Google Drive / pen drive weekly).
   - **Restore file** — merges a backup file back in.
 - Works without internet; changes sync when you are back online and logged in.
 - **Install as app:** in Chrome open the live link → address bar install icon (laptop) or menu → *Add to Home screen* (mobile).
+
+## What's new (v3)
+
+- **Safe for many devices:** laptop + mobile + other staff can book GRs at the same time — every GR gets its own number (no overwrite). Changes from other devices appear live without reload.
+- **Offline:** GRs save on the device when internet is gone (⟳ mark) and upload by themselves when it returns. Data is kept in the browser's IndexedDB (lakhs of GRs, not just a few thousand).
+- **Edit / Cancel GR** from GR Register (cancel needs a reason; cancelled GRs are kept but excluded from totals). "↺ Pending" undoes a wrong delivery mark.
+- **Manifest / Loading sheet:** vehicle + driver, pick pending GRs, print sheet, WhatsApp the list to the driver.
+- **Reports:** date-wise GR report, Download Excel (CSV) and Print.
+- **Accounts:** party-wise / city-wise with Paid, To Pay and TBB, month filter, Excel download.
+- **New GR starts with the party name:** type 1–2 words of the name → a list opens (name · city · mobile · GSTIN); pick with arrow keys + Enter or a tap, and GSTIN / mobile / address fill in.
+- **Edit** button on every Dashboard / Register row and right after saving — fix a wrong GR and print again.
+- **Invoice No. / E-Way Bill:** bigger, bold boxes; several e-way bills allowed (comma between them). A long list never cuts the Bilti — text size adjusts to fit the half page.
+- **GR Number:** plain numbers like your GR book (4501, 4502…), one series per office. Set the first number once in Backup & Login → GR Number.
+- **Bilti:** new design — Consignee Copy + Driver Copy, G.R. No. box, company GSTIN on its own line, Articles / Actual Wt / Charge Wt boxes, prints clearly even when the printer skips background colours, Private Marka / Remarks / Booking Clerk signature (old design still available), amount in words, no browser header/footer on print. Printer setting per device: A4 two copies, A4 one copy, Thermal 80 mm, Thermal 58 mm (Backup & Login → Printer).
+- **WhatsApp:** every message has a **bill link** — the party opens it without login and can print / download PDF. "PDF WhatsApp" shares the PDF straight from mobile (on laptop it downloads the PDF and opens WhatsApp).
+- **Login first:** nothing (not even backup download) is visible before Google login. Link opened inside WhatsApp shows a "Chrome mein kholein" button (Google blocks login inside WhatsApp).
+- Validation: GSTIN format, 10-digit mobile (+91 / 0 cleaned automatically), no negative amounts, no future dates, 12-digit e-way bill. **Enter** moves to the next field; only Ctrl+S / Save GR saves.
+
+No change is needed in Firebase rules for this version.
 
 ## Notes
 

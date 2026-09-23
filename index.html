@@ -111,7 +111,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
 .user img{width:28px;height:28px;border-radius:50%}
 .dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ink-muted);margin-right:6px}
 .dot.on{background:var(--success)}.dot.off{background:var(--danger)}
-.backup-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.backup-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
 .bk{border:1px solid var(--line);border-radius:var(--r-md);padding:16px;display:grid;gap:10px;align-content:start}
 .bk h3{margin:0;font-size:15px}.bk p{margin:0;color:var(--ink-muted);font-size:13px}
 .branch-side{margin:-8px 4px 16px;padding:8px 10px;border-radius:var(--r-sm);background:rgba(255,255,255,.06);display:grid}
@@ -131,6 +131,80 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
 @media (max-width:440px){.form-grid,.two,.cards{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 
+/* ---- small additions ---- */
+.ac{position:absolute;left:0;right:0;top:100%;z-index:30;margin-top:2px;background:var(--surface-000);border:1px solid var(--line);border-radius:var(--r-sm);box-shadow:var(--shadow-card);max-height:280px;overflow:auto}
+.aci{padding:7px 10px;cursor:pointer;display:grid;gap:1px;color:var(--ink);font-size:14px;font-weight:400}
+.aci small{color:var(--ink-muted);font-size:12px}
+.aci.on,.aci:hover{background:var(--sun-100)}
+.chip.cancel{background:transparent;border:1px solid var(--danger);color:var(--danger)}
+.toast{max-width:calc(100vw - 40px);z-index:50}
+.cust-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;align-items:end}
+@media (max-width:1000px){.cust-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:440px){.cust-grid{grid-template-columns:1fr}}
+.btn:disabled{opacity:.6;cursor:wait}
+body.locked aside .nav,body.locked .side-bottom,body.locked .branch-side,body.locked #newGrTop,body.locked #branchPickWrap,body.locked #branchChip,body.locked #userBox,body.locked #view-backup .bk:not(:first-child){display:none!important}
+body.locked #view-backup .backup-grid{grid-template-columns:minmax(0,420px)}
+.rpt{font:11px/1.35 Arial,Helvetica,sans-serif;color:#111;background:#fff}
+.rpt h2{margin:0;font-size:16px}.rpt .sub{font-size:10.5px}
+.rpt table{width:100%;border-collapse:collapse}
+.rpt th,.rpt td{border:1px solid #111;padding:3px 5px;text-align:left;white-space:normal;font-size:10px;color:#111;text-transform:none;letter-spacing:0;font-weight:400}
+.rpt th{font-weight:700;background:#eee}.rpt .num{text-align:right}.rpt tfoot td{font-weight:700}
+.rpt .sign{display:flex;justify-content:space-between;margin-top:48px;font-weight:700}
+.thermal{width:72mm;font:11px/1.35 Arial,Helvetica,sans-serif;color:#000;background:#fff;padding:1mm 0}
+.thermal.w58{width:48mm;font-size:9.5px}
+.thermal .c{text-align:center}.thermal hr{border:0;border-top:1px dashed #000;margin:3px 0}
+.thermal table{width:100%;border-collapse:collapse}.thermal td{padding:1px 0;border:0;white-space:normal;font-size:inherit;color:#000;vertical-align:top}.thermal td.r{text-align:right}
+.billpage{padding:0 12px 24px}.billpage .billty{font-size:11px}
+.printdoc,.billty{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+
+.bt2{box-sizing:border-box;border:1.5px solid #111;color:#111;background:#fff;font:10px/1.3 Arial,Helvetica,sans-serif;display:flex;flex-direction:column;-webkit-print-color-adjust:exact;print-color-adjust:exact;text-align:left}
+.bt2 *{box-sizing:border-box}
+.bt2 .h{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:6px 8px;border-bottom:1.5px solid #111}
+.bt2 .logo{width:5em;height:5em;border-radius:.8em;background:#fff;color:#111;display:grid;place-items:center;font-weight:900;font-size:1.25em;letter-spacing:.04em;border:.22em solid #111}
+.bt2 .co{text-align:center}
+.bt2 .co .tg{display:flex;justify-content:space-between;gap:10px;font-size:.88em;font-weight:700}
+.bt2 .co .tg span:last-child{font-style:italic;font-weight:400}
+.bt2 .co .gstin{display:inline-block;border:1.5px solid #111;border-radius:3px;padding:0 8px;margin:2px 0 1px;font-weight:900;font-size:1.1em;letter-spacing:.03em}
+.bt2 .co .nm{font-size:2.15em;font-weight:900;letter-spacing:.02em;line-height:1.05;margin:1px 0}
+.bt2 .co .ad{font-size:1.05em;font-weight:800}
+.bt2 .grbox{border:1.5px solid #111;min-width:15em}
+.bt2 .grbox .lab{background:#fff;color:#111;text-align:center;font-weight:900;padding:2px 4px;letter-spacing:.08em;font-size:1em;border-bottom:1.5px solid #111}
+.bt2 .grbox .no{font-size:2em;font-weight:900;text-align:center;padding:3px 5px;font-family:Arial,Helvetica,sans-serif;letter-spacing:.03em;white-space:nowrap}
+.bt2 .grbox .kv{display:flex;justify-content:space-between;gap:8px;padding:1px 6px;border-top:1px solid #111}
+.bt2 .br{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid #111;font-size:.82em;background:#fff}
+.bt2 .br>div{padding:2px 6px;border-right:1px solid #111}.bt2 .br>div:last-child{border-right:0}
+.bt2 .pp{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #111}
+.bt2 .pp>div{padding:4px 8px;min-height:4.6em;font-size:1.15em;font-weight:700}.bt2 .pp>div+div{border-left:1px solid #111}
+.bt2 .t{font-size:.76em;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#555}
+.bt2 .pn{font-size:1.2em;font-weight:900}
+.bt2 .v{font-weight:700;min-height:1.2em}
+.bt2 .sh{display:grid;grid-template-columns:.85fr .85fr 1fr 1.55fr 1.75fr .7fr;border-bottom:1px solid #111}
+.bt2 .sh>div:nth-child(4) .v,.bt2 .sh>div:nth-child(5) .v{font-weight:900;font-size:1.05em}
+.bt2 .sh>div{padding:3px 6px;font-size:1.1em;border-right:1px solid #111;min-width:0;overflow-wrap:anywhere}.bt2 .sh>div:last-child{border-right:0}
+.bt2 .pay{display:inline-block;border:1.5px solid #111;border-radius:3px;padding:0 5px;font-weight:900}
+.bt2 .mid{display:grid;grid-template-columns:1.2fr 1fr;flex:1;border-bottom:1px solid #111;min-height:0}
+.bt2 .gd{padding:4px 8px;display:flex;flex-direction:column;gap:4px;position:relative}
+.bt2 .gd .row{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.bt2 .gd .row>div{border:1.3px solid #111;border-radius:3px;padding:2px 6px;text-align:center}
+.bt2 .gd .row .v{font-size:1.35em}
+.bt2 .gd{font-size:1.1em}
+.bt2 .terms{font-size:.8em;color:#333;margin-top:auto;border-top:1px dashed #999;padding-top:3px}
+.bt2 .stamp{position:absolute;top:35%;left:10%;transform:rotate(-14deg);border:3px solid #b42318;color:#b42318;font-size:2.4em;font-weight:900;padding:2px 12px;opacity:.75;letter-spacing:.08em}
+.bt2 .rt{border-left:1px solid #111;display:flex;flex-direction:column;font-size:1.15em}
+.bt2 table{width:100%;border-collapse:collapse}
+.bt2 td{padding:2px 8px;border:0;border-bottom:1px solid #ddd;font-size:inherit;white-space:nowrap;color:#111;line-height:1.35}
+.bt2 td.r{text-align:right;font-variant-numeric:tabular-nums}
+.bt2 tr.sub td{border-top:1px solid #111;font-weight:700}
+.bt2 tr.gt td{background:#fff;color:#111;font-weight:900;font-size:1.3em;border-top:2px solid #111;border-bottom:2px solid #111;padding:3px 8px}
+.bt2 .words{padding:3px 8px;font-size:.85em;font-style:italic;border-top:1px solid #111}
+.bt2 .ft{display:grid;grid-template-columns:.9fr 1.4fr 1.4fr 1.4fr;border-bottom:1px solid #111;min-height:4.6em}
+.bt2 .ft>div{padding:4px 6px;border-right:1px solid #111}.bt2 .ft>div:last-child{border-right:0}
+.bt2 .gstby{color:#b42318;font-size:.82em;text-align:center;display:grid;place-items:center;font-weight:700}
+.bt2 .sig{display:flex;align-items:flex-end;justify-content:center;font-size:.95em;font-weight:800}
+.bt2 .sig span{border-top:1px solid #111;padding-top:1px;width:85%;text-align:center}
+.bt2 .qr{text-align:center;display:grid;justify-items:center;gap:1px}.bt2 .qr svg{width:5.4em;height:5.4em;display:block}.bt2 .qr small{font-size:.7em}
+.bt2 .strip{background:#fff;color:#111;text-align:center;font-weight:900;padding:3px;letter-spacing:.05em;font-size:.95em}
+.billpage .bt2{font-size:11px}
 /* ---- Billty print (Party + Driver copy) ---- */
 .printdoc{display:none}
 .billty{border:1.3px solid #111;padding:3px;margin:0 auto 2px;max-width:100%;font-size:7.2px;line-height:1.15;color:#111;background:#fff;font-family:Arial,Helvetica,sans-serif}
@@ -157,6 +231,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
   .billty .headrow>div:first-child{font-size:.88em;line-height:1.1}
   .billty .bt-charges{flex:1}
   .billty .remarks td{height:22px}
+  .bt2{height:139mm;font-size:10.2px;break-inside:avoid;page-break-inside:avoid;overflow:hidden}
   .cutline{margin:2.5mm 0}
 }
 </style></head><body>
@@ -168,13 +243,13 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
     <button class="nav active" data-view="dash">⌂ Dashboard</button>
     <button class="nav" data-view="gr">＋ New GR / Booking <small>F2</small></button>
     <button class="nav" data-view="register">▣ GR Register <small>F3</small></button>
-    <button class="nav" data-view="soon">⇢ Manifest</button>
+    <button class="nav" data-view="manifest">⇢ Manifest</button>
     <button class="nav" data-view="delivery">✓ Delivery / POD</button>
     <button class="nav" data-view="customers">▤ Customers <small>F4</small></button>
     <button class="nav" data-view="accounts">₹ Accounts <small>F6</small></button>
-    <button class="nav" data-view="soon">▥ Reports</button>
+    <button class="nav" data-view="reports">▥ Reports</button>
     <button class="nav" data-view="backup">⟲ Backup &amp; Login</button>
-    <div class="side-bottom"><small>Quick Keys</small><div><kbd>F2</kbd> New GR &nbsp;<kbd>Ctrl</kbd>+<kbd>S</kbd> Save</div><div><kbd>F3</kbd> Register &nbsp;<kbd>F4</kbd> Customers</div><div><kbd>F6</kbd> Accounts &nbsp;<kbd>Esc</kbd> Dashboard</div><div><kbd>Ctrl</kbd>+<kbd>F</kbd> Search</div></div>
+    <div class="side-bottom"><small>Quick Keys</small><div><kbd>F2</kbd> New GR &nbsp;<kbd>Ctrl</kbd>+<kbd>S</kbd> Save</div><div><kbd>F3</kbd> Register &nbsp;<kbd>F4</kbd> Customers</div><div><kbd>F6</kbd> Accounts &nbsp;<kbd>Esc</kbd> Dashboard</div><div><kbd>Ctrl</kbd>+<kbd>F</kbd> Search &nbsp;<kbd>Enter</kbd> Next</div></div>
   </aside>
 
   <main>
@@ -192,7 +267,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
       <div class="cards">
         <div class="card"><span>Today's Booking</span><strong id="cToday">0</strong><small id="cTodayNote">GRs booked today</small></div>
         <div class="card"><span>Pending Delivery</span><strong id="cPending">0</strong><small class="warn">Need attention</small></div>
-        <div class="card"><span>Total Freight</span><strong id="cFreight">₹0</strong><small>This month</small></div>
+        <div class="card"><span>Total Freight</span><strong id="cFreight">₹0</strong><small>This month (GST sahit)</small></div>
         <div class="card"><span>Active Parties</span><strong id="cParties">0</strong><small>Saved in party list</small></div>
       </div>
       <div class="panel" id="allOffices" hidden>
@@ -213,30 +288,32 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
 
     <!-- NEW GR -->
     <section id="view-gr" class="panel" hidden>
-      <form id="grForm" style="display:grid;gap:18px" autocomplete="off">
+      <form id="grForm" style="display:grid;gap:18px" autocomplete="off" novalidate>
         <div class="saved-strip" id="savedStrip" hidden>
           <b id="savedText">GR saved</b>
-          <button type="button" class="btn small" id="printBilltyBtn">Print Billty</button>
+          <button type="button" class="btn small" id="printBilltyBtn">Print Bilti</button>
           <a class="btn small wa" id="waCnr" target="_blank" rel="noopener">WhatsApp Consignor</a>
           <a class="btn small wa" id="waCne" target="_blank" rel="noopener">WhatsApp Consignee</a>
+          <button type="button" class="btn small wa" id="pdfCne">PDF WhatsApp</button>
+          <button type="button" class="btn small" id="editSaved">Edit</button>
         </div>
         <div class="panel-head">
-          <div><h2 id="formTitle">New GR / Booking</h2><p>Consignor और Consignee की details अलग-अलग रहेंगी.</p></div>
-          <div class="actions"><button type="button" class="btn" id="resetBtn">Clear</button><button type="submit" class="btn primary">Save GR</button></div>
+          <div><h2 id="formTitle">New GR / Booking</h2><p>Consignor aur Consignee ki details alag-alag rahengi.</p></div>
+          <div class="actions"><button type="button" class="btn" id="resetBtn">Clear</button><button type="submit" class="btn primary" id="grSubmit">Save GR</button></div>
         </div>
 
         <div class="party-grid">
           <div class="party">
             <div class="party-title"><h3>Consignor / From</h3><button type="button" class="btn small" id="repeatLast">↺ Repeat last party</button></div>
             <span class="chip sample" id="cnrHint" hidden>Saved party</span>
-            <label>Party Name *<input id="cnrName" list="partyList" placeholder="Consignor name"></label>
-            <div class="two"><label>GST No.<input id="cnrGst" class="mono" list="gstList" placeholder="GSTIN" maxlength="15"></label><label>Mobile<input id="cnrMob" inputmode="tel" placeholder="Mobile number" maxlength="10"></label></div>
+            <label>Party Name *<input id="cnrName" placeholder="Party ka naam likhein — list khulegi"></label>
+            <div class="two"><label>GST No.<input id="cnrGst" class="mono" list="gstList" placeholder="GSTIN" maxlength="15"></label><label>Mobile<input id="cnrMob" inputmode="tel" placeholder="Mobile number" maxlength="16"></label></div>
             <label>Address<textarea id="cnrAddr" placeholder="Full address"></textarea></label>
           </div>
           <div class="party">
             <div class="party-title"><h3>Consignee / To</h3><span class="chip sample" id="cneHint" hidden>Saved party</span></div>
-            <label>Party Name *<input id="cneName" list="partyList" placeholder="Consignee name"></label>
-            <div class="two"><label>GST No.<input id="cneGst" class="mono" list="gstList" placeholder="GSTIN" maxlength="15"></label><label>Mobile<input id="cneMob" inputmode="tel" placeholder="Mobile number" maxlength="10"></label></div>
+            <label>Party Name *<input id="cneName" placeholder="Party ka naam likhein — list khulegi"></label>
+            <div class="two"><label>GST No.<input id="cneGst" class="mono" list="gstList" placeholder="GSTIN" maxlength="15"></label><label>Mobile<input id="cneMob" inputmode="tel" placeholder="Mobile number" maxlength="16"></label></div>
             <label>Address<textarea id="cneAddr" placeholder="Full address"></textarea></label>
           </div>
         </div>
@@ -248,26 +325,26 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
         <div class="section-title">Shipment Details</div>
         <div class="form-grid">
           <label>GR / Docket No.<input id="grNo" class="mono" readonly></label>
-          <label>Invoice No.<input id="invoice" placeholder="Optional"></label>
+          <label style="grid-column:span 2">Invoice No.<input id="invoice" placeholder="Optional — ek se zyada ho to comma lagayein" maxlength="200" style="font-weight:700"></label>
           <label>Booking Date<input id="grDate" type="date"></label>
           <label>From *<input id="from" list="cityList" placeholder="City"></label>
           <label>To *<input id="to" list="cityList" placeholder="City"></label>
           <label>Delivery At<input id="deliveryAt" list="cityList" placeholder="Delivery location"></label>
-          <label>E-Way Bill No.<input id="ewb" class="mono" placeholder="Optional" maxlength="12"></label>
-          <label>No. of Articles<input id="articles" type="number" min="0" placeholder="0"></label>
+          <label style="grid-column:span 2">E-Way Bill No.<input id="ewb" class="mono" placeholder="Optional — ek se zyada ho to comma lagayein" maxlength="300" style="font-weight:700"></label>
+          <label>No. of Articles<input id="articles" type="number" min="0" step="1" inputmode="numeric" placeholder="0"></label>
           <label>Contents<input id="contents" list="itemsList" placeholder="Goods / material"></label>
-          <label>Actual Weight (kg)<input id="actWt" type="number" min="0" placeholder="0"></label>
-          <label>Charge Weight (kg)<input id="chWt" type="number" min="0" placeholder="0"></label>
+          <label>Actual Weight (kg)<input id="actWt" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0"></label>
+          <label>Charge Weight (kg)<input id="chWt" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0"></label>
           <label>Payment<select id="payMode"><option>To Pay</option><option>Paid</option><option>TBB</option></select></label>
         </div>
 
         <div class="charges">
-          <label>Freight<input id="chFreight" class="charge" type="number" min="0" placeholder="0"></label>
-          <label>D/D Charges<input id="chDD" class="charge" type="number" min="0" placeholder="0"></label>
-          <label>Stat. Charge<input id="chStat" class="charge" type="number" min="0" placeholder="0"></label>
-          <label>COD<input id="chCod" class="charge" type="number" min="0" placeholder="0"></label>
-          <label>Risk Charge<input id="chRisk" class="charge" type="number" min="0" placeholder="0"></label>
-          <label>GST %<input id="gstRate" type="number" min="0" step=".01" value="5"></label>
+          <label>Freight<input id="chFreight" class="charge" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0"></label>
+          <label>D/D Charges<input id="chDD" class="charge" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0"></label>
+          <label>Stat. Charge<input id="chStat" class="charge" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0"></label>
+          <label>COD<input id="chCod" class="charge" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0"></label>
+          <label>Risk Charge<input id="chRisk" class="charge" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0"></label>
+          <label>GST %<input id="gstRate" type="number" min="0" max="28" step=".01" value="5" inputmode="decimal"></label>
           <div class="total"><b>Sub Total</b><strong id="grandTotal">₹0</strong></div>
           <div class="total"><b>GST</b><strong id="gstAmt">₹0</strong></div>
           <div class="total"><b>Grand Total</b><strong id="gTotal">₹0</strong></div>
@@ -278,14 +355,36 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
 
     <!-- GR REGISTER -->
     <section id="view-register" class="panel" hidden>
-      <div class="panel-head"><div><h2>GR Register</h2><p>Is office ke saare GR — search karke Billty dobara print ya WhatsApp kar sakte hain.</p></div></div>
+      <div class="panel-head"><div><h2>GR Register</h2><p>Is office ke saare GR — search karke Bilti dobara print, WhatsApp, Edit ya Cancel kar sakte hain.</p></div></div>
       <div class="actions" style="margin:-4px 0 4px">
         <input id="regSearch" placeholder="GR no. / consignor / consignee / route se search karein" style="max-width:360px">
-        <select id="regStatus" style="max-width:160px"><option value="">Sab status</option><option>Pending</option><option>Delivered</option></select>
+        <select id="regStatus" style="max-width:160px"><option value="">Sab status</option><option>Pending</option><option>Delivered</option><option>Cancelled</option></select>
       </div>
       <div class="table-wrap"><table>
         <thead><tr><th>GR No.</th><th>Date</th><th>Consignor</th><th>Consignee</th><th>Route</th><th>Articles</th><th class="num">Total</th><th>Status</th><th></th></tr></thead>
         <tbody id="regRows"></tbody>
+      </table></div>
+    </section>
+
+    <!-- MANIFEST -->
+    <section id="view-manifest" class="panel" hidden>
+      <div class="panel-head"><div><h2>Manifest / Loading Sheet</h2><p>Gaadi mein load hone wale GR chunein — manifest print karke driver ko dein, WhatsApp bhi kar sakte hain.</p></div></div>
+      <div class="form-grid">
+        <label>Vehicle No. *<input id="mfVehicle" class="mono" placeholder="UP15 AB 1234" maxlength="15"></label>
+        <label>Driver Name<input id="mfDriver" placeholder="Driver ka naam"></label>
+        <label>Driver Mobile<input id="mfDmob" inputmode="tel" maxlength="16" placeholder="Mobile"></label>
+        <label>Date<input id="mfDate" type="date"></label>
+        <label>To (route filter)<input id="mfTo" list="cityList" placeholder="Sab routes"></label>
+      </div>
+      <div class="actions" style="align-items:center"><button class="btn primary" id="mfCreate" type="button">Manifest banayein + Print</button><span id="mfSel" class="chip sample">0 GR chune</span></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th><input type="checkbox" id="mfAll" style="width:auto" title="Sab chunein"></th><th>GR No.</th><th>Date</th><th>Consignor</th><th>Consignee</th><th>To</th><th class="num">Articles</th><th class="num">Weight</th><th>Payment</th><th class="num">Total</th></tr></thead>
+        <tbody id="mfRows"></tbody>
+      </table></div>
+      <div class="section-title">Pichle Manifest</div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Manifest No.</th><th>Date</th><th>Vehicle</th><th>Driver</th><th class="num">GRs</th><th class="num">To Pay</th><th></th></tr></thead>
+        <tbody id="mfList"></tbody>
       </table></div>
     </section>
 
@@ -300,14 +399,14 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
 
     <!-- CUSTOMERS + GOODS MASTER -->
     <section id="view-customers" class="panel" hidden>
-      <div class="panel-head"><div><h2>Customers</h2><p>Party master — saari offices mein saanjha, GR banate waqt naam se apne aap bhar jaata hai.</p></div></div>
-      <form id="custForm" class="grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;align-items:end">
+      <div class="panel-head"><div><h2>Customers</h2><p>Party master — saari offices mein saanjha, GR banate waqt naam se apne aap bhar jaata hai. Edit ke liye row par click karein.</p></div></div>
+      <form id="custForm" class="cust-grid" autocomplete="off" novalidate>
         <label>Name *<input id="custName" placeholder="Party name"></label>
         <label>GSTIN<input id="custGst" class="mono" maxlength="15" placeholder="GSTIN"></label>
-        <label>Mobile<input id="custMob" inputmode="tel" maxlength="10" placeholder="Mobile"></label>
+        <label>Mobile<input id="custMob" inputmode="tel" maxlength="16" placeholder="Mobile"></label>
         <label>City<input id="custCity" list="cityList" placeholder="City"></label>
         <label>Address<input id="custAddr" placeholder="Address"></label>
-        <div class="full" style="grid-column:1/-1"><button type="submit" class="btn primary">Save Customer</button></div>
+        <div class="full" style="grid-column:1/-1"><button type="submit" class="btn primary" id="custSave">Save Customer</button> <button type="reset" class="btn" id="custClear">Clear</button></div>
       </form>
       <div class="actions" style="margin:8px 0 -4px"><input id="custSearch" placeholder="Customer search karein" style="max-width:320px"></div>
       <div class="table-wrap"><table>
@@ -322,13 +421,32 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
     <!-- ACCOUNTS -->
     <section id="view-accounts" class="panel" hidden>
       <div class="panel-head">
-        <div><h2>Accounts</h2><p>Customer-wise aur city-wise hisaab — is office ke GR par based.</p></div>
-        <div class="actions"><select id="acctBy"><option value="customer">Customer-wise</option><option value="city">City-wise (To)</option></select></div>
+        <div><h2>Accounts</h2><p>Party-wise aur city-wise hisaab (cancelled GR chhod kar). Party = jo payment karegi: To Pay → Consignee, Paid/TBB → Consignor.</p></div>
+        <div class="actions"><select id="acctBy" style="width:auto"><option value="customer">Party-wise</option><option value="city">City-wise (To)</option></select><input type="month" id="acctMonth" style="width:auto" title="Mahina (khali = sab)"><button class="btn" id="acctCsv" type="button">Download Excel</button></div>
       </div>
       <div class="cards" id="acctCards"></div>
       <div class="table-wrap"><table>
         <thead id="acctHead"></thead>
         <tbody id="acctRows"></tbody>
+      </table></div>
+    </section>
+
+    <!-- REPORTS -->
+    <section id="view-reports" class="panel" hidden>
+      <div class="panel-head">
+        <div><h2>Reports</h2><p>Date-wise GR report — Excel mein download ya print karein.</p></div>
+        <div class="actions"><button class="btn" id="rpCsv" type="button">Download Excel</button><button class="btn" id="rpPrint" type="button">Print</button></div>
+      </div>
+      <div class="form-grid">
+        <label>From date<input type="date" id="rpFrom"></label>
+        <label>To date<input type="date" id="rpTo"></label>
+        <label>Status<select id="rpStatus"><option value="">Sab</option><option>Pending</option><option>Delivered</option><option>Cancelled</option></select></label>
+        <label>Payment<select id="rpPay"><option value="">Sab</option><option>To Pay</option><option>Paid</option><option>TBB</option></select></label>
+      </div>
+      <div class="cards" id="rpCards"></div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>GR No.</th><th>Date</th><th>Consignor</th><th>Consignee</th><th>Route</th><th class="num">Articles</th><th class="num">Wt (kg)</th><th>Payment</th><th class="num">Freight</th><th class="num">GST</th><th class="num">Total</th><th>Status</th></tr></thead>
+        <tbody id="rpRows"></tbody>
       </table></div>
     </section>
 
@@ -343,7 +461,7 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
         <div class="bk">
           <h3>Cloud Backup (automatic)</h3>
           <p><span class="dot" id="syncDot"></span><span id="syncText">—</span></p>
-          <p>Har GR save hote hi cloud mein chala jaata hai. Dusre laptop/mobile par same Google ID se login karke wahi data milega.</p>
+          <p>Har GR save hote hi cloud mein chala jaata hai. Doosre laptop/mobile par same Google ID se login karke wahi data milega.</p>
           <div class="actions"><button class="btn" id="syncNow">Sync now</button></div>
         </div>
         <div class="bk">
@@ -351,11 +469,24 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
           <p id="fileBkText">Poora data ek .json file mein. Pen drive ya Google Drive mein rakh sakte hain.</p>
           <div class="actions"><button class="btn" id="dlBackup">Download backup</button><label class="btn" style="display:inline-block;color:var(--ink);font-size:14px;font-weight:600">Restore file<input type="file" id="restoreFile" accept=".json,application/json" hidden></label></div>
         </div>
+        <div class="bk">
+          <h3>GR Number</h3>
+          <p>Transport ki GR book ka pehla number daalein — naya GR yahin se ginti shuru karega (jaise 4501, 4502…). Har office ki ginti alag.</p>
+          <div id="grStartRows" style="display:grid;gap:6px"></div>
+          <div class="actions"><button class="btn primary" id="grStartSave" type="button">Save GR Number</button></div>
+        </div>
+        <div class="bk">
+          <h3>Printer</h3>
+          <p>Is computer/mobile ke printer ke hisaab se Bilti ka size chunein. Print dialog mein Scale 100% rakhein.</p>
+          <select id="billtyDesign"><option value="new">Bilti design — Naya</option><option value="old">Bilti design — Purana</option></select>
+          <select id="printMode"><option value="a4-2">A4 — Consignee + Driver copy (1 page)</option><option value="a4-1">A4 — sirf Consignee copy</option><option value="t80">Thermal 80mm (3 inch)</option><option value="t58">Thermal 58mm (2 inch)</option></select>
+          <div class="actions"><button class="btn" id="testPrint" type="button">Test print</button></div>
+        </div>
       </div>
     </section>
 
     <section id="view-soon" class="panel" hidden>
-      <div class="soon"><h2 style="margin:0 0 6px;color:var(--ink)">Agla step</h2>Ye screen approval ke baad banegi. Abhi Dashboard aur New GR chal rahe hain.</div>
+      <div class="soon">—</div>
     </section>
   </main>
 </div>
@@ -364,130 +495,213 @@ td.num{text-align:right;font-variant-numeric:tabular-nums}
 
 <script src="firebase-config.js"></script>
 <script>
-(function(){
+(async function(){
+'use strict';
 /* ================= config ================= */
 const CFG=window.SGC_CONFIG||null; // from firebase-config.js
 const COMPANY=(CFG&&CFG.companyId)||'suraj-goods-carriers';
 const BRANCHES=(CFG&&Array.isArray(CFG.branches)&&CFG.branches.length?CFG.branches:[
   {id:'MRT',name:'Meerut Office',bookingCode:'MRT',address:'Meerut',users:[]},
   {id:'DEL',name:'Delhi Office',bookingCode:'DEL',address:'Delhi',users:[]}
-]).map(b=>({id:String(b.id).toUpperCase().replace(/[^A-Z0-9]/g,''),name:b.name||b.id,bookingCode:b.bookingCode||b.id,address:b.address||b.name||'',users:(b.users||[]).map(e=>e.toLowerCase())}));
-const ADMINS=((CFG&&CFG.admins)||[]).map(e=>e.toLowerCase());
-const COMPANY_INFO=(CFG&&CFG.company)||{gstin:'',tagline:'',hoAddress:'',phone:'',email:'',branchOffices:[]};
-const PKEY='sgc_parties_v1',BKEY='sgc_branch',OLDKEY='sgc_tms_v1';
+]).map(b=>({id:String(b.id).toUpperCase().replace(/[^A-Z0-9]/g,''),name:b.name||b.id,bookingCode:b.bookingCode||b.id,address:b.address||b.name||'',users:(b.users||[]).map(e=>String(e).trim().toLowerCase())}));
+const ADMINS=((CFG&&CFG.admins)||[]).map(e=>String(e).trim().toLowerCase());
+const COMPANY_INFO=Object.assign({gstin:'',tagline:'',hoAddress:'',phone:'',email:'',branchOffices:[]},(CFG&&CFG.company)||{});
+const GATE=!!(CFG&&CFG.firebase&&CFG.firebase.apiKey); // real deployment: Google login required
+const PKEY='sgc_parties_v1',PMKEY='sgc_parties_meta',BKEY='sgc_branch',OLDKEY='sgc_tms_v1',IKEY='sgc_items_v2',OLDIKEY='sgc_items_v1',LUKEY='sgc_last_user';
 const dbKey=id=>'sgc_tms_v2_'+id;
 const $=id=>document.getElementById(id);
-const inr=n=>'₹'+Math.round(n||0).toLocaleString('en-IN');
-const today=()=>new Date().toISOString().slice(0,10);
+const r2=n=>Math.round((+n||0)*100)/100;
+const inr=n=>{const v=r2(n);return '₹'+v.toLocaleString('en-IN',v%1?{minimumFractionDigits:2,maximumFractionDigits:2}:{maximumFractionDigits:0});};
+const money=n=>r2(n).toFixed(2);
+const localDate=(d=new Date())=>new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);
+const today=()=>localDate();
+const nowIso=()=>new Date().toISOString();
+const newUid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,10);
 const branchById=id=>BRANCHES.find(b=>b.id===id);
+const GST_RE=/^\d{2}[A-Z]{5}\d{4}[A-Z][1-9A-Z]Z[0-9A-Z]$/;
+function normMob(v){let d=String(v||'').replace(/\D/g,'');if(d.length===12&&d.startsWith('91'))d=d.slice(2);if(d.length===11&&d.startsWith('0'))d=d.slice(1);return d;}
+const mobOk=m=>/^[6-9]\d{9}$/.test(m);
+const lc=s=>String(s||'').trim().toLowerCase();
 
-/* ================= storage ================= */
-function lsGet(k){try{return JSON.parse(localStorage.getItem(k));}catch(e){return null;}}
-function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v));return true;}catch(e){return false;}}
+/* ================= storage (IndexedDB, falls back to localStorage) ================= */
+const Store={cache:new Map(),db:null,bc:null,warned:false,onRemote:null,
+  async init(){
+    try{
+      if(!window.indexedDB)throw 0;
+      this.db=await new Promise((ok,no)=>{const r=indexedDB.open('sgc-tms',1);r.onupgradeneeded=()=>r.result.createObjectStore('kv');r.onsuccess=()=>ok(r.result);r.onerror=()=>no(r.error);r.onblocked=()=>no('blocked');setTimeout(()=>no('timeout'),4000);});
+      await new Promise((ok,no)=>{const rq=this.db.transaction('kv','readonly').objectStore('kv').openCursor();rq.onsuccess=()=>{const c=rq.result;if(c){this.cache.set(c.key,c.value);c.continue();}else ok();};rq.onerror=()=>no(rq.error);});
+    }catch(e){this.db=null;}
+    // bring over data saved by older versions (localStorage)
+    try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(/^sgc_/.test(k)&&!this.cache.has(k)){try{const v=JSON.parse(localStorage.getItem(k));this.cache.set(k,v);if(this.db)this.persist(k,v);}catch(_){}}}}catch(_){}
+    try{this.bc=new BroadcastChannel('sgc-tms');this.bc.onmessage=ev=>this.remote(ev.data&&ev.data.k);}catch(e){}
+    try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist();}catch(e){}
+  },
+  get(k){const v=this.cache.get(k);return v===undefined?null:v;},
+  set(k,v){this.cache.set(k,v);this.persist(k,v);return true;},
+  persist(k,v){
+    const ping=()=>{try{this.bc&&this.bc.postMessage({k});}catch(e){}};
+    if(this.db){try{const tx=this.db.transaction('kv','readwrite');tx.objectStore('kv').put(v,k);tx.oncomplete=ping;tx.onerror=()=>{this.fallback(k,v);ping();};return;}catch(e){}}
+    this.fallback(k,v);ping();
+  },
+  fallback(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){if(!this.warned){this.warned=true;toast('Browser storage full hai — Backup download karke rakhein');}}},
+  async remote(k){
+    if(!k)return;
+    if(this.db){await new Promise(ok=>{try{const rq=this.db.transaction('kv','readonly').objectStore('kv').get(k);rq.onsuccess=()=>{if(rq.result!==undefined)this.cache.set(k,rq.result);ok();};rq.onerror=()=>ok();}catch(e){ok();}});}
+    else{try{this.cache.set(k,JSON.parse(localStorage.getItem(k)));}catch(e){}}
+    this.onRemote&&this.onRemote(k);
+  }
+};
+await Store.init();
+const lsGet=k=>Store.get(k),lsSet=(k,v)=>Store.set(k,v);
+
+/* ================= data ================= */
 function sampleDb(bid){
-  const t=today(),y=new Date(Date.now()-864e5).toISOString().slice(0,10),yr=t.slice(0,4);
-  const mk=(n,date,a,am,b,bm,from,to,art,fr,st)=>({no:'SGC-'+bid+'-'+yr+'-'+String(n).padStart(6,'0'),branch:bid,date,cnr:{name:a,mob:am},cne:{name:b,mob:bm},from,to,articles:art,chWt:art*12,payMode:'To Pay',charges:{freight:fr,dd:100,stat:20,cod:0,risk:0},total:fr+120,status:st,sample:true});
-  const city=(branchById(bid)||{}).name||'Meerut';const from=city.replace(/\s*office$/i,'');
-  return {seq:3,sample:true,lastSync:null,lastFileBackup:null,grs:[
+  const t=today(),y=localDate(new Date(Date.now()-864e5)),yr=t.slice(0,4);
+  const mk=(n,date,a,am,b,bm,from,to,art,fr,st)=>({no:'SGC-'+bid+'-'+yr+'-'+String(n).padStart(6,'0'),uid:'s'+n,branch:bid,date,cnr:{name:a,mob:am},cne:{name:b,mob:bm},from,to,articles:art,chWt:art*12,payMode:'To Pay',charges:{freight:fr,dd:100,stat:20,cod:0,risk:0},total:fr+120,gst:0,gstRate:0,gTotal:fr+120,status:st,sample:true});
+  const from=((branchById(bid)||{}).address||'Meerut');
+  return {seq:0,sample:true,dirty:[],grs:[
     mk(3,t,'Nav Durga Sports','9800000001','Kumar Traders','9800000002',from,'Delhi',40,2400,'Pending'),
     mk(2,t,'Sharma Textiles','','Gupta & Sons','9800000003',from,'Ghaziabad',12,900,'Pending'),
     mk(1,y,'Agarwal Steels','','Jain Hardware','',from,'Noida',25,1800,'Delivered')]};
 }
-function loadBranchDb(bid){const d=lsGet(dbKey(bid));return d&&d.grs?d:sampleDb(bid);}
-// one-time move of data saved by the first version (single office) into the first office
+function normDb(d,bid){
+  if(!d||!Array.isArray(d.grs))d=GATE?{seq:0,grs:[]}:sampleDb(bid);
+  if(GATE&&(d.sample||d.grs.some(g=>g.sample))){d.grs=d.grs.filter(g=>!g.sample);d.sample=false;}
+  if(!Array.isArray(d.dirty)){d.dirty=[];if(GATE)d.grs.forEach(g=>{if(!g.sample){g.legacyCheck=true;d.dirty.push(g.no);}});}
+  return d;
+}
+function loadBranchDb(bid){const raw=lsGet(dbKey(bid));const d=normDb(raw,bid);if(d!==raw&&GATE)lsSet(dbKey(bid),d);return d;}
 (function migrate(){
   const old=lsGet(OLDKEY);if(!old||!old.grs)return;
   const first=BRANCHES[0].id;
-  if(!lsGet(dbKey(first))){
-    const grs=old.grs.filter(g=>!g.sample).map(g=>Object.assign({branch:first},g));
-    lsSet(dbKey(first),{seq:old.seq||0,sample:!grs.length&&!!old.sample,lastSync:null,lastFileBackup:old.lastFileBackup||null,grs:grs.length?grs:sampleDb(first).grs});
-  }
+  if(!lsGet(dbKey(first))){const grs=old.grs.filter(g=>!g.sample).map(g=>Object.assign({branch:first},g));lsSet(dbKey(first),{seq:old.seq||0,dirty:grs.map(g=>g.no),grs,lastFileBackup:old.lastFileBackup||null});}
   if(!lsGet(PKEY)&&old.parties)lsSet(PKEY,old.parties);
-  try{localStorage.removeItem(OLDKEY);}catch(e){}
+  lsSet(OLDKEY,null);
 })();
 
 let branch=branchById(lsGet(BKEY))||BRANCHES[0];
 let db=loadBranchDb(branch.id);
-let parties=lsGet(PKEY)||[];
-function save(){if(!lsSet(dbKey(branch.id),db))toast('Browser storage band hai — data save nahi hua');}
+let parties=(lsGet(PKEY)||[]).filter(p=>p&&p.name);
+let pmeta=Object.assign({lastPull:0,dirty:[]},lsGet(PMKEY)||{});
+let items=(()=>{let it=lsGet(IKEY);if(it&&it.map)return Object.assign({dirty:[]},it);
+  it={map:{},dirty:[]};(lsGet(OLDIKEY)||[]).forEach(n=>{const k=ikey(n);if(k){it.map[k]={n:String(n).trim(),on:true,t:nowIso()};it.dirty.push(k);}});return it;})();
+function ikey(n){return encodeURIComponent(lc(n)).replace(/\./g,'%2E').slice(0,300);}
+const dbFor=bid=>bid===branch.id?db:loadBranchDb(bid);
+function saveFor(bid,d){if(bid===branch.id)db=d;lsSet(dbKey(bid),d);}
+function save(){saveFor(branch.id,db);}
 function saveParties(){lsSet(PKEY,parties);}
-function seqFromGrs(list){return (list||db.grs).filter(g=>!g.sample).reduce((m,g)=>Math.max(m,+String(g.no).split('-').pop()||0),0);}
-function nextNo(){return 'SGC-'+branch.id+'-'+new Date().getFullYear()+'-'+String((db.sample?seqFromGrs():Math.max(db.seq||0,seqFromGrs()))+1).padStart(6,'0');}
+function savePm(){lsSet(PMKEY,pmeta);}
+function saveItems(){lsSet(IKEY,items);}
+const noNum=no=>+String(no).split('-').pop()||0;
+function seqFromGrs(list){return (list||[]).filter(g=>!g.sample).reduce((m,g)=>Math.max(m,noNum(g.no)),0);}
+// GR number = plain number like the office's own GR book (e.g. 4501); each office has its own series.
+// The first number is set once in Backup & Login -> GR Number (shared by all devices through the cloud).
+const SKEY='sgc_settings';
+let settings=Object.assign({grStart:{},dirty:[]},lsGet(SKEY)||{});
+function saveSettings(){lsSet(SKEY,settings);}
+function grStartFor(bid){const s=settings.grStart[bid];if(s&&+s.n>0)return +s.n;const b=(CFG&&CFG.branches||[]).find(x=>String(x.id).toUpperCase().replace(/[^A-Z0-9]/g,'')===bid);return (b&&+b.grStart>0)?+b.grStart:1;}
+function nextSeq(d,bid){return Math.max(d.seq||0,seqFromGrs(d.grs),grStartFor(bid||branch.id)-1)+1;}
+function fmtNo(bid,n){return String(n);}
+function nextNo(){return fmtNo(branch.id,nextSeq(db,branch.id));}
+function markDirty(d,no){if(!d.dirty.includes(no))d.dirty.push(no);}
+function markClean(d,no){d.dirty=d.dirty.filter(x=>x!==no);}
+const cmpNo=(a,b)=>noNum(a.no)-noNum(b.no)||String(a.no).localeCompare(String(b.no));
+const byNoDesc=(a,b)=>cmpNo(b,a);
+const isCancelled=g=>g.status==='Cancelled';
+const amtOf=g=>isCancelled(g)?0:(g.gTotal!=null?g.gTotal:(g.total||0));
 
 /* ================= access ================= */
-let fb=null,user=null,syncState='off';
-const email=()=>(user&&user.email||'').toLowerCase();
-function isAdmin(){return !CFG||!CFG.firebase||!CFG.firebase.apiKey?true:ADMINS.includes(email());} // offline demo: free switching
+let fb=null,user=null,offlineEmail='',syncState=GATE?'off':'nosetup',locked=GATE;
+const email=()=>lc((user&&user.email)||offlineEmail);
+function isAdmin(){return GATE?ADMINS.includes(email()):true;}
 function userBranch(){const e=email();return BRANCHES.find(b=>b.users.includes(e));}
-function canSwitch(){return isAdmin()||!user;}
+const canSwitch=()=>isAdmin();
+const canUse=bid=>isAdmin()||((userBranch()||{}).id===bid);
 function switchBranch(id,silent){
   const b=branchById(id);if(!b||b.id===branch.id)return;
-  if(user&&!isAdmin()&&userBranch()&&userBranch().id!==b.id)return;
-  save();branch=b;lsSet(BKEY,b.id);db=loadBranchDb(b.id);
-  resetForm();$('savedStrip').hidden=true;renderBranch();renderDash();if(!$('view-register').hidden)renderRegister();renderCloud();
+  if(!canSwitch()){renderBranch();return;}
+  if(curView==='gr'&&(editingNo||!formPristine())&&!confirm('GR form mein bhara hua data hat jayega. Office badlein?')){renderBranch();return;}
+  branch=b;lsSet(BKEY,b.id);db=loadBranchDb(b.id);
+  resetForm();$('savedStrip').hidden=true;renderBranch();
+  if(user)startLive();
+  renderView(curView);renderCloud();
   if(!silent)toast(b.name+' khula');
-  if(user)fullSync();
 }
 function renderBranch(){
   $('sideBranch').textContent=branch.name;
-  const sw=canSwitch();
-  $('branchPickWrap').hidden=!sw||BRANCHES.length<2;$('branchChip').hidden=sw&&BRANCHES.length>1;
+  const sw=canSwitch()&&BRANCHES.length>1;
+  $('branchPickWrap').hidden=!sw;$('branchChip').hidden=sw;
   $('branchChip').textContent=branch.name;
   $('branchPick').innerHTML=BRANCHES.map(b=>`<option value="${b.id}" ${b.id===branch.id?'selected':''}>${esc(b.name)}</option>`).join('');
 }
 $('branchPick').onchange=e=>switchBranch(e.target.value);
 
 /* ================= views ================= */
-let lastSoon=null;
-const GATE=!!(CFG&&CFG.firebase&&CFG.firebase.apiKey); // login zaroori hai jab tak Firebase set nahi hai
-let locked=GATE;
+const TITLES={dash:'Dashboard',gr:'New GR / Booking',register:'GR Register',manifest:'Manifest / Loading Sheet',delivery:'Delivery / POD',customers:'Customers',accounts:'Accounts',reports:'Reports',backup:'Backup & Login'};
+let curView='dash';
 function show(v){
   if(locked&&v!=='backup')v='backup';
-  ['dash','gr','register','delivery','customers','accounts','backup','soon'].forEach(x=>$('view-'+x).hidden=x!==v);
-  document.querySelectorAll('.nav').forEach(b=>b.classList.toggle('active',b.dataset.view===v&&(v!=='soon'||b===lastSoon)));
-  $('pageTitle').textContent={dash:'Dashboard',gr:'New GR / Booking',register:'GR Register',delivery:'Delivery / POD',customers:'Customers',accounts:'Accounts',backup:'Backup & Login'}[v]||(lastSoon?lastSoon.textContent.replace(/^\S+\s/,''):'');
-  if(v==='dash')renderDash();
-  if(v==='register')renderRegister();
-  if(v==='delivery')renderDelivery();
-  if(v==='customers')renderCustomers();
-  if(v==='accounts')renderAccounts();
-  if(v==='backup')renderCloud();
-  if(v==='gr'){if(!$('grNo').value)resetForm();setTimeout(()=>$('cnrName').focus(),0);}
+  if(!TITLES[v])v='dash';
+  curView=v;
+  document.body.classList.toggle('locked',locked);
+  Object.keys(TITLES).forEach(x=>{const el=$('view-'+x);if(el)el.hidden=x!==v;});
+  if($('view-soon'))$('view-soon').hidden=true;
+  document.querySelectorAll('.nav').forEach(b=>b.classList.toggle('active',b.dataset.view===v));
+  $('pageTitle').textContent=locked?'Login':(v==='gr'&&editingNo?'Edit GR':TITLES[v]);
+  renderView(v);
+  if(v==='gr'){if(!editingNo&&!$('grNo').value)resetForm();setTimeout(()=>$('cnrName').focus(),0);}
 }
-document.querySelectorAll('.nav').forEach(b=>b.addEventListener('click',()=>{lastSoon=b.dataset.view==='soon'?b:null;show(b.dataset.view);}));
-$('newGrTop').onclick=()=>show('gr');
+function renderView(v){const f={dash:renderDash,register:renderRegister,manifest:renderManifest,delivery:renderDelivery,customers:renderCustomers,accounts:renderAccounts,reports:renderReports,backup:renderCloud}[v];if(f)f();}
+function refreshView(){
+  renderCloud();
+  if(locked)return;
+  if(curView==='gr'){if(!editingNo)$('grNo').value=nextNo();return;}
+  if(curView==='delivery'&&[...document.querySelectorAll('#delRows input')].some(i=>i===document.activeElement||(i.dataset.podBy!==undefined&&i.value)))return;
+  if(curView==='manifest'&&document.querySelector('#mfRows input:checked'))return;
+  if(curView==='customers'&&document.activeElement&&document.activeElement.closest&&document.activeElement.closest('#custForm'))return;
+  renderView(curView);
+}
+document.querySelectorAll('.nav').forEach(b=>b.addEventListener('click',()=>show(b.dataset.view)));
+$('newGrTop').onclick=()=>{if(editingNo)resetForm();show('gr');};
 
 /* ================= WhatsApp ================= */
 function waMsg(g,who){
   const p=who==='cnr'?g.cnr:g.cne;const b=branchById(g.branch);
+  const st=isCancelled(g)?'*cancelled*.':g.status==='Delivered'?'*delivered*'+(g.pod&&g.pod.by?' (received by '+g.pod.by+(g.pod.date?' on '+fmtDate(g.pod.date):'')+').':'.'):'*booked*.';
   return ['*THE SURAJ GOODS CARRIERS*'+(b?' — '+b.name:''),'',
-    'Dear '+(p.name||'Customer')+',','Your consignment has been '+(g.status==='Delivered'?'*delivered*.':'*booked*.'),'',
+    'Dear '+(p.name||'Customer')+',','Your consignment has been '+st,'',
     'GR No: *'+g.no+'*','Date: '+fmtDate(g.date),'Route: '+g.from+' → '+g.to,
     'Consignor: '+g.cnr.name,'Consignee: '+g.cne.name,
     'Articles: '+(g.articles||0)+(g.chWt?' | Weight: '+g.chWt+' kg':''),
-    'Amount: '+inr(g.gTotal!=null?g.gTotal:g.total)+(g.payMode?' ('+g.payMode+')':''),'','Thank you.'].join('\n');
+    (g.mf&&g.mf.vehicle?'Vehicle: '+g.mf.vehicle:null),
+    'Amount: ₹'+money(g.gTotal!=null?g.gTotal:g.total)+(g.payMode?' ('+g.payMode+')':''),'',
+    (!isCancelled(g)&&/^https?:/.test(location.href)?'Bill dekhein / PDF: '+billLink(g):null),
+    (COMPANY_INFO.phone?'Ph: '+COMPANY_INFO.phone:null),'Thank you.'].filter(x=>x!==null).join('\n');
 }
-function waHref(g,who){
-  const mob=(((who==='cnr'?g.cnr:g.cne)||{}).mob||'').replace(/\D/g,'');
-  return mob.length===10?'https://wa.me/91'+mob+'?text='+encodeURIComponent(waMsg(g,who)):'';
-}
+function waHref(g,who){const mob=normMob(((who==='cnr'?g.cnr:g.cne)||{}).mob);return mobOk(mob)?'https://wa.me/91'+mob+'?text='+encodeURIComponent(waMsg(g,who)):'';}
 function setWa(a,href){if(href){a.href=href;a.removeAttribute('aria-disabled');a.title='';}else{a.removeAttribute('href');a.setAttribute('aria-disabled','true');a.title='Mobile number nahi hai';}}
 
 /* ================= dashboard ================= */
-const amtOf=g=>g.gTotal!=null?g.gTotal:(g.total||0);
-function stats(d){const t=today(),m=t.slice(0,7),real=d.grs;
-  return {today:real.filter(g=>g.date===t).length,pending:real.filter(g=>g.status==='Pending').length,freight:real.filter(g=>String(g.date).slice(0,7)===m).reduce((s,g)=>s+amtOf(g),0),sample:!!d.sample};}
-function grRowHtml(g){
-  const c=waHref(g,'cnr'),e=waHref(g,'cne');
-  return `<tr>
-    <td class="mono">${esc(g.no)}</td><td>${fmtDate(g.date)}</td><td>${esc(g.cnr.name)}</td><td>${esc(g.cne.name)}</td>
+function stats(d){const t=today(),m=t.slice(0,7),L=d.grs.filter(g=>!isCancelled(g));
+  return {today:L.filter(g=>g.date===t).length,pending:L.filter(g=>g.status==='Pending').length,freight:L.filter(g=>String(g.date).slice(0,7)===m).reduce((s,g)=>s+amtOf(g),0),sample:!!d.sample};}
+function statusChip(g){
+  const c=isCancelled(g)?'cancel':g.status==='Delivered'?'ok':'';
+  return `${g.sample?'<span class="chip sample">Sample</span> ':''}<span class="chip ${c}">${esc(g.status)}</span>${g.mf&&g.mf.vehicle?` <span class="chip sample" title="Manifest ${esc(g.mf.no)}">${esc(g.mf.vehicle)}</span>`:''}${g.pendingNew||db.dirty.includes(g.no)?' <span class="chip sample" title="Cloud par jaana baaki">⟳</span>':''}`;
+}
+function grRowHtml(g,full){
+  const c=waHref(g,'cnr'),e=waHref(g,'cne'),n=esc(g.no),can=!isCancelled(g)&&!g.sample;
+  return `<tr${isCancelled(g)?' style="opacity:.6"':''}>
+    <td class="mono">${n}</td><td>${fmtDate(g.date)}</td><td>${esc(g.cnr.name)}</td><td>${esc(g.cne.name)}</td>
     <td>${esc(g.from)} → ${esc(g.to)}</td><td class="num">${g.articles||0}</td><td class="num">${inr(amtOf(g))}</td>
-    <td>${g.sample?'<span class="chip sample">Sample</span> ':''}<span class="chip ${g.status==='Delivered'?'ok':''}">${g.status}</span></td>
+    <td>${statusChip(g)}</td>
     <td><div class="row-actions">
-      <button class="btn small" data-print="${esc(g.no)}">Print Billty</button>
+      <button class="btn small" data-print="${n}">Print Bilti</button>
       <a class="btn small wa" ${c?`href="${esc(c)}"`:'aria-disabled="true"'} target="_blank" rel="noopener">WA Consignor</a>
       <a class="btn small wa" ${e?`href="${esc(e)}"`:'aria-disabled="true"'} target="_blank" rel="noopener">WA Consignee</a>
-      ${g.status==='Pending'&&!g.sample?`<button class="btn small" data-deliver="${esc(g.no)}">Mark delivered</button>`:''}
+      ${g.status==='Pending'&&can?`<button class="btn small" data-deliver="${n}">Mark delivered</button>`:''}
+      ${can?`<button class="btn small" data-edit="${n}">Edit</button>`:''}${full&&can?`<button class="btn small" data-pdf="${n}">PDF</button>`:''}
+      ${full&&can&&g.status==='Delivered'?`<button class="btn small" data-undeliver="${n}">↺ Pending</button>`:''}
+      ${full&&can&&g.status==='Pending'?`<button class="btn small" data-cancel="${n}" style="color:var(--danger)">Cancel</button>`:''}
     </div></td></tr>`;
 }
 function renderDash(){
@@ -495,13 +709,12 @@ function renderDash(){
   $('cToday').textContent=s.today;$('cPending').textContent=s.pending;$('cFreight').textContent=inr(s.freight);
   $('cParties').textContent=parties.length;
   $('sampleNote').hidden=$('clearSample').hidden=!db.sample;
-  const rows=db.grs.slice().reverse().slice(0,20);
-  $('grRows').innerHTML=rows.length?rows.map(grRowHtml).join('')
+  const rows=db.grs.slice().sort(byNoDesc).slice(0,20);
+  $('grRows').innerHTML=rows.length?rows.map(g=>grRowHtml(g,false)).join('')
     :'<tr><td colspan="9" class="empty">Is office mein abhi koi GR nahi hai. F2 dabayein ya "New GR" par click karein.</td></tr>';
-  // all offices (admin)
   const showAll=isAdmin()&&BRANCHES.length>1;$('allOffices').hidden=!showAll;
   if(showAll)$('officeCards').innerHTML=BRANCHES.map(b=>{
-    const d=b.id===branch.id?db:loadBranchDb(b.id),st=stats(d);
+    const d=dbFor(b.id),st=stats(d);
     return `<button class="card" data-branch="${b.id}" style="text-align:left;cursor:pointer;${b.id===branch.id?'border-color:var(--sun-500)':''}">
       <span>${esc(b.name)}${b.id===branch.id?' · open':''}${st.sample?' · sample':''}</span>
       <strong>${inr(st.freight)}</strong>
@@ -509,22 +722,33 @@ function renderDash(){
   renderBanner();
 }
 $('officeCards').addEventListener('click',e=>{const c=e.target.closest('[data-branch]');if(c)switchBranch(c.dataset.branch);});
+function touch(g){g.savedAt=nowIso();g.editedBy=email()||g.editedBy;markDirty(db,g.no);save();flushSoon();}
 function onGrRowClick(e){
-  const n=e.target.dataset.deliver;
-  if(n){const g=db.grs.find(x=>x.no===n);if(g){g.status='Delivered';g.savedAt=new Date().toISOString();save();pushGr(g);renderDash();if(!$('view-register').hidden)renderRegister();toast(n+' delivered mark ho gaya');}return;}
-  const pn=e.target.dataset.print;if(pn){const g=db.grs.find(x=>x.no===pn);if(g)printBillty(g);}
+  const t=e.target.closest('button');if(!t)return;const ds=t.dataset;
+  const find=no=>db.grs.find(x=>x.no===no);
+  if(ds.print){const g=find(ds.print);if(g)printBillty(g);return;}
+  if(ds.edit){startEdit(ds.edit);return;}
+  if(ds.pdf){const g=find(ds.pdf);if(g)sharePdf(g,'cne',t);return;}
+  if(ds.deliver){const g=find(ds.deliver);if(!g||!confirm(g.no+' ko Delivered mark karein?'))return;g.status='Delivered';g.pod=Object.assign({date:today()},g.pod||{});touch(g);refreshView();toast(g.no+' delivered mark ho gaya');return;}
+  if(ds.undeliver){const g=find(ds.undeliver);if(!g||!confirm(g.no+' ko wapas Pending karein?'))return;g.status='Pending';delete g.pod;touch(g);refreshView();toast(g.no+' wapas Pending');return;}
+  if(ds.cancel){const g=find(ds.cancel);if(!g)return;const why=prompt(g.no+' CANCEL karna hai? Wajah likhein (zaroori):','');if(why===null)return;if(!why.trim()){toast('Cancel ki wajah likhna zaroori hai');return;}
+    if(g.mf&&!confirm(g.no+' manifest '+g.mf.no+' ('+g.mf.vehicle+') mein load hai. Cancel karne par manifest se bhi hat jayega. Aage badhein?'))return;
+    g.status='Cancelled';g.cancel={why:why.trim(),at:nowIso(),by:email()};if(g.mf){g.cancel.mf=g.mf.no;delete g.mf;}touch(g);refreshView();toast(g.no+' cancel ho gaya');return;}
 }
 $('grRows').addEventListener('click',onGrRowClick);
 $('regRows').addEventListener('click',onGrRowClick);
-$('clearSample').onclick=()=>{db.grs=db.grs.filter(g=>!g.sample);db.seq=seqFromGrs();db.sample=false;save();renderDash();toast('Sample data hata diya');};
+$('clearSample').onclick=()=>{db.grs=db.grs.filter(g=>!g.sample);db.sample=false;save();renderDash();toast('Sample data hata diya');};
 
-/* ================= GR register (search + reprint) ================= */
+/* ================= GR register ================= */
+const REG_LIMIT=300;
+function grText(g){return [g.no,g.cnr.name,g.cne.name,g.cnr.mob,g.cne.mob,g.from,g.to,g.invoice,g.contents,g.ewb,g.mf&&g.mf.vehicle].join(' ').toLowerCase();}
 function renderRegister(){
-  const q=($('regSearch').value||'').trim().toLowerCase(),st=$('regStatus').value;
-  let rows=db.grs.slice().reverse();
+  const q=lc($('regSearch').value),st=$('regStatus').value;
+  let rows=db.grs.filter(g=>!g.sample||!GATE).slice().sort(byNoDesc);
   if(st)rows=rows.filter(g=>g.status===st);
-  if(q)rows=rows.filter(g=>[g.no,g.cnr.name,g.cne.name,g.from,g.to,g.invoice].some(v=>String(v||'').toLowerCase().includes(q)));
-  $('regRows').innerHTML=rows.length?rows.map(grRowHtml).join('')
+  if(q)rows=rows.filter(g=>grText(g).includes(q));
+  const more=rows.length-REG_LIMIT;
+  $('regRows').innerHTML=rows.length?rows.slice(0,REG_LIMIT).map(g=>grRowHtml(g,true)).join('')+(more>0?`<tr><td colspan="9" class="empty">Aur ${more} purane GR hain — upar search karke dhoondhein.</td></tr>`:'')
     :'<tr><td colspan="9" class="empty">Kuch nahi mila. Search ya status badal kar dekhein.</td></tr>';
 }
 $('regSearch').addEventListener('input',renderRegister);
@@ -532,270 +756,738 @@ $('regStatus').addEventListener('change',renderRegister);
 
 /* ================= Delivery / POD ================= */
 function renderDelivery(){
-  const rows=db.grs.filter(g=>!g.sample&&g.status==='Pending').slice().reverse();
+  const rows=db.grs.filter(g=>!g.sample&&g.status==='Pending').sort(byNoDesc);
   $('delRows').innerHTML=rows.length?rows.map(g=>`<tr>
     <td class="mono">${esc(g.no)}</td><td>${fmtDate(g.date)}</td><td>${esc(g.cne.name)}</td><td>${esc(g.from)} → ${esc(g.to)}</td>
     <td class="num">${inr(amtOf(g))}</td>
-    <td><input data-pod-by="${esc(g.no)}" placeholder="Receiver ka naam"></td>
-    <td><input type="date" data-pod-date="${esc(g.no)}" value="${today()}"></td>
+    <td><input data-pod-by="${esc(g.no)}" placeholder="Receiver ka naam" style="min-width:150px"></td>
+    <td><input type="date" data-pod-date="${esc(g.no)}" value="${today()}" max="${today()}"></td>
     <td><button type="button" class="btn small" data-pod-mark="${esc(g.no)}">Delivered mark karein</button></td>
-  </tr>`).join(''):'<tr><td colspan="8" class="empty">Sab consignment deliver ho gaye hain.</td></tr>';
+  </tr>`).join(''):'<tr><td colspan="8" class="empty">Koi pending delivery nahi hai.</td></tr>';
 }
 $('delRows').addEventListener('click',e=>{
   const n=e.target.dataset.podMark;if(!n)return;
   const g=db.grs.find(x=>x.no===n);if(!g)return;
   const byEl=document.querySelector(`[data-pod-by="${n}"]`),dateEl=document.querySelector(`[data-pod-date="${n}"]`);
-  g.status='Delivered';g.pod={by:(byEl&&byEl.value.trim())||'',date:(dateEl&&dateEl.value)||today()};g.savedAt=new Date().toISOString();
-  save();pushGr(g);renderDelivery();renderDash();if(!$('view-register').hidden)renderRegister();toast(n+' delivered mark ho gaya');
+  const by=(byEl&&byEl.value.trim())||'',date=(dateEl&&dateEl.value)||today();
+  if(date<g.date){toast('Delivery date booking date se pehle nahi ho sakti');return;}
+  if(!by&&!confirm('Receiver ka naam khali hai — phir bhi delivered mark karein?')){byEl&&byEl.focus();return;}
+  g.status='Delivered';g.pod={by,date,at:nowIso()};touch(g);
+  if(byEl)byEl.value='';renderDelivery();toast(n+' delivered mark ho gaya');
 });
+$('delRows').addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.dataset.podBy!==undefined){e.preventDefault();const b=document.querySelector(`[data-pod-mark="${e.target.dataset.podBy}"]`);b&&b.click();}});
 
-/* ================= Customers + Goods/Items master ================= */
-const IKEY='sgc_items_v1';
-let items=lsGet(IKEY)||[];
-function saveItems(){lsSet(IKEY,items);}
+/* ================= Goods / Items master ================= */
+function itemNames(){return Object.values(items.map).filter(x=>x.on).map(x=>x.n).sort((a,b)=>a.localeCompare(b));}
 function upsertItem(name){
-  name=(name||'').trim();if(!name)return;
-  if(!items.some(x=>x.toLowerCase()===name.toLowerCase())){items.push(name);saveItems();refreshItems();}
+  name=String(name||'').trim();const k=ikey(name);if(!k)return;
+  const cur=items.map[k];if(cur&&cur.on)return;
+  items.map[k]={n:name,on:true,t:nowIso()};if(!items.dirty.includes(k))items.dirty.push(k);saveItems();refreshItems();flushSoon();
 }
 function refreshItems(){
-  $('itemsList').innerHTML=items.map(x=>`<option value="${esc(x)}">`).join('');
-  const wrap=$('itemChips');if(!wrap)return;
-  wrap.innerHTML=items.length?items.map(x=>`<span class="chip" data-item="${esc(x)}" style="cursor:pointer">${esc(x)} ✕</span>`).join(''):'<span class="empty">Koi item nahi — neeche se add karein</span>';
+  const list=itemNames();
+  $('itemsList').innerHTML=list.map(x=>`<option value="${esc(x)}">`).join('');
+  $('itemChips').innerHTML=list.length?list.map(x=>`<span class="chip" data-item="${esc(ikey(x))}" style="cursor:pointer" title="Hatane ke liye click karein">${esc(x)} ✕</span>`).join(''):'<span class="empty">Koi item nahi — upar se add karein</span>';
 }
-if($('itemChips'))$('itemChips').addEventListener('click',e=>{
-  const c=e.target.closest('[data-item]');if(!c)return;
-  items=items.filter(x=>x!==c.dataset.item);saveItems();refreshItems();
+$('itemChips').addEventListener('click',e=>{
+  const c=e.target.closest('[data-item]');if(!c)return;const k=c.dataset.item,it=items.map[k];if(!it)return;
+  if(!confirm('"'+it.n+'" item list se hatayein?'))return;
+  items.map[k]={n:it.n,on:false,t:nowIso()};if(!items.dirty.includes(k))items.dirty.push(k);saveItems();refreshItems();flushSoon();
 });
-if($('itemAddBtn'))$('itemAddBtn').onclick=()=>{upsertItem($('itemNew').value);$('itemNew').value='';$('itemNew').focus();};
-if($('itemNew'))$('itemNew').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('itemAddBtn').click();}});
+$('itemAddBtn').onclick=()=>{const v=$('itemNew').value.trim();if(!v){$('itemNew').focus();return;}upsertItem(v);$('itemNew').value='';$('itemNew').focus();toast(v+' item list mein aa gaya');};
+$('itemNew').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();$('itemAddBtn').click();}});
 
+/* ================= Customers ================= */
+const partyId=n=>encodeURIComponent(lc(n)).replace(/\./g,'%2E').slice(0,700)||'x';
+function findParty(name){const id=partyId(name);return parties.find(p=>partyId(p.name)===id);}
+function upsertParty(p,force){
+  if(!p||!String(p.name||'').trim())return;
+  const id=partyId(p.name);const i=parties.findIndex(x=>partyId(x.name)===id);
+  const base=i>=0?parties[i]:{};const out=Object.assign({},base);let changed=i<0;
+  ['name','gst','mob','city','addr'].forEach(k=>{const v=String(p[k]||'').trim();if((force||v)&&v!==(out[k]||'')&&!(k==='name'&&i>=0&&!force)){out[k]=v;changed=true;}});
+  if(!out.name)out.name=String(p.name).trim();
+  if(!changed)return;
+  out.savedAt=nowIso();
+  if(i>=0)parties[i]=out;else parties.push(out);
+  if(!pmeta.dirty.includes(id))pmeta.dirty.push(id);
+  saveParties();savePm();refreshParties();flushSoon();
+}
 function custStats(name){
-  const n=(name||'').toLowerCase();let grs=0,total=0;
-  if(!n)return{grs,total};
-  BRANCHES.forEach(b=>{
-    const d=b.id===branch.id?db:loadBranchDb(b.id);
-    d.grs.forEach(g=>{if(!g.sample&&(g.cnr.name.toLowerCase()===n||g.cne.name.toLowerCase()===n)){grs++;total+=amtOf(g);}});
-  });
+  const id=partyId(name);let grs=0,total=0;
+  BRANCHES.forEach(b=>{if(!canUse(b.id))return;dbFor(b.id).grs.forEach(g=>{if(!g.sample&&!isCancelled(g)&&(partyId(g.cnr.name)===id||partyId(g.cne.name)===id)){grs++;total+=amtOf(g);}});});
   return {grs,total};
 }
 function renderCustomers(){
-  const q=(($('custSearch')&&$('custSearch').value)||'').trim().toLowerCase();
+  const q=lc($('custSearch').value);
   let list=parties.slice().sort((a,b)=>a.name.localeCompare(b.name));
-  if(q)list=list.filter(p=>[p.name,p.gst,p.mob,p.city,p.addr].some(v=>String(v||'').toLowerCase().includes(q)));
-  $('custRows').innerHTML=list.length?list.map(p=>{
-    const s=custStats(p.name);
-    return `<tr><td>${esc(p.name)}</td><td class="mono">${esc(p.gst||'')}</td><td>${esc(p.mob||'')}</td><td>${esc(p.city||'')}</td><td>${esc(p.addr||'')}</td><td class="num">${s.grs}</td><td class="num">${inr(s.total)}</td></tr>`;
+  if(q)list=list.filter(p=>[p.name,p.gst,p.mob,p.city,p.addr].join(' ').toLowerCase().includes(q));
+  $('custRows').innerHTML=list.length?list.slice(0,500).map(p=>{const s=custStats(p.name);
+    return `<tr data-cust="${esc(p.name)}" style="cursor:pointer" title="Edit karne ke liye click karein"><td>${esc(p.name)}</td><td class="mono">${esc(p.gst||'')}</td><td>${esc(p.mob||'')}</td><td>${esc(p.city||'')}</td><td>${esc(p.addr||'')}</td><td class="num">${s.grs}</td><td class="num">${inr(s.total)}</td></tr>`;
   }).join(''):'<tr><td colspan="7" class="empty">Koi customer nahi mila.</td></tr>';
   refreshItems();
 }
-if($('custForm'))$('custForm').addEventListener('submit',e=>{
+$('custRows').addEventListener('click',e=>{const r=e.target.closest('[data-cust]');if(!r)return;const p=findParty(r.dataset.cust);if(!p)return;
+  $('custName').value=p.name;$('custGst').value=p.gst||'';$('custMob').value=p.mob||'';$('custCity').value=p.city||'';$('custAddr').value=p.addr||'';
+  $('custName').dataset.editing=p.name;$('custName').readOnly=true;$('custSave').textContent='Update Customer';$('custGst').focus();window.scrollTo({top:0,behavior:'smooth'});});
+$('custForm').addEventListener('reset',()=>{delete $('custName').dataset.editing;$('custName').readOnly=false;$('custSave').textContent='Save Customer';});
+$('custGst').addEventListener('input',()=>$('custGst').value=$('custGst').value.toUpperCase().replace(/\s/g,''));
+$('custForm').addEventListener('submit',e=>{
   e.preventDefault();
-  const name=$('custName').value.trim();
+  const name=$('custName').value.trim().replace(/\s+/g,' ');
+  const gst=$('custGst').value.trim().toUpperCase(),mob=normMob($('custMob').value);
   if(!name){toast('Naam zaroori hai');$('custName').focus();return;}
-  const p={name,gst:$('custGst').value.trim().toUpperCase(),mob:$('custMob').value.trim(),city:$('custCity').value.trim(),addr:$('custAddr').value.trim()};
-  upsertParty(p);saveParties();refreshParties();
-  $('custForm').reset();toast(name+' save ho gaya, list mein aa gaya');renderCustomers();$('custName').focus();
+  if(gst&&!GST_RE.test(gst)){toast('GSTIN sahi nahi hai (15 characters, jaise 09AMDPD3360P1ZU)');$('custGst').focus();return;}
+  if($('custMob').value.trim()&&!mobOk(mob)){toast('Mobile 10 digit ka hona chahiye');$('custMob').focus();return;}
+  const editing=$('custName').dataset.editing;
+  const dup=findParty(name);
+  if(!editing&&dup&&!confirm('"'+dup.name+'" pehle se list mein hai. Uski details update karein?'))return;
+  upsertParty({name,gst,mob,city:$('custCity').value.trim(),addr:$('custAddr').value.trim()},true);
+  $('custForm').reset();
+  toast(name+' save ho gaya');renderCustomers();$('custName').focus();
 });
-if($('custSearch'))$('custSearch').addEventListener('input',renderCustomers);
+$('custSearch').addEventListener('input',renderCustomers);
 
-/* ================= Accounts (customer-wise / city-wise hisaab) ================= */
-function renderAccounts(){
-  const by=($('acctBy')&&$('acctBy').value)||'customer';
-  const map={};
-  db.grs.filter(g=>!g.sample).forEach(g=>{
-    const key=by==='city'?g.to:g.cne.name;
-    if(!key)return;
-    if(!map[key])map[key]={key,grs:0,total:0,pending:0};
-    map[key].grs++;map[key].total+=amtOf(g);if(g.status==='Pending')map[key].pending++;
+/* ================= Accounts ================= */
+function billParty(g){return g.payMode==='To Pay'?g.cne.name:g.cnr.name;}
+function acctRows(){
+  const by=$('acctBy').value,mon=$('acctMonth').value,map={};
+  db.grs.filter(g=>!g.sample&&!isCancelled(g)&&(!mon||String(g.date).slice(0,7)===mon)).forEach(g=>{
+    const key=(by==='city'?g.to:billParty(g))||'—',k=lc(key);
+    const r=map[k]||(map[k]={key,grs:0,paid:0,topay:0,tbb:0,total:0,pending:0});
+    const a=amtOf(g);r.grs++;r.total+=a;if(g.status==='Pending')r.pending++;
+    if(g.payMode==='Paid')r.paid+=a;else if(g.payMode==='TBB')r.tbb+=a;else r.topay+=a;
   });
-  const rows=Object.values(map).sort((a,b)=>b.total-a.total);
-  $('acctHead').innerHTML=`<tr><th>${by==='city'?'City (To)':'Customer'}</th><th class="num">GRs</th><th class="num">Pending</th><th class="num">Total</th></tr>`;
-  $('acctRows').innerHTML=rows.length?rows.map(r=>`<tr><td>${esc(r.key)}</td><td class="num">${r.grs}</td><td class="num">${r.pending}</td><td class="num">${inr(r.total)}</td></tr>`).join('')
-    :'<tr><td colspan="4" class="empty">Is office mein abhi koi GR nahi hai.</td></tr>';
-  const totalAll=rows.reduce((s,r)=>s+r.total,0);
-  $('acctCards').innerHTML=`<div class="card"><span>Total ${by==='city'?'Cities':'Customers'}</span><strong>${rows.length}</strong></div>
-    <div class="card"><span>Total Amount</span><strong>${inr(totalAll)}</strong></div>
-    <div class="card"><span>Total GRs</span><strong>${rows.reduce((s,r)=>s+r.grs,0)}</strong></div>`;
+  return Object.values(map).sort((a,b)=>b.total-a.total);
 }
-if($('acctBy'))$('acctBy').addEventListener('change',renderAccounts);
+function renderAccounts(){
+  if(!$('acctMonth').dataset.init){$('acctMonth').value=today().slice(0,7);$('acctMonth').dataset.init=1;}
+  const by=$('acctBy').value,rows=acctRows(),sum=k=>rows.reduce((s,r)=>s+r[k],0);
+  $('acctHead').innerHTML=`<tr><th>${by==='city'?'City (To)':'Party (jo payment karegi)'}</th><th class="num">GRs</th><th class="num">Paid</th><th class="num">To Pay</th><th class="num">TBB</th><th class="num">Total</th><th class="num">Pending Delivery</th></tr>`;
+  $('acctRows').innerHTML=rows.length?rows.map(r=>`<tr><td>${esc(r.key)}</td><td class="num">${r.grs}</td><td class="num">${inr(r.paid)}</td><td class="num">${inr(r.topay)}</td><td class="num">${inr(r.tbb)}</td><td class="num"><b>${inr(r.total)}</b></td><td class="num">${r.pending}</td></tr>`).join('')
+    +`<tr><td><b>TOTAL</b></td><td class="num"><b>${sum('grs')}</b></td><td class="num"><b>${inr(sum('paid'))}</b></td><td class="num"><b>${inr(sum('topay'))}</b></td><td class="num"><b>${inr(sum('tbb'))}</b></td><td class="num"><b>${inr(sum('total'))}</b></td><td class="num"><b>${sum('pending')}</b></td></tr>`
+    :'<tr><td colspan="7" class="empty">Is mahine / filter mein koi GR nahi hai.</td></tr>';
+  $('acctCards').innerHTML=`<div class="card"><span>Total GRs</span><strong>${sum('grs')}</strong><small>${rows.length} ${by==='city'?'cities':'parties'}</small></div>
+    <div class="card"><span>Total Amount</span><strong>${inr(sum('total'))}</strong><small>GST sahit</small></div>
+    <div class="card"><span>To Pay</span><strong>${inr(sum('topay'))}</strong><small class="warn">Delivery par vasool karna</small></div>
+    <div class="card"><span>TBB</span><strong>${inr(sum('tbb'))}</strong><small>Bill banana hai</small></div>`;
+}
+$('acctBy').addEventListener('change',renderAccounts);
+$('acctMonth').addEventListener('change',renderAccounts);
+$('acctCsv').onclick=()=>{const by=$('acctBy').value,rows=acctRows();
+  downloadCsv('SGC-'+branch.id+'-accounts-'+($('acctMonth').value||'all')+'.csv',[[by==='city'?'City':'Party','GRs','Paid','To Pay','TBB','Total','Pending Delivery'],...rows.map(r=>[r.key,r.grs,money(r.paid),money(r.topay),money(r.tbb),money(r.total),r.pending])]);};
+
+/* ================= Reports ================= */
+function reportRows(){
+  const f=$('rpFrom').value,t=$('rpTo').value,st=$('rpStatus').value,pm=$('rpPay').value;
+  return db.grs.filter(g=>!g.sample&&(!f||g.date>=f)&&(!t||g.date<=t)&&(!st||g.status===st)&&(!pm||g.payMode===pm)).sort((a,b)=>String(a.date).localeCompare(String(b.date))||cmpNo(a,b));
+}
+function renderReports(){
+  if(!$('rpFrom').value){$('rpFrom').value=today().slice(0,8)+'01';$('rpTo').value=today();}
+  const rows=reportRows(),L=rows.filter(g=>!isCancelled(g)),sum=f=>L.reduce((s,g)=>s+f(g),0);
+  $('rpRows').innerHTML=rows.length?rows.slice(0,1000).map(g=>`<tr${isCancelled(g)?' style="opacity:.6"':''}><td class="mono">${esc(g.no)}</td><td>${fmtDate(g.date)}</td><td>${esc(g.cnr.name)}</td><td>${esc(g.cne.name)}</td><td>${esc(g.from)} → ${esc(g.to)}</td><td class="num">${g.articles||0}</td><td class="num">${g.chWt||0}</td><td>${esc(g.payMode||'')}</td><td class="num">${inr(isCancelled(g)?0:g.total)}</td><td class="num">${inr(isCancelled(g)?0:g.gst)}</td><td class="num">${inr(amtOf(g))}</td><td>${esc(g.status)}</td></tr>`).join('')
+    +`<tr><td colspan="5"><b>TOTAL (${L.length} GR${rows.length!==L.length?', cancelled chhod kar':''})</b></td><td class="num"><b>${sum(g=>g.articles||0)}</b></td><td class="num"><b>${sum(g=>g.chWt||0)}</b></td><td></td><td class="num"><b>${inr(sum(g=>g.total||0))}</b></td><td class="num"><b>${inr(sum(g=>g.gst||0))}</b></td><td class="num"><b>${inr(sum(amtOf))}</b></td><td></td></tr>`
+    :'<tr><td colspan="12" class="empty">Is date range / filter mein koi GR nahi hai.</td></tr>';
+  $('rpCards').innerHTML=`<div class="card"><span>GRs</span><strong>${L.length}</strong><small>${fmtDate($('rpFrom').value)} – ${fmtDate($('rpTo').value)}</small></div>
+    <div class="card"><span>Sub Total (bina GST)</span><strong>${inr(sum(g=>g.total||0))}</strong><small>Sub total</small></div>
+    <div class="card"><span>GST</span><strong>${inr(sum(g=>g.gst||0))}</strong><small>Total GST</small></div>
+    <div class="card"><span>Grand Total</span><strong>${inr(sum(amtOf))}</strong><small>${sum(g=>g.status==='Pending'?1:0)} pending delivery</small></div>`;
+}
+['rpFrom','rpTo','rpStatus','rpPay'].forEach(i=>$(i).addEventListener('change',renderReports));
+$('rpCsv').onclick=()=>{const rows=reportRows();
+  downloadCsv('SGC-'+branch.id+'-report-'+$('rpFrom').value+'-to-'+$('rpTo').value+'.csv',[['GR No','Date','Invoice','Consignor','Consignor GSTIN','Consignee','Consignee GSTIN','From','To','Articles','Contents','Actual Wt','Charge Wt','Payment','Freight','D/D','Stat','COD','Risk','Sub Total','GST %','GST','Grand Total','Status','Delivered To','Delivery Date','Vehicle','E-Way Bill'],
+    ...rows.map(g=>{const c=g.charges||{},x=isCancelled(g);return [g.no,fmtDate(g.date),g.invoice||'',g.cnr.name,g.cnr.gst||'',g.cne.name,g.cne.gst||'',g.from,g.to,g.articles||0,g.contents||'',g.actWt||0,g.chWt||0,g.payMode||'',money(c.freight),money(c.dd),money(c.stat),money(c.cod),money(c.risk),money(x?0:g.total),g.gstRate||0,money(x?0:g.gst),money(amtOf(g)),g.status,(g.pod&&g.pod.by)||'',g.pod&&g.pod.date?fmtDate(g.pod.date):'',(g.mf&&g.mf.vehicle)||'',g.ewb||''];})]);};
+$('rpPrint').onclick=()=>{const rows=reportRows(),L=rows.filter(g=>!isCancelled(g)),sum=f=>L.reduce((s,g)=>s+f(g),0);
+  printHtml(`<div class="rpt">${rptHead('GR REPORT',fmtDate($('rpFrom').value)+' to '+fmtDate($('rpTo').value)+($('rpStatus').value?' · '+$('rpStatus').value:'')+($('rpPay').value?' · '+$('rpPay').value:''))}
+  <table><thead><tr><th>GR No.</th><th>Date</th><th>Consignor</th><th>Consignee</th><th>To</th><th class="num">Art.</th><th class="num">Wt</th><th>Pay</th><th class="num">Freight</th><th class="num">GST</th><th class="num">Total</th><th>Status</th></tr></thead>
+  <tbody>${rows.map(g=>`<tr><td>${esc(g.no)}</td><td>${fmtDate(g.date)}</td><td>${esc(g.cnr.name)}</td><td>${esc(g.cne.name)}</td><td>${esc(g.to)}</td><td class="num">${g.articles||0}</td><td class="num">${g.chWt||0}</td><td>${esc(g.payMode||'')}</td><td class="num">${money(isCancelled(g)?0:g.total)}</td><td class="num">${money(isCancelled(g)?0:g.gst)}</td><td class="num">${money(amtOf(g))}</td><td>${esc(g.status)}</td></tr>`).join('')}</tbody>
+  <tfoot><tr><td colspan="5">TOTAL (${L.length} GR)</td><td class="num">${sum(g=>g.articles||0)}</td><td class="num">${sum(g=>g.chWt||0)}</td><td></td><td class="num">${money(sum(g=>g.total||0))}</td><td class="num">${money(sum(g=>g.gst||0))}</td><td class="num">${money(sum(amtOf))}</td><td></td></tr></tfoot></table></div>`);};
+
+/* ================= Manifest / Loading sheet ================= */
+function mfPending(){const to=lc($('mfTo').value);return db.grs.filter(g=>!g.sample&&g.status==='Pending'&&!g.mf&&(!to||lc(g.to).includes(to)||lc(g.deliveryAt).includes(to))).sort(cmpNo);}
+function mfAll(){const m={};db.grs.forEach(g=>{if(g.mf&&g.mf.no){(m[g.mf.no]||(m[g.mf.no]={mf:g.mf,grs:[]})).grs.push(g);}});return Object.values(m).sort((a,b)=>String(b.mf.no).localeCompare(String(a.mf.no)));}
+function renderManifest(){
+  if(!$('mfDate').value)$('mfDate').value=today();
+  const rows=mfPending();
+  $('mfRows').innerHTML=rows.length?rows.map(g=>`<tr><td><input type="checkbox" data-mf="${esc(g.no)}" style="width:auto"></td><td class="mono">${esc(g.no)}</td><td>${fmtDate(g.date)}</td><td>${esc(g.cnr.name)}</td><td>${esc(g.cne.name)}</td><td>${esc(g.to)}</td><td class="num">${g.articles||0}</td><td class="num">${g.chWt||0}</td><td>${esc(g.payMode||'')}</td><td class="num">${inr(amtOf(g))}</td></tr>`).join('')
+    :'<tr><td colspan="10" class="empty">Load karne ke liye koi pending GR nahi hai.</td></tr>';
+  $('mfAll').checked=false;mfCount();
+  const list=mfAll().slice(0,60);
+  $('mfList').innerHTML=list.length?list.map(({mf,grs})=>{const tp=grs.filter(g=>g.payMode==='To Pay').reduce((s,g)=>s+amtOf(g),0);const w=driverWa(mf,grs);
+    return `<tr><td class="mono">${esc(mf.no)}</td><td>${fmtDate(mf.date)}</td><td class="mono">${esc(mf.vehicle)}</td><td>${esc(mf.driver||'')}${mf.dmob?' · '+esc(mf.dmob):''}</td><td class="num">${grs.length}</td><td class="num">${inr(tp)}</td><td><div class="row-actions"><button class="btn small" data-mfprint="${esc(mf.no)}">Print</button><a class="btn small wa" ${w?`href="${esc(w)}"`:'aria-disabled="true"'} target="_blank" rel="noopener">WA Driver</a><button class="btn small" data-mfcancel="${esc(mf.no)}" style="color:var(--danger)">Cancel</button></div></td></tr>`;}).join('')
+    :'<tr><td colspan="7" class="empty">Abhi koi manifest nahi bana.</td></tr>';
+}
+function mfCount(){const n=document.querySelectorAll('#mfRows input:checked').length;$('mfSel').textContent=n+' GR chune';}
+$('mfRows').addEventListener('change',mfCount);
+$('mfAll').addEventListener('change',()=>{document.querySelectorAll('#mfRows input[data-mf]').forEach(c=>c.checked=$('mfAll').checked);mfCount();});
+$('mfTo').addEventListener('input',()=>{if(!document.querySelector('#mfRows input:checked'))renderManifest();});
+$('mfVehicle').addEventListener('input',()=>$('mfVehicle').value=$('mfVehicle').value.toUpperCase());
+function nextMfNo(){const n=db.grs.reduce((m,g)=>g.mf&&g.mf.no?Math.max(m,noNum(g.mf.no)):m,0)+1;return 'MF-'+branch.id+'-'+new Date().getFullYear()+'-'+String(n).padStart(4,'0');}
+$('mfCreate').onclick=()=>{
+  const nos=[...document.querySelectorAll('#mfRows input:checked')].map(c=>c.dataset.mf);
+  const vehicle=$('mfVehicle').value.trim().toUpperCase().replace(/\s+/g,' '),dmob=normMob($('mfDmob').value);
+  if(!vehicle){toast('Vehicle number likhein');$('mfVehicle').focus();return;}
+  if(!nos.length){toast('Kam se kam ek GR chunein');return;}
+  if($('mfDmob').value.trim()&&!mobOk(dmob)){toast('Driver mobile 10 digit ka hona chahiye');$('mfDmob').focus();return;}
+  const mf={no:nextMfNo(),uid:newUid(),vehicle,driver:$('mfDriver').value.trim(),dmob:mobOk(dmob)?dmob:'',date:$('mfDate').value||today(),by:email(),at:nowIso()};
+  const grs=[];nos.forEach(no=>{const g=db.grs.find(x=>x.no===no);if(g&&!g.mf){g.mf=Object.assign({},mf);g.savedAt=nowIso();markDirty(db,g.no);grs.push(g);}});
+  save();flushSoon();printManifest(mf,grs);
+  ['mfVehicle','mfDriver','mfDmob'].forEach(i=>$(i).value='');$('mfTo').value='';renderManifest();toast(mf.no+' bana — '+grs.length+' GR');
+};
+$('mfList').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  const no=b.dataset.mfprint||b.dataset.mfcancel;const grp=mfAll().find(x=>x.mf.no===no);if(!grp)return;
+  if(b.dataset.mfprint){printManifest(grp.mf,grp.grs);return;}
+  if(!confirm(no+' cancel karein? Iske '+grp.grs.length+' GR wapas "load karne ke liye" list mein aa jayenge.'))return;
+  grp.grs.forEach(g=>{delete g.mf;g.savedAt=nowIso();markDirty(db,g.no);});save();flushSoon();renderManifest();toast(no+' cancel ho gaya');
+});
+function driverWa(mf,grs){if(!mobOk(mf.dmob||''))return '';
+  const msg=['*THE SURAJ GOODS CARRIERS* — Manifest '+mf.no,'Vehicle: '+mf.vehicle+' | Date: '+fmtDate(mf.date),'',...grs.map((g,i)=>(i+1)+'. '+g.no+' → '+g.cne.name+', '+g.to+' ('+(g.articles||0)+' art'+(g.payMode==='To Pay'?', To Pay ₹'+money(amtOf(g)):'')+')'),'','Total: '+grs.length+' GR, '+grs.reduce((s,g)=>s+(g.articles||0),0)+' articles'].join('\n');
+  return 'https://wa.me/91'+mf.dmob+'?text='+encodeURIComponent(msg);}
+function printManifest(mf,grs){
+  grs=grs.slice().sort(cmpNo);const sum=f=>grs.reduce((s,g)=>s+f(g),0);
+  printHtml(`<div class="rpt">${rptHead('MANIFEST / LOADING SHEET','Manifest No. <b>'+esc(mf.no)+'</b> · Date '+fmtDate(mf.date)+' · Vehicle <b>'+esc(mf.vehicle)+'</b>'+(mf.driver?' · Driver '+esc(mf.driver):'')+(mf.dmob?' ('+esc(mf.dmob)+')':''))}
+  <table><thead><tr><th>#</th><th>GR No.</th><th>Date</th><th>Consignor</th><th>Consignee</th><th>To</th><th class="num">Art.</th><th class="num">Wt (kg)</th><th>Pay</th><th class="num">To Pay ₹</th></tr></thead>
+  <tbody>${grs.map((g,i)=>`<tr><td>${i+1}</td><td>${esc(g.no)}</td><td>${fmtDate(g.date)}</td><td>${esc(g.cnr.name)}</td><td>${esc(g.cne.name)}${g.cne.mob?' · '+esc(g.cne.mob):''}</td><td>${esc(g.deliveryAt||g.to)}</td><td class="num">${g.articles||0}</td><td class="num">${g.chWt||0}</td><td>${esc(g.payMode||'')}</td><td class="num">${g.payMode==='To Pay'?money(amtOf(g)):'—'}</td></tr>`).join('')}</tbody>
+  <tfoot><tr><td colspan="6">TOTAL — ${grs.length} GR</td><td class="num">${sum(g=>g.articles||0)}</td><td class="num">${sum(g=>g.chWt||0)}</td><td></td><td class="num">${money(sum(g=>g.payMode==='To Pay'?amtOf(g):0))}</td></tr></tfoot></table>
+  <div class="sign"><span>Booking Clerk</span><span>Loaded By</span><span>Driver's Signature</span></div></div>`);
+}
 
 /* ================= GR form ================= */
 const charges=['chFreight','chDD','chStat','chCod','chRisk'];
+let editingNo=null,saving=false,lastSavedUid=null,offlineTold=false;
 function calc(){
-  const sub=charges.reduce((s,id)=>s+(+$(id).value||0),0);
-  const rate=+$('gstRate').value||0,gst=sub*rate/100,gTotal=sub+gst;
+  const sub=r2(charges.reduce((s,id)=>s+Math.max(0,+$(id).value||0),0));
+  const rate=Math.min(28,Math.max(0,+$('gstRate').value||0)),gst=r2(sub*rate/100),gTotal=r2(sub+gst);
   $('grandTotal').textContent=inr(sub);$('gstAmt').textContent=inr(gst);$('gTotal').textContent=inr(gTotal);
-  return {sub,gst,gTotal};
+  return {sub,gst,gTotal,rate};
 }
 charges.forEach(id=>$(id).addEventListener('input',calc));
 $('gstRate').addEventListener('input',calc);
 $('actWt').addEventListener('input',()=>{if(!$('chWt').dataset.touched)$('chWt').value=$('actWt').value;});
 $('chWt').addEventListener('input',()=>$('chWt').dataset.touched=1);
+function formPristine(){return !['cnrName','cneName','to','chFreight','invoice'].some(i=>$(i).value.trim());}
+function setFormMode(){
+  $('formTitle').textContent=editingNo?'Edit GR — '+editingNo:'New GR / Booking';
+  $('grSubmit').textContent=editingNo?'Update GR':'Save GR';
+  $('resetBtn').textContent=editingNo?'Cancel edit':'Clear';
+  if(curView==='gr')$('pageTitle').textContent=editingNo?'Edit GR':TITLES.gr;
+}
 function resetForm(){
-  $('grForm').reset();$('grNo').value=nextNo();$('grDate').value=today();$('chWt').dataset.touched='';$('gstRate').value=5;
+  editingNo=null;
+  $('grForm').reset();$('grNo').value=nextNo();$('grDate').value=today();$('grDate').max=today();$('chWt').dataset.touched='';$('gstRate').value=5;
   $('from').value=branch.address||'';
   ['cnrHint','cneHint'].forEach(i=>$(i).hidden=true);
-  document.querySelectorAll('.err').forEach(x=>x.classList.remove('err'));calc();
+  document.querySelectorAll('#grForm .err').forEach(x=>x.classList.remove('err'));calc();setFormMode();
 }
-$('resetBtn').onclick=()=>{resetForm();$('savedStrip').hidden=true;};
-const CITY_LIST=['Meerut','Delhi','Ghaziabad','Noida','Greater Noida','Bangalore','Mumbai','Chennai','Kolkata','Hyderabad','Pune','Ahmedabad','Surat','Jaipur','Lucknow','Kanpur','Nagpur','Indore','Bhopal','Patna','Ludhiana','Agra','Nashik','Vadodara','Faridabad','Gurugram','Varanasi','Amritsar','Chandigarh','Guwahati','Coimbatore','Vijayawada','Madurai','Raipur','Ranchi','Jodhpur','Gwalior','Dehradun','Jammu','Shimla','Panipat','Karnal','Muzaffarnagar','Saharanpur','Moradabad','Bareilly','Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Goa','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Delhi NCR','Jammu & Kashmir'];
-function refreshCityList(){if($('cityList'))$('cityList').innerHTML=CITY_LIST.map(x=>`<option value="${esc(x)}">`).join('');}
-function refreshGstList(){
-  if(!$('gstList'))return;
-  const set=new Set(parties.map(p=>p.gst).filter(Boolean));
-  $('gstList').innerHTML=[...set].map(x=>`<option value="${esc(x)}">`).join('');
+$('resetBtn').onclick=()=>{if(!editingNo&&!formPristine()&&!confirm('Form mein bhara data hata dein?'))return;resetForm();$('savedStrip').hidden=true;$('cnrName').focus();};
+function fillParty(pre,p){$(pre+'Name').value=p.name||'';$(pre+'Gst').value=p.gst||'';$(pre+'Mob').value=p.mob||'';$(pre+'Addr').value=p.addr||'';}
+function startEdit(no){
+  const g=db.grs.find(x=>x.no===no);if(!g)return;
+  if(isCancelled(g)){toast('Cancelled GR edit nahi ho sakta');return;}
+  resetForm();editingNo=g.no;
+  fillParty('cnr',g.cnr);fillParty('cne',g.cne);
+  const set=(id,v)=>$(id).value=v==null?'':v;
+  set('grNo',g.no);set('invoice',g.invoice);set('grDate',g.date);set('from',g.from);set('to',g.to);set('deliveryAt',g.deliveryAt);set('ewb',g.ewb);
+  set('articles',g.articles||'');set('contents',g.contents);set('actWt',g.actWt||'');set('chWt',g.chWt||'');$('chWt').dataset.touched=1;set('payMode',g.payMode||'To Pay');
+  const c=g.charges||{};set('chFreight',c.freight||'');set('chDD',c.dd||'');set('chStat',c.stat||'');set('chCod',c.cod||'');set('chRisk',c.risk||'');
+  set('gstRate',g.gstRate!=null?g.gstRate:5);set('remarks',g.remarks);calc();
+  $('savedStrip').hidden=true;setFormMode();show('gr');
 }
-function refreshParties(){$('partyList').innerHTML=parties.map(p=>`<option value="${esc(p.name)}">`).join('');refreshGstList();}
+const CITY_LIST=['Meerut','Delhi','New Delhi','Ghaziabad','Noida','Greater Noida','Hapur','Modinagar','Muzaffarnagar','Saharanpur','Baghpat','Bulandshahr','Aligarh','Mathura','Agra','Moradabad','Bareilly','Rampur','Haridwar','Roorkee','Dehradun','Rishikesh','Haldwani','Rudrapur','Kashipur','Bijnor','Shamli','Lucknow','Kanpur','Prayagraj','Varanasi','Gorakhpur','Jhansi','Firozabad','Etawah','Faridabad','Gurugram','Sonipat','Panipat','Karnal','Ambala','Kurukshetra','Yamunanagar','Rohtak','Hisar','Rewari','Chandigarh','Ludhiana','Jalandhar','Amritsar','Patiala','Bathinda','Jammu','Srinagar','Shimla','Solan','Baddi','Jaipur','Jodhpur','Udaipur','Kota','Ajmer','Bikaner','Alwar','Bhiwadi','Ahmedabad','Surat','Vadodara','Rajkot','Vapi','Mumbai','Pune','Nagpur','Nashik','Aurangabad','Bhiwandi','Indore','Bhopal','Gwalior','Jabalpur','Raipur','Bilaspur','Patna','Muzaffarpur','Ranchi','Jamshedpur','Dhanbad','Kolkata','Howrah','Siliguri','Guwahati','Bhubaneswar','Cuttack','Hyderabad','Vijayawada','Visakhapatnam','Bengaluru','Bangalore','Mysuru','Hubli','Chennai','Coimbatore','Madurai','Tiruppur','Kochi','Thiruvananthapuram','Kozhikode','Goa',
+ 'Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Jammu & Kashmir','Ladakh','Puducherry'];
+function refreshCityList(){const seen=new Set(),list=[];
+  const add=c=>{c=String(c||'').trim();const k=lc(c);if(c&&!seen.has(k)){seen.add(k);list.push(c);}};
+  db.grs.slice(-400).forEach(g=>{add(g.to);add(g.from);});parties.forEach(p=>add(p.city));CITY_LIST.forEach(add);
+  $('cityList').innerHTML=list.map(x=>`<option value="${esc(x)}">`).join('');}
+function refreshGstList(){$('gstList').innerHTML=parties.filter(p=>p.gst).map(p=>`<option value="${esc(p.gst)}">${esc(p.name)}</option>`).join('');}
+function refreshParties(){$('partyList').innerHTML=parties.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(p=>`<option value="${esc(p.name)}">${p.city?esc(p.city):''}</option>`).join('');refreshGstList();}
 $('repeatLast').onclick=()=>{
-  const last=db.grs.filter(g=>!g.sample).slice(-1)[0];
+  const last=db.grs.filter(g=>!g.sample&&!isCancelled(g)).sort((a,b)=>String(a.createdAt||a.no).localeCompare(String(b.createdAt||b.no))).slice(-1)[0];
   if(!last){toast('Is office mein pichla koi GR nahi mila');return;}
-  $('cnrName').value=last.cnr.name;$('cnrGst').value=last.cnr.gst||'';$('cnrMob').value=last.cnr.mob||'';$('cnrAddr').value=last.cnr.addr||'';
-  $('cneName').value=last.cne.name;$('cneGst').value=last.cne.gst||'';$('cneMob').value=last.cne.mob||'';$('cneAddr').value=last.cne.addr||'';
-  $('from').value=last.from;$('to').value=last.to;
-  $('cnrHint').hidden=false;$('cneHint').hidden=false;
-  toast('Pichli party bhar di gayi');
+  fillParty('cnr',last.cnr);fillParty('cne',last.cne);$('from').value=last.from;$('to').value=last.to;$('deliveryAt').value=last.deliveryAt||'';
+  $('cnrHint').hidden=false;$('cneHint').hidden=false;$('to').focus();
+  toast('Pichli party bhar di gayi — '+last.no);
 };
 function wireParty(pre){
-  $(pre+'Name').addEventListener('change',()=>{
-    const p=parties.find(x=>x.name.toLowerCase()===$(pre+'Name').value.trim().toLowerCase());
-    $(pre+'Hint').hidden=!p;
-    if(p){$(pre+'Gst').value=p.gst||'';$(pre+'Mob').value=p.mob||'';$(pre+'Addr').value=p.addr||'';}
-  });
+  const fillFrom=p=>{if(!p)return;fillParty(pre,p);$(pre+'Hint').hidden=false;if(pre==='cne'&&p.city&&!$('to').value.trim())$('to').value=p.city;};
+  $(pre+'Name').addEventListener('change',()=>{const p=findParty($(pre+'Name').value);$(pre+'Hint').hidden=!p;if(p)fillFrom(p);});
+  $(pre+'Gst').addEventListener('input',()=>{$(pre+'Gst').value=$(pre+'Gst').value.toUpperCase().replace(/\s/g,'');});
+  $(pre+'Gst').addEventListener('change',()=>{const v=$(pre+'Gst').value;if(v.length===15&&!$(pre+'Name').value.trim()){const p=parties.find(x=>x.gst===v);if(p)fillFrom(p);}});
 }
 wireParty('cnr');wireParty('cne');
-['cnrGst','cneGst'].forEach(i=>$(i).addEventListener('input',()=>$(i).value=$(i).value.toUpperCase()));
-function party(pre){return {name:$(pre+'Name').value.trim(),gst:$(pre+'Gst').value.trim(),mob:$(pre+'Mob').value.trim(),addr:$(pre+'Addr').value.trim()};}
-function upsertParty(p){p=Object.assign({},p,{savedAt:new Date().toISOString()});const i=parties.findIndex(x=>x.name.toLowerCase()===p.name.toLowerCase());if(i>=0)parties[i]=p;else parties.push(p);pushParty(p);}
-
-$('grForm').addEventListener('submit',e=>{
+function partyMatches(text){
+  const q=lc(text).split(/\s+/).filter(Boolean);if(!q.length)return [];
+  return parties.filter(p=>{const hay=lc([p.name,p.city,p.mob].join(' '));return q.every(w=>hay.includes(w));})
+    .sort((a,b)=>(lc(a.name).startsWith(q[0])?0:1)-(lc(b.name).startsWith(q[0])?0:1)||a.name.localeCompare(b.name)).slice(0,8);
+}
+function attachPartyList(pre){
+  const input=$(pre+'Name'),box=document.createElement('div');box.className='ac';box.hidden=true;box.setAttribute('role','listbox');
+  input.parentNode.style.position='relative';input.parentNode.appendChild(box);input.setAttribute('autocomplete','off');
+  let list=[],idx=-1;
+  const paint=()=>[...box.children].forEach((c,i)=>c.classList.toggle('on',i===idx));
+  const render=()=>{list=partyMatches(input.value);idx=list.length?0:-1;
+    box.innerHTML=list.map((p,i)=>`<div class="aci" data-i="${i}" role="option"><b>${esc(p.name)}</b><small>${esc([p.city,p.mob,p.gst].filter(Boolean).join(' · ')||'—')}</small></div>`).join('');
+    box.hidden=!list.length;paint();};
+  const pick=i=>{const p=list[i];if(!p)return;input.value=p.name;box.hidden=true;fillParty(pre,p);$(pre+'Hint').hidden=false;if(pre==='cne'&&p.city&&!$('to').value.trim())$('to').value=p.city;};
+  input.addEventListener('input',render);
+  input.addEventListener('keydown',e=>{
+    if(box.hidden)return;
+    if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();idx=(idx+(e.key==='ArrowDown'?1:-1)+list.length)%list.length;paint();}
+    else if(e.key==='Enter'&&idx>=0)pick(idx); // then Enter moves on to the next field as usual
+    else if(e.key==='Escape'){box.hidden=true;e.stopPropagation();}
+  });
+  box.addEventListener('pointerdown',e=>{const d=e.target.closest('[data-i]');if(d){e.preventDefault();pick(+d.dataset.i);input.focus();}});
+  input.addEventListener('blur',()=>setTimeout(()=>{box.hidden=true;},180));
+}
+attachPartyList('cnr');attachPartyList('cne');
+function party(pre){return {name:$(pre+'Name').value.trim().replace(/\s+/g,' '),gst:$(pre+'Gst').value.trim().toUpperCase(),mob:normMob($(pre+'Mob').value),addr:$(pre+'Addr').value.trim()};}
+// Enter = next field (Tally style). Ctrl+S or "Save GR" saves.
+$('grForm').addEventListener('keydown',e=>{
+  if(e.key!=='Enter'||e.ctrlKey||e.metaKey||e.shiftKey||e.altKey||e.isComposing)return;
+  const t=e.target;if(t.tagName==='TEXTAREA'||t.tagName==='BUTTON')return;
   e.preventDefault();
-  document.querySelectorAll('.err').forEach(x=>x.classList.remove('err'));
-  const req=['cnrName','cneName','from','to'].filter(id=>!$(id).value.trim());
-  const gstBad=['cnrGst','cneGst'].filter(id=>$(id).value&&$(id).value.length!==15);
-  const mobBad=['cnrMob','cneMob'].filter(id=>$(id).value&&!/^\d{10}$/.test($(id).value));
-  const bad=[...req,...gstBad,...mobBad];
-  if(bad.length){bad.forEach(id=>$(id).classList.add('err'));$(bad[0]).focus();
-    toast(req.length?'Party name, From aur To bharna zaroori hai':gstBad.length?'GSTIN 15 characters ka hona chahiye':'Mobile 10 digit ka hona chahiye');return;}
-  if(db.sample){db.grs=db.grs.filter(g=>!g.sample);db.seq=seqFromGrs();db.sample=false;}
-  let no=nextNo();
-  const cnr=party('cnr'),cne=party('cne'),amt=calc();
-  const gr={no,branch:branch.id,invoice:$('invoice').value.trim(),date:$('grDate').value||today(),cnr,cne,from:$('from').value.trim(),to:$('to').value.trim(),
-    deliveryAt:$('deliveryAt').value.trim(),ewb:$('ewb').value.trim(),articles:+$('articles').value||0,contents:$('contents').value.trim(),
-    actWt:+$('actWt').value||0,chWt:+$('chWt').value||0,payMode:$('payMode').value,
-    charges:{freight:+$('chFreight').value||0,dd:+$('chDD').value||0,stat:+$('chStat').value||0,cod:+$('chCod').value||0,risk:+$('chRisk').value||0},
-    gstRate:+$('gstRate').value||0,gst:amt.gst,total:amt.sub,gTotal:amt.gTotal,
-    remarks:$('remarks').value.trim(),status:'Pending',savedAt:new Date().toISOString(),by:email()};
-  db.grs.push(gr);db.seq=Math.max(db.seq||0,seqFromGrs());upsertParty(cnr);upsertParty(cne);upsertItem(gr.contents);saveParties();save();pushGr(gr);refreshParties();
-  $('savedText').textContent=gr.no+' saved:';
-  setWa($('waCnr'),waHref(gr,'cnr'));setWa($('waCne'),waHref(gr,'cne'));$('savedStrip').hidden=false;
-  $('printBilltyBtn').onclick=()=>printBillty(gr);
-  toast(gr.no+' save ho gaya');resetForm();$('cnrName').focus();
+  const f=[...$('grForm').querySelectorAll('input,select,textarea')].filter(x=>!x.readOnly&&!x.disabled&&x.type!=='hidden'&&x.offsetParent!==null);
+  const i=f.indexOf(t);if(i>=0&&i<f.length-1){f[i+1].focus();if(f[i+1].select&&f[i+1].tagName==='INPUT'&&f[i+1].type!=='date')try{f[i+1].select();}catch(_){}}
 });
+function withTimeout(p,ms){return Promise.race([p,new Promise((_,no)=>setTimeout(()=>no(new Error('timeout')),ms))]);}
+$('grForm').addEventListener('submit',async e=>{
+  e.preventDefault();if(saving)return;
+  const F=$('grForm');F.querySelectorAll('.err').forEach(x=>x.classList.remove('err'));
+  const cnr=party('cnr'),cne=party('cne');
+  const errs=[];const bad=(id,msg)=>{$(id).classList.add('err');errs.push([id,msg]);};
+  if(!cnr.name)bad('cnrName','Consignor ka naam likhein');
+  if(!cne.name)bad('cneName','Consignee ka naam likhein');
+  if(!$('from').value.trim())bad('from','From city likhein');
+  if(!$('to').value.trim())bad('to','To city likhein');
+  [['cnrGst',cnr.gst],['cneGst',cne.gst]].forEach(([id,v])=>{if(v&&!GST_RE.test(v))bad(id,'GSTIN sahi nahi hai (15 characters, jaise 09AMDPD3360P1ZU)');});
+  [['cnrMob',cnr.mob,'cnrMob'],['cneMob',cne.mob]].forEach(([id,v])=>{if($(id).value.trim()&&!mobOk(v))bad(id,'Mobile 10 digit ka hona chahiye (6-9 se shuru)');});
+  ['articles','actWt','chWt',...charges,'gstRate'].forEach(id=>{if((+$(id).value||0)<0)bad(id,'Minus (negative) value nahi ho sakti');});
+  const ewbList=$('ewb').value.split(/[\s,;\/]+/).filter(Boolean),ewb=ewbList.join(', ');
+  if(ewbList.some(x=>!/^\d{12}$/.test(x)))bad('ewb','E-Way Bill 12 digit ka hota hai (ek se zyada ho to comma lagakar likhein)');
+  const date=$('grDate').value||today();if(date>today())bad('grDate','Booking date aage ki nahi ho sakti');
+  if(errs.length){$(errs[0][0]).focus();toast(errs[0][1]);return;}
+  const amt=calc();
+  if(!amt.sub&&!confirm('Freight / charges 0 hain. Phir bhi GR save karein?')){$('chFreight').focus();return;}
+  const fields={invoice:$('invoice').value.trim(),date,cnr,cne,from:$('from').value.trim(),to:$('to').value.trim(),
+    deliveryAt:$('deliveryAt').value.trim(),ewb,articles:Math.max(0,+$('articles').value||0),contents:$('contents').value.trim(),
+    actWt:Math.max(0,+$('actWt').value||0),chWt:Math.max(0,+$('chWt').value||0),payMode:$('payMode').value,
+    charges:{freight:r2(Math.max(0,+$('chFreight').value||0)),dd:r2(Math.max(0,+$('chDD').value||0)),stat:r2(Math.max(0,+$('chStat').value||0)),cod:r2(Math.max(0,+$('chCod').value||0)),risk:r2(Math.max(0,+$('chRisk').value||0))},
+    gstRate:amt.rate,gst:amt.gst,total:amt.sub,gTotal:amt.gTotal,remarks:$('remarks').value.trim()};
+  upsertParty(cnr);upsertParty(cne);upsertItem(fields.contents);
+  const btn=$('grSubmit');saving=true;btn.disabled=true;
+  try{
+    if(editingNo){
+      const g=db.grs.find(x=>x.no===editingNo);if(!g){toast('GR nahi mila');return;}
+      Object.assign(g,fields,{savedAt:nowIso(),editedAt:nowIso(),editedBy:email()});
+      markDirty(db,g.no);save();flushSoon();
+      showSaved(g,'updated');toast(g.no+' update ho gaya');resetForm();refreshCityList();return;
+    }
+    if(db.sample){db.grs=db.grs.filter(x=>!x.sample);db.sample=false;}
+    const gr=Object.assign({no:nextNo(),uid:newUid(),branch:branch.id},fields,{status:'Pending',createdAt:nowIso(),savedAt:nowIso(),by:email(),pendingNew:true});
+    db.grs.push(gr);db.seq=Math.max(db.seq||0,noNum(gr.no));markDirty(db,gr.no);save();lastSavedUid=gr.uid;
+    if(fb&&user&&navigator.onLine){btn.textContent='Saving…';
+      try{await withTimeout(commitGr(branch.id,gr),12000);}catch(err){}}
+    // offline: no nagging — the GR is safe on this device, the ⟳ mark + banner show it is waiting, and it uploads by itself
+    if(gr.pendingNew&&GATE&&!offlineTold){offlineTold=true;toast(gr.no+' is device mein save hai — internet aate hi apne aap cloud par chala jayega',6000);}
+    showSaved(gr,'saved');if(!gr.pendingNew||!(fb&&user))toast(gr.no+' save ho gaya');
+    resetForm();refreshCityList();$('cnrName').focus();
+  }finally{saving=false;btn.disabled=false;setFormMode();}
+});
+function showSaved(g,word){
+  $('savedText').textContent=g.no+' '+word+':';
+  setWa($('waCnr'),waHref(g,'cnr'));setWa($('waCne'),waHref(g,'cne'));$('savedStrip').hidden=false;
+  const cur=()=>db.grs.find(x=>x.uid===g.uid)||g;
+  $('printBilltyBtn').onclick=()=>printBillty(cur());
+  $('pdfCne').onclick=()=>sharePdf(cur(),'cne',$('pdfCne'));
+  $('editSaved').onclick=()=>{const x=cur();if(x)startEdit(x.no);};
+}
 
-/* ================= Firebase: Google login + cloud ================= */
+/* ================= Firebase: Google login + live cloud sync ================= */
 const SDK='https://cdn.jsdelivr.net/npm/firebase@10.12.2/';
 function loadScript(src){return new Promise((ok,no)=>{const s=document.createElement('script');s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s);});}
+const coDoc=()=>fb.fs.collection('companies').doc(COMPANY);
+const grCol=bid=>coDoc().collection('branches').doc(bid).collection('grs');
+const partyCol=()=>coDoc().collection('parties');
+const ITEMS_ID='~items',SETTINGS_ID='~settings';
+const LOCAL_ONLY=['pendingNew','srvMs','sample','legacyCheck'];
+function toRemote(o){const x=JSON.parse(JSON.stringify(o));LOCAL_ONLY.forEach(k=>delete x[k]);x.srvAt=firebase.firestore.FieldValue.serverTimestamp();return x;}
+function fromRemote(data){const x=Object.assign({},data);const s=x.srvAt;delete x.srvAt;x.srvMs=s&&typeof s.toMillis==='function'?s.toMillis():null;return x;}
+const pendingEcho=doc=>!!(doc.metadata&&doc.metadata.hasPendingWrites);
+const isOffline=e=>!navigator.onLine||/unavailable|network|offline|timeout/i.test(String(e&&(e.code||e.message)||e));
+const inflight=new Set();
+function renumber(bid,g){
+  const d=dbFor(bid),old=g.no,n=Math.max(nextSeq(d,bid),noNum(old)+1);
+  g.no=fmtNo(bid,n);d.dirty=d.dirty.map(x=>x===old?g.no:x);d.seq=Math.max(d.seq||0,n);saveFor(bid,d);
+  toast('GR '+old+' dusre device ne pehle le liya tha — is GR ka naya number: '+g.no,8000);
+  if(lastSavedUid===g.uid&&!$('savedStrip').hidden)$('savedText').textContent=g.no+' saved:';
+}
+async function commitGr(bid,g){
+  const key=g.uid||g.no;if(!fb||!user||inflight.has(key))return false;
+  inflight.add(key);
+  try{
+    if(g.pendingNew){
+      for(let k=0;;k++){
+        const ref=grCol(bid).doc(g.no);
+        const res=await fb.fs.runTransaction(async tx=>{const s=await tx.get(ref);if(s.exists&&(s.data()||{}).uid!==g.uid)return 'taken';tx.set(ref,toRemote(g));return 'ok';});
+        if(res==='ok')break;
+        if(k>=40)throw new Error('GR number free nahi mila');
+        renumber(bid,g);
+      }
+      g.pendingNew=false;
+    }else if(g.legacyCheck){
+      const ref=grCol(bid).doc(g.no);
+      await fb.fs.runTransaction(async tx=>{const s=await tx.get(ref);if(!s.exists)tx.set(ref,toRemote(g));return 1;});
+      delete g.legacyCheck;
+    }else await grCol(bid).doc(g.no).set(toRemote(g));
+    const d=dbFor(bid);const cur=d.grs.find(x=>x.uid&&x.uid===g.uid);if(cur&&cur!==g)cur.pendingNew=false;
+    markClean(d,g.no);saveFor(bid,d);
+    return true;
+  }finally{inflight.delete(key);}
+}
+function applyRemoteGr(bid,d,r){
+  let i=d.grs.findIndex(g=>g.no===r.no);
+  if(i>=0){const l=d.grs[i];
+    if(l.pendingNew&&l.uid!==r.uid){if(!inflight.has(l.uid))renumber(bid,l);d.grs.push(r);return true;}
+    else if(l.legacyCheck){markClean(d,l.no);}
+    else if(d.dirty.includes(l.no)&&(l.savedAt||'')>(r.savedAt||''))return false;
+  }
+  if(i<0){const j=r.uid?d.grs.findIndex(g=>g.uid===r.uid):-1;
+    if(j>=0){markClean(d,d.grs[j].no);d.grs[j]=r;}else d.grs.push(r);
+    return true;}
+  d.grs[i]=r;return true;
+}
+let unsubGr=null,unsubParty=null,flushTimer=null,flushing=false;
+function stopLive(){try{unsubGr&&unsubGr();unsubParty&&unsubParty();}catch(e){}unsubGr=unsubParty=null;}
+function liveQuery(col,since){return since?col.where('srvAt','>',firebase.firestore.Timestamp.fromMillis(since-5*60000)):col;}
+function startLive(){
+  if(!fb||!user)return;stopLive();
+  const bid=branch.id;
+  unsubGr=liveQuery(grCol(bid),db.lastPull).onSnapshot(snap=>{
+    if(bid!==branch.id)return;const d=db;let ch=false;
+    snap.docChanges().forEach(c=>{if(c.type==='removed'||pendingEcho(c.doc))return;const r=fromRemote(c.doc.data());
+      if(applyRemoteGr(bid,d,r))ch=true;if(r.srvMs)d.lastPull=Math.max(d.lastPull||0,r.srvMs);});
+    d.seq=Math.max(d.seq||0,seqFromGrs(d.grs));d.lastSync=nowIso();saveFor(bid,d);
+    if(syncState!=='error'||!d.dirty.length)syncState='ok';
+    if(ch){refreshCityList();refreshView();}else renderCloud();
+  },e=>syncFail(e));
+  unsubParty=liveQuery(partyCol(),pmeta.lastPull).onSnapshot(snap=>{
+    let ch=false,chItems=false;
+    snap.docChanges().forEach(c=>{if(c.type==='removed'||pendingEcho(c.doc))return;const r=fromRemote(c.doc.data());
+      if(r.srvMs)pmeta.lastPull=Math.max(pmeta.lastPull||0,r.srvMs);
+      if(c.doc.id===SETTINGS_ID){let chS=false;Object.entries(r.grStart||{}).forEach(([k,v])=>{const l=settings.grStart[k];if(v&&(!l||(v.t||'')>(l.t||''))){settings.grStart[k]=v;settings.dirty=settings.dirty.filter(x=>x!==k);chS=true;}});if(chS){saveSettings();ch=true;}return;}
+      if(c.doc.id===ITEMS_ID){Object.entries(r.items||{}).forEach(([k,v])=>{const l=items.map[k];if(!l||(v.t||'')>(l.t||'')){items.map[k]=v;items.dirty=items.dirty.filter(x=>x!==k);chItems=true;}});return;}
+      if(!r.name)return;const id=partyId(r.name),i=parties.findIndex(p=>partyId(p.name)===id);delete r.srvMs;
+      if(i>=0&&pmeta.dirty.includes(id)&&(parties[i].savedAt||'')>(r.savedAt||''))return;
+      if(i>=0)parties[i]=r;else parties.push(r);pmeta.dirty=pmeta.dirty.filter(x=>x!==id);ch=true;});
+    savePm();if(chItems){saveItems();refreshItems();}
+    if(ch){saveParties();refreshParties();refreshView();}
+  },e=>syncFail(e));
+}
+function flushSoon(){clearTimeout(flushTimer);flushTimer=setTimeout(flush,400);renderCloud();}
+async function flush(){
+  if(!fb||!user||flushing)return;flushing=true;let fail=null;
+  try{
+    for(const b of BRANCHES){if(!canUse(b.id))continue;const d=dbFor(b.id);
+      for(const no of d.dirty.slice()){const g=d.grs.find(x=>x.no===no);if(!g){markClean(d,no);continue;}
+        try{await commitGr(b.id,g);}catch(e){fail=e;if(isOffline(e))break;}}
+      saveFor(b.id,d);if(fail&&isOffline(fail))break;}
+    if(!fail||!isOffline(fail)){
+      for(const id of pmeta.dirty.slice()){const p=parties.find(x=>partyId(x.name)===id);if(!p){pmeta.dirty=pmeta.dirty.filter(x=>x!==id);continue;}
+        try{await partyCol().doc(id).set(toRemote(p));pmeta.dirty=pmeta.dirty.filter(x=>x!==id);}catch(e){fail=e;if(isOffline(e))break;}}
+      savePm();
+      if(settings.dirty.length&&(!fail||!isOffline(fail))){const keys=settings.dirty.slice(),payload={grStart:{}};keys.forEach(k=>{if(settings.grStart[k])payload.grStart[k]=settings.grStart[k];});
+        try{await partyCol().doc(SETTINGS_ID).set(toRemote(payload),{merge:true});settings.dirty=settings.dirty.filter(k=>!keys.includes(k));saveSettings();}catch(e){fail=e;}}
+      if(items.dirty.length&&(!fail||!isOffline(fail))){const keys=items.dirty.slice(),payload={items:{}};keys.forEach(k=>{if(items.map[k])payload.items[k]=items.map[k];});
+        try{await partyCol().doc(ITEMS_ID).set(toRemote(payload),{merge:true});items.dirty=items.dirty.filter(k=>!keys.includes(k));saveItems();}catch(e){fail=e;}}
+    }
+  }finally{flushing=false;}
+  if(fail)syncFail(fail);else{syncState='ok';db.lastSync=nowIso();save();}
+  refreshView();
+}
+async function syncOtherBranches(){
+  for(const b of BRANCHES){if(b.id===branch.id)continue;
+    try{const d=loadBranchDb(b.id);const snap=await liveQuery(grCol(b.id),d.lastPull).get();
+      snap.forEach(doc=>{if(pendingEcho(doc))return;const r=fromRemote(doc.data());applyRemoteGr(b.id,d,r);if(r.srvMs)d.lastPull=Math.max(d.lastPull||0,r.srvMs);});
+      d.seq=Math.max(d.seq||0,seqFromGrs(d.grs));saveFor(b.id,d);}catch(e){console.warn(e);}}
+  if(curView==='dash')renderDash();
+}
+function hasDirty(){return BRANCHES.some(b=>canUse(b.id)&&dbFor(b.id).dirty.length)||pmeta.dirty.length||items.dirty.length||settings.dirty.length;}
+function pendingCount(){return BRANCHES.reduce((s,b)=>s+(canUse(b.id)?dbFor(b.id).dirty.length:0),0);}
+function syncFail(e){console.warn(e);const code=String(e&&(e.code||e.message)||e);
+  syncState=isOffline(e)?'offline':'error';renderCloud();
+  if(/permission/i.test(code))toast('Cloud ne permission nahi di — Firebase rules check karein ('+email()+')',8000);
+  else if(syncState==='error')toast('Cloud sync nahi hua — data is device mein safe hai. Thodi der mein phir koshish hogi.');}
+window.addEventListener('online',()=>{if(user){syncState='syncing';renderCloud();flush();}});
+window.addEventListener('offline',()=>{if(GATE&&user){syncState='offline';renderCloud();}});
+setInterval(()=>{if(user&&hasDirty()&&navigator.onLine)flush();},45000);
+
+const INAPP=/(FBAN|FBAV|Instagram|WhatsApp|Line\/|; wv\))/i.test(navigator.userAgent);
+function openInChrome(){
+  const u=location.href;
+  if(/android/i.test(navigator.userAgent))location.href='intent://'+u.replace(/^https?:\/\//,'')+'#Intent;scheme=https;package=com.android.chrome;end';
+  else{try{navigator.clipboard.writeText(u);}catch(e){}toast('Link copy ho gaya — Safari/Chrome mein paste karke kholein');}
+}
 async function initCloud(){
-  if(!CFG||!CFG.firebase||!CFG.firebase.apiKey){syncState='nosetup';renderCloud();return;}
+  if(!GATE){syncState='nosetup';renderCloud();return;}
   try{
     await loadScript(SDK+'firebase-app-compat.js');
     await Promise.all([loadScript(SDK+'firebase-auth-compat.js'),loadScript(SDK+'firebase-firestore-compat.js')]);
     firebase.initializeApp(CFG.firebase);
     fb={auth:firebase.auth(),fs:firebase.firestore()};
-    fb.auth.getRedirectResult().catch(()=>{});
-    fb.auth.onAuthStateChanged(async u=>{
-      user=u;
-      if(u){
-        const home=userBranch();
-        if(!isAdmin()&&!home){toast(u.email+' ko kisi office ka access nahi hai');user=null;await fb.auth.signOut();locked=GATE;show('backup');return;}
-        if(!isAdmin()&&home.id!==branch.id){save();branch=home;lsSet(BKEY,home.id);db=loadBranchDb(home.id);resetForm();}
-      }
-      syncState=u?'syncing':'loggedout';
-      locked=GATE&&!u;
-      renderBranch();renderCloud();
-      if(u){await fullSync();show('dash');if(isAdmin())syncOtherBranches();}
-      else if(GATE){show('backup');}
-      else renderDash();
-    });
-  }catch(e){syncState='error';locked=false;renderCloud();show('dash');}
+    try{await fb.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);}catch(e){}
+  }catch(e){
+    const last=lsGet(LUKEY);
+    if(last&&last.email){offlineEmail=last.email;applyUserBranch();locked=false;syncState='offline';renderBranch();show('dash');toast('Internet nahi hai — offline chal raha hai. Internet aane par page reload karein.',6000);}
+    else{syncState='error';renderCloud();$('bkLoginText').textContent='Pehli baar login ke liye internet chahiye. Internet check karke page reload karein.';$('bkLogin').hidden=true;}
+    return;
+  }
+  fb.auth.onAuthStateChanged(onAuth);
 }
-const coDoc=()=>fb.fs.collection('companies').doc(COMPANY);
-const grCol=bid=>coDoc().collection('branches').doc(bid).collection('grs');
-const partyCol=()=>coDoc().collection('parties');
-const partyId=n=>encodeURIComponent(n.toLowerCase()).replace(/\./g,'%2E').slice(0,700)||'x';
-const clean=o=>JSON.parse(JSON.stringify(o));
-async function pushGr(g){if(!fb||!user||g.sample)return;try{await grCol(g.branch||branch.id).doc(g.no).set(clean(g));markSynced();}catch(e){syncFail(e);}}
-async function pushParty(p){if(!fb||!user||!p.name)return;try{await partyCol().doc(partyId(p.name)).set(clean(p));}catch(e){syncFail(e);}}
-function newer(a,b){return (a&&a.savedAt||'')>(b&&b.savedAt||'');}
-async function mergeBranch(bid,d){
-  const gs=await grCol(bid).get();const remote={};gs.forEach(x=>remote[x.id]=x.data());
-  if(Object.keys(remote).length&&d.sample){d.grs=d.grs.filter(g=>!g.sample);d.sample=false;}
-  const local={};d.grs.forEach(g=>local[g.no]=g);
-  for(const id in remote)if(!local[id]||newer(remote[id],local[id]))local[id]=remote[id];
-  const up=[];for(const id in local){const g=local[id];if(!g.sample&&(!remote[id]||newer(g,remote[id])))up.push(g);}
-  for(let i=0;i<up.length;i+=400){const b=fb.fs.batch();up.slice(i,i+400).forEach(g=>b.set(grCol(bid).doc(g.no),clean(g)));await b.commit();}
-  d.grs=Object.values(local).sort((a,b)=>String(a.no).localeCompare(String(b.no)));
-  d.seq=Math.max(d.seq||0,seqFromGrs(d.grs));d.lastSync=new Date().toISOString();return d;
-}
-async function mergeParties(){
-  const ps=await partyCol().get();const remote={};ps.forEach(x=>remote[x.id]=x.data());
-  const local={};parties.forEach(p=>local[partyId(p.name)]=p);
-  for(const id in remote)if(!local[id]||newer(remote[id],local[id]))local[id]=remote[id];
-  const up=Object.keys(local).filter(id=>!remote[id]||newer(local[id],remote[id]));
-  for(let i=0;i<up.length;i+=400){const b=fb.fs.batch();up.slice(i,i+400).forEach(id=>b.set(partyCol().doc(id),clean(local[id])));await b.commit();}
-  parties=Object.values(local);saveParties();
-}
-async function fullSync(){
-  if(!fb||!user)return;
-  syncState='syncing';renderCloud();
-  try{
-    const bid=branch.id;
-    await Promise.all([mergeBranch(bid,db),mergeParties()]);
-    if(bid===branch.id){save();if(!$('view-gr').hidden&&!$('cnrName').value)$('grNo').value=nextNo();}
-    refreshParties();markSynced();renderDash();if(!$('view-register').hidden)renderRegister();
-  }catch(e){syncFail(e);}
-}
-async function syncOtherBranches(){
-  for(const b of BRANCHES){if(b.id===branch.id)continue;
-    try{const d=await mergeBranch(b.id,loadBranchDb(b.id));lsSet(dbKey(b.id),d);}catch(e){console.warn(e);}}
-  renderDash();
-}
-function markSynced(){db.lastSync=new Date().toISOString();syncState='ok';save();renderCloud();}
-function syncFail(e){syncState='error';console.warn(e);renderCloud();toast('Cloud sync nahi hua — internet check karein. Data laptop mein safe hai.');}
-window.addEventListener('online',()=>{if(user)fullSync();});
-async function login(){
-  if(!fb){show('backup');toast(syncState==='nosetup'?'Pehle firebase-config.js mein setup karein (README dekhein)':'Cloud load nahi hua — internet check karein');return;}
-  const p=new firebase.auth.GoogleAuthProvider();p.setCustomParameters({prompt:'select_account'});
-  try{await fb.auth.signInWithPopup(p);}catch(e){
-    if(e.code==='auth/popup-blocked'||e.code==='auth/operation-not-supported-in-this-environment')fb.auth.signInWithRedirect(p);
-    else if(e.code!=='auth/popup-closed-by-user')toast('Login nahi hua: '+(e.code||'error'));
+function applyUserBranch(){if(isAdmin())return;const h=userBranch();if(h&&h.id!==branch.id){branch=h;lsSet(BKEY,h.id);db=loadBranchDb(h.id);resetForm();}}
+async function onAuth(u){
+  stopLive();user=u;offlineEmail='';
+  if(u){
+    if(!isAdmin()&&!userBranch()){toast(u.email+' ko kisi office ka access nahi hai — admin se baat karein',8000);user=null;try{await fb.auth.signOut();}catch(e){}return;}
+    lsSet(LUKEY,{email:lc(u.email),at:nowIso()});
+    applyUserBranch();locked=false;syncState='syncing';
+    renderBranch();show(curView==='backup'?'dash':curView);
+    startLive();flush();if(isAdmin())syncOtherBranches();
+  }else{
+    lsSet(LUKEY,null);locked=GATE;syncState='loggedout';editingNo=null;
+    renderBranch();show('backup');
   }
 }
+function login(){
+  if(INAPP){toast('WhatsApp ke andar Google login nahi chalta — Chrome mein khol rahe hain');openInChrome();return;}
+  if(!fb){toast(syncState==='nosetup'?'Pehle firebase-config.js mein setup karein (README dekhein)':'Cloud load nahi hua — internet check karke page reload karein');return;}
+  const p=new firebase.auth.GoogleAuthProvider();p.setCustomParameters({prompt:'select_account'});
+  // popup must open straight from the click (no await before it) or mobile browsers block it
+  fb.auth.signInWithPopup(p).catch(e=>{
+    if(e.code==='auth/popup-blocked')toast('Browser ne popup rok diya — popup allow karke dobara Login dabayein',6000);
+    else if(e.code==='auth/operation-not-supported-in-this-environment'||e.code==='auth/web-storage-unsupported'){toast('Is browser mein login nahi chalta — Chrome mein kholein');openInChrome();}
+    else if(e.code==='auth/network-request-failed')toast('Internet check karein, phir dobara Login dabayein');
+    else if(e.code==='auth/unauthorized-domain')toast('Ye website Firebase mein authorised nahi hai (Authentication → Settings → Authorised domains)',8000);
+    else if(e.code!=='auth/popup-closed-by-user'&&e.code!=='auth/cancelled-popup-request')toast('Login nahi hua: '+(e.code||'error'));
+  });
+}
 $('bkLogin').onclick=login;
-$('bannerBtn').onclick=()=>syncState==='nosetup'?show('backup'):login();
-$('bkLogout').onclick=()=>fb&&fb.auth.signOut();
-$('syncNow').onclick=()=>user?(fullSync(),isAdmin()&&syncOtherBranches()):login();
+$('bannerBtn').onclick=()=>syncState==='nosetup'?show('backup'):(user?(flush(),isAdmin()&&syncOtherBranches()):login());
+$('bkLogout').onclick=async()=>{if(!fb)return;
+  if(hasDirty()&&!confirm(pendingCount()+' GR abhi cloud par nahi gaye. Logout karenge to wo is device mein rahenge aur agle login par jayenge. Logout karein?'))return;
+  if(!hasDirty()&&!confirm('Logout karein?'))return;
+  fb.auth.signOut();};
+$('syncNow').onclick=()=>{if(!user)return login();syncState='syncing';renderCloud();startLive();flush();if(isAdmin())syncOtherBranches();};
 
 function renderBanner(){
-  const b=$('cloudBanner');
+  const b=$('cloudBanner'),pend=pendingCount();
   if(syncState==='nosetup'){b.hidden=false;$('bannerTitle').textContent='Cloud backup abhi set nahi hai';$('bannerText').textContent='Data sirf is browser mein hai. GitHub par live karke Google login chalu karein.';$('bannerBtn').textContent='Setup dekhein';}
-  else if(syncState==='loggedout'){b.hidden=false;$('bannerTitle').textContent='Google se login karein';$('bannerText').textContent='Login ke baad aapka office apne aap khulega aur har GR cloud mein backup hoga.';$('bannerBtn').textContent='Login with Google';}
+  else if(GATE&&(syncState==='offline'||syncState==='error')){b.hidden=false;$('bannerTitle').textContent=syncState==='offline'?'Internet nahi hai':'Cloud sync ruka hua hai';$('bannerText').textContent=(pend?pend+' GR':'Aapka kaam')+' is device mein safe hai — internet aate hi apne aap cloud par chala jayega.';$('bannerBtn').textContent='Sync now';}
   else b.hidden=true;
 }
+function renderGrStart(){
+  const rows=BRANCHES.filter(b=>canUse(b.id)).map(b=>{const d=dbFor(b.id),used=seqFromGrs(d.grs);
+    return `<label>${esc(b.name)}<input type="number" min="1" step="1" inputmode="numeric" data-grstart="${b.id}" value="${grStartFor(b.id)}" ${isAdmin()?'':'disabled'}></label><small style="color:var(--ink-muted)">Agla GR number: <b>${nextSeq(d,b.id)}</b>${used?' · ab tak ka sabse bada: '+used:''}</small>`;}).join('');
+  $('grStartRows').innerHTML=rows;$('grStartSave').hidden=!isAdmin();
+}
+$('grStartSave').onclick=()=>{
+  if(!isAdmin())return;let msg=[];
+  document.querySelectorAll('[data-grstart]').forEach(i=>{const bid=i.dataset.grstart,n=Math.floor(+i.value);
+    if(!(n>=1)){msg.push(branchById(bid).name+': sahi number daalein');return;}
+    if(n===grStartFor(bid))return;
+    const used=seqFromGrs(dbFor(bid).grs);
+    if(used>=n)msg.push(branchById(bid).name+' mein '+used+' tak GR ban chuke hain — agla GR '+(used+1)+' hi aayega');
+    settings.grStart[bid]={n,t:nowIso(),by:email()};if(!settings.dirty.includes(bid))settings.dirty.push(bid);});
+  saveSettings();flushSoon();renderGrStart();if(curView==='gr'&&!editingNo)$('grNo').value=nextNo();
+  toast(msg.length?msg.join(' | '):'GR number save ho gaya — agla GR: '+nextNo(),6000);
+};
 function renderCloud(){
   const t=db.lastSync?new Date(db.lastSync).toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}):'kabhi nahi';
-  const txt={nosetup:'Setup pending — firebase-config.js khali hai',loggedout:'Login nahi hai — backup band',syncing:'Sync ho raha hai…',ok:branch.name+' synced · '+t,error:'Sync fail · last '+t,off:'—'}[syncState];
-  $('syncText').textContent=txt;$('syncDot').className='dot '+(syncState==='ok'?'on':syncState==='error'||syncState==='loggedout'?'off':'');
-  $('bkLoginText').textContent=user?('Logged in: '+user.email+' · '+(isAdmin()?'Admin (sab offices)':branch.name)):syncState==='nosetup'?'Google login GitHub par live karne ke baad chalega (README step 1–4).':'Login nahi hai.';
-  $('bkLogin').hidden=!!user;$('bkLogout').hidden=!user;
-  $('userBox').innerHTML=user?`${user.photoURL?`<img src="${esc(user.photoURL)}" alt="">`:''}<span>${esc(user.displayName||user.email)}</span>`
-    :(fb?'<button class="btn ghost" id="hdrLogin">Login with Google</button>':'');
-  const h=$('hdrLogin');if(h)h.onclick=login;
+  const pend=pendingCount();
+  const txt={nosetup:'Setup pending — firebase-config.js khali hai',loggedout:'Login nahi hai — backup band',syncing:'Sync ho raha hai…',ok:branch.name+' synced · '+t,error:'Sync ruka hua · last '+t,offline:'Offline — internet aate hi sync hoga',off:'—'}[syncState]||'—';
+  $('syncText').textContent=txt+(pend&&GATE?' · '+pend+' GR cloud par jaana baaki':'');
+  $('syncDot').className='dot '+(syncState==='ok'&&!pend?'on':/error|loggedout|offline/.test(syncState)?'off':'');
+  const checking=GATE&&!user&&!offlineEmail&&syncState==='off';
+  $('bkLoginText').textContent=user?('Logged in: '+user.email+' · '+(isAdmin()?'Admin (sab offices)':branch.name)):offlineEmail?('Offline — '+offlineEmail):checking?'Login check ho raha hai…':syncState==='nosetup'?'Google login GitHub par live karne ke baad chalega (README step 1–4).':INAPP?'Aapne link WhatsApp ke andar khola hai. Google login ke liye isse Chrome mein kholein.':'Apne office ki Google ID se login karein.';
+  $('bkLogin').hidden=!!user||!!offlineEmail||checking||(syncState==='error'&&!fb);
+  $('bkLogout').hidden=!user;
+  $('bkLogin').textContent=INAPP?'Chrome mein kholein':'Login with Google';
+  $('userBox').innerHTML=user?`${user.photoURL?`<img src="${esc(user.photoURL)}" alt="" referrerpolicy="no-referrer">`:''}<span>${esc(user.displayName||user.email)}</span>`:'';
+  if(!locked)renderGrStart();
   $('fileBkText').textContent=branch.name+' ka poora data ek .json file mein. Last file backup: '+(db.lastFileBackup?new Date(db.lastFileBackup).toLocaleDateString('en-IN'):'kabhi nahi')+'.';
   renderBanner();
 }
 
-/* ================= Billty print (Party + Driver copy) ================= */
+/* ================= printing ================= */
+function rptHead(title,sub){const b=branch;return `<div style="display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid #111;padding-bottom:4px;margin-bottom:6px"><div><h2>THE SURAJ GOODS CARRIERS</h2><div class="sub">${esc(COMPANY_INFO.hoAddress)}${COMPANY_INFO.gstin?' · GSTIN '+esc(COMPANY_INFO.gstin):''}<br>${esc(b.name)} · Booking Code ${esc(b.bookingCode)}${COMPANY_INFO.phone?' · Ph '+esc(COMPANY_INFO.phone):''}</div></div><div style="text-align:right"><b style="font-size:13px">${title}</b><div class="sub">${sub}</div></div></div>`;}
+/* printer choice is per device (each counter has its own printer) */
+const PRKEY='sgc_print_mode';
+const printMode=()=>lsGet(PRKEY)||'a4-2';
+function setPageStyle(kind,html){
+  let st=$('pageStyle');if(!st){st=document.createElement('style');st.id='pageStyle';document.head.appendChild(st);}
+  if(kind==='thermal'){
+    // roll paper: exact width, height measured from the content so nothing is cut and no paper is wasted
+    const wmm=printMode()==='t58'?58:80,m=document.createElement('div');
+    m.style.cssText='position:absolute;left:-10000px;top:0;width:'+wmm+'mm;padding:1mm 2mm;box-sizing:border-box';m.innerHTML=html;document.body.appendChild(m);
+    const hmm=Math.ceil(m.getBoundingClientRect().height*25.4/96)+6;m.remove();
+    st.textContent='@media print{@page{size:'+wmm+'mm '+hmm+'mm;margin:0}.printdoc{padding:1mm 2mm}}';return;
+  }
+  // margin:0 => browser does not print its own URL/date header & footer; our padding keeps content inside the printer's safe area
+  st.textContent=kind==='thermal'?''
+    :kind==='billty'?'@media print{@page{size:A4 portrait;margin:0}.printdoc{padding:6mm 7mm}}'
+    :'@media print{@page{size:A4 portrait;margin:8mm 7mm}.printdoc{padding:0}}';
+}
+function printHtml(html,kind){
+  if(typeof window.print!=='function'){toast('Print sirf real browser mein chalta hai');return;}
+  setPageStyle(kind||'report',html);$('printContent').innerHTML=html;setTimeout(()=>window.print(),60);
+}
+function billtyThermal(g,label,w58){
+  const b=branchById(g.branch)||{},c=g.charges||{},row=(k,v)=>`<tr><td>${k}</td><td class="r">${v}</td></tr>`;
+  return `<div class="thermal${w58?' w58':''}"><div class="c"><b style="font-size:1.25em">THE SURAJ GOODS CARRIERS</b><br>${esc(COMPANY_INFO.hoAddress)}<br>GSTIN ${esc(COMPANY_INFO.gstin)} · Ph ${esc(COMPANY_INFO.phone)}</div><hr>
+  <div class="c"><b>${isCancelled(g)?'*** CANCELLED *** ':''}${label}</b></div>
+  <table>${row('GR No.','<b>'+esc(g.no)+'</b>')}${row('Date',fmtDate(g.date))}${row('Booking Code',esc(b.bookingCode||''))}${g.invoice?row('Invoice',esc(g.invoice)):''}${row('From',esc(g.from))}${row('To',esc(g.deliveryAt||g.to))}</table><hr>
+  <div><b>Consignor:</b> ${esc(g.cnr.name)}${g.cnr.mob?' · '+esc(g.cnr.mob):''}${g.cnr.gst?'<br>GSTIN '+esc(g.cnr.gst):''}</div>
+  <div><b>Consignee:</b> ${esc(g.cne.name)}${g.cne.mob?' · '+esc(g.cne.mob):''}${g.cne.gst?'<br>GSTIN '+esc(g.cne.gst):''}</div><hr>
+  <table>${row('Articles',g.articles||0)}${g.contents?row('Contents',esc(g.contents)):''}${row('Wt Act/Chg (kg)',(g.actWt||0)+' / '+(g.chWt||0))}${g.ewb?row('E-Way Bill',esc(g.ewb)):''}</table><hr>
+  <table>${row('Freight',money(c.freight))}${c.dd?row('D/D Ch.',money(c.dd)):''}${c.stat?row('Stat. Ch.',money(c.stat)):''}${c.cod?row('COD',money(c.cod)):''}${c.risk?row('Risk Ch.',money(c.risk)):''}${row('Sub Total',money(g.total))}${row('GST '+(g.gstRate||0)+'%',money(g.gst))}${row('<b>G. TOTAL</b>','<b>₹'+money(g.gTotal)+'</b>')}${row('Payment',esc(g.payMode||''))}</table>
+  <div>${esc(inWords(g.gTotal))}</div>${g.remarks?'<div>Remarks: '+esc(g.remarks)+'</div>':''}<hr>
+  <div style="font-size:.9em">Goods carried at owner's risk. No responsibility of leakage &amp; breakage.</div>
+  <div style="display:flex;justify-content:space-between;margin-top:9mm"><span>Booking Clerk</span><span>Signature</span></div>
+  <div class="c" style="margin-top:2mm">SAFE | SECURE | ON TIME</div></div>`;
+}
+/* ---------- Billty — new design (default) ---------- */
+const DKEY='sgc_billty_design';
+const billtyDesign=()=>lsGet(DKEY)||'new';
+function billtyNew(g,label){
+  // label = copy name shown in the bottom strip (CONSIGNEE COPY / DRIVER COPY); the number box always says G.R. NO.
+  const b=branchById(g.branch)||{},c=g.charges||{},x=isCancelled(g),sub=g.total||0,gst=g.gst||0,gt=g.gTotal!=null?g.gTotal:sub;
+  const party=(t,p)=>`<div><div class="t">${t}</div><div class="pn">${esc(p.name||'')}</div>${p.addr?`<div>${esc(p.addr)}</div>`:''}<div>${p.mob?'Mob: <b>'+esc(p.mob)+'</b>':''}${p.mob&&p.gst?' &nbsp;·&nbsp; ':''}${p.gst?'GSTIN: <b>'+esc(p.gst)+'</b>':''}</div></div>`;
+  const cell=(t,v)=>`<div><div class="t">${t}</div><div class="v">${v||'&nbsp;'}</div></div>`;
+  const row=(k,v,cls)=>`<tr${cls?` class="${cls}"`:''}><td>${k}</td><td class="r">₹${money(v)}</td></tr>`;
+  return `<div class="bt2">
+  <div class="h">
+    <div class="logo">SGC</div>
+    <div class="co">
+      <div class="tg"><span>DISPUTES SUBJECT TO MEERUT JURISDICTION</span><span>A Unique Transport System</span></div>
+      <div class="gstin">GSTIN: ${esc(COMPANY_INFO.gstin)}</div>
+      <div class="nm">THE SURAJ GOODS CARRIERS</div>
+      <div class="ad">${esc(COMPANY_INFO.hoAddress)}</div>
+      <div class="ad">${esc(b.name||'')}: ${esc(COMPANY_INFO.phone)} &nbsp;·&nbsp; ${esc(COMPANY_INFO.email)}</div></div>
+    <div class="grbox"><div class="lab">${x?'CANCELLED · ':''}G.R. NO.</div><div class="no">${esc(g.no)}</div>
+      <div class="kv"><span>Date</span><b>${fmtDate(g.date)}</b></div><div class="kv"><span>Booking Code</span><b>${esc(b.bookingCode||'')}</b></div></div>
+  </div>
+  <div class="br">${(COMPANY_INFO.branchOffices||[]).map(o=>`<div><b>${esc(o.title||'BRANCH OFFICE')}:</b> ${(o.lines||[]).map(esc).join(' ')} · Mob. ${esc(o.mobile||'')}</div>`).join('')}</div>
+  <div class="pp">${party('Consignor (From)',g.cnr)}${party('Consignee (To)',g.cne)}</div>
+  <div class="sh">${cell('From',esc(g.from))}${cell('To',esc(g.to))}${cell('Delivery At',esc(g.deliveryAt||g.to))}${cell('Invoice No.',esc(g.invoice||''))}${cell('E-Way Bill No.',esc(g.ewb||''))}${cell('Payment','<span class="pay">'+esc(g.payMode||'')+'</span>')}</div>
+  <div class="mid">
+    <div class="gd">
+      <div class="row">${cell('No. of Articles',String(g.articles||0))}${cell('Actual Wt (Kg)',String(g.actWt||0))}${cell('Charge Wt (Kg)',String(g.chWt||0))}</div>
+      ${cell('Contents — As said to be contained',esc(g.contents||''))}
+      ${cell('Remarks / Special Instructions',(x?'<b>CANCELLED — '+esc((g.cancel&&g.cancel.why)||'')+'.</b> ':'')+esc(g.remarks||''))}
+      <div class="terms">No responsibility of leakage &amp; breakage. We have accepted &amp; booked the consignment on the terms &amp; conditions printed overleaf. Goods carried at owner's risk. We are not responsible for illegal goods, declaration of goods, octroi, enroute taxes etc. हम माल के मालिक नहीं हैं।</div>
+      ${x?'<div class="stamp">CANCELLED</div>':''}
+    </div>
+    <div class="rt"><table>
+      ${row('Freight',c.freight)}${row('D/D Charges',c.dd)}${row('Stat. Charge',c.stat)}${row('COD',c.cod)}${row('Risk Charge',c.risk)}
+      ${row('Sub Total',sub,'sub')}${row('GST ('+(g.gstRate||0)+'%)',gst)}${row('GRAND TOTAL',gt,'gt')}
+    </table><div class="words">Rupees ${esc(inWords(gt))}</div></div>
+  </div>
+  <div class="ft">
+    <div class="gstby">GST will be paid by<br>Consignor / Consignee</div>
+    <div class="sig"><span>PRIVATE MARKA</span></div><div class="sig"><span>REMARKS</span></div><div class="sig"><span>BOOKING CLERK Signature</span></div>
+  </div>
+  <div class="strip">🚚 SAFE | SECURE | ON TIME &nbsp; · &nbsp; ${x?'CANCELLED · ':''}${label} &nbsp; · &nbsp; For THE SURAJ GOODS CARRIERS</div>
+</div>`;
+}
+const billtyAny=(g,label)=>billtyDesign()==='old'?billtyCopy(g,label):billtyNew(g,label);
+function printBillty(g){printBilltyNow(g);}
+function printBilltyNow(g){
+  const m=printMode();
+  if(m==='t80'||m==='t58'){printHtml(billtyThermal(g,'CONSIGNEE COPY',m==='t58')+'<div class="cutline"></div>'+billtyThermal(g,'DRIVER COPY',m==='t58'),'thermal');return;}
+  const html=billtyAny(g,'CONSIGNEE COPY')+(m==='a4-1'?'':'<div class="cutline"></div>'+billtyAny(g,'DRIVER COPY'));
+  printHtml(billtyDesign()==='old'?html:fitHalfPage(html),'billty');
+}
+// Each copy must fit its half of the A4 page. Long invoice / e-way bill lists make it taller,
+// so measure it off-screen at the real print width and step the text size down until it fits.
+function fitHalfPage(html){
+  const box=document.createElement('div');box.style.cssText='position:absolute;left:-10000px;top:0;width:196mm';box.innerHTML=html;document.body.appendChild(box);
+  const limit=139*96/25.4-2;
+  box.querySelectorAll('.bt2').forEach(el=>{let fs=10.2;el.style.height='auto';el.style.fontSize=fs+'px';
+    while(fs>6.6&&el.getBoundingClientRect().height>limit){fs=Math.round((fs-0.2)*10)/10;el.style.fontSize=fs+'px';}
+    el.style.height='';});
+  const out=box.innerHTML;box.remove();return out;
+}
+$('printMode').value=printMode();
+$('billtyDesign').value=billtyDesign();
+$('billtyDesign').onchange=()=>{lsSet(DKEY,$('billtyDesign').value);toast('Bilti design badal gaya (is device par)');};
+$('printMode').onchange=()=>{lsSet(PRKEY,$('printMode').value);toast('Printer setting save ho gayi (sirf is device ke liye)');};
+$('testPrint').onclick=()=>{const g=db.grs.filter(x=>!x.sample).sort(byNoDesc)[0];if(!g){toast('Pehle ek GR banayein, phir test print karein');return;}printBillty(g);};
+
+/* ---------- Bill link (opens without login) + PDF share ---------- */
+const BILL_KEYS=['no','branch','date','invoice','cnr','cne','from','to','deliveryAt','ewb','articles','contents','actWt','chWt','payMode','charges','gstRate','gst','total','gTotal','remarks','status','cancel'];
+const b64e=s=>btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+const b64d=s=>decodeURIComponent(escape(atob(s.replace(/-/g,'+').replace(/_/g,'/'))));
+// compact array format keeps the link (and the printed QR code) small
+function billPack(g,short){const c=g.charges||{},p=x=>[x.name||'',x.mob||'',x.gst||'',short?'':(x.addr||'')];
+  return [1,g.no,g.branch,g.date,g.invoice||'',p(g.cnr),p(g.cne),g.from||'',g.to||'',g.deliveryAt||'',g.ewb||'',g.articles||0,g.contents||'',g.actWt||0,g.chWt||0,g.payMode||'',[c.freight||0,c.dd||0,c.stat||0,c.cod||0,c.risk||0],g.gstRate||0,g.gst||0,g.total||0,g.gTotal||0,short?'':(g.remarks||''),g.status||'',(g.cancel&&g.cancel.why)||''];}
+function billUnpack(a){if(!Array.isArray(a)||a[0]!==1)return a;const q=x=>({name:x[0],mob:x[1],gst:x[2],addr:x[3]});
+  return {no:a[1],branch:a[2],date:a[3],invoice:a[4],cnr:q(a[5]),cne:q(a[6]),from:a[7],to:a[8],deliveryAt:a[9],ewb:a[10],articles:a[11],contents:a[12],actWt:a[13],chWt:a[14],payMode:a[15],
+    charges:{freight:a[16][0],dd:a[16][1],stat:a[16][2],cod:a[16][3],risk:a[16][4]},gstRate:a[17],gst:a[18],total:a[19],gTotal:a[20],remarks:a[21],status:a[22],cancel:a[23]?{why:a[23]}:undefined};}
+const APP_URL=()=>/^https?:/.test(location.href)?location.origin+location.pathname:'https://vinitsharma6433-cpu.github.io/suraj-goods-carriers/';
+function billLink(g,short){return APP_URL()+'#bill='+b64e(JSON.stringify(billPack(g,short)));}
+/* QR code on the Billty (scan = open this bill) */
+let qrLib=null;
+function loadQr(){return qrLib||(qrLib=loadScript('https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js').catch(e=>{qrLib=null;throw e;}));}
+function qrSvg(text){try{if(typeof window.qrcode!=='function')return '';const q=window.qrcode(0,'L');q.addData(text);q.make();return q.createSvgTag({cellSize:2,margin:0,scalable:true});}catch(e){return '';}}
+let pdfLibs=null,pdfCache=null;
+function loadPdfLibs(){return pdfLibs||(pdfLibs=Promise.all([loadScript('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js'),loadScript('https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js')]).catch(e=>{pdfLibs=null;throw e;}));}
+async function makePdf(g){
+  await loadPdfLibs();
+  const box=document.createElement('div');box.style.cssText='position:fixed;left:-10000px;top:0;width:794px;background:#fff;padding:14px';
+  box.innerHTML=billtyAny(g,'CONSIGNEE COPY');if(billtyDesign()==='old')box.firstElementChild.style.fontSize='11px';document.body.appendChild(box);
+  try{
+    const cv=await html2canvas(box,{scale:2,backgroundColor:'#ffffff',logging:false});
+    const pdf=new window.jspdf.jsPDF({unit:'mm',format:'a4',orientation:'portrait'});
+    const w=198,h=Math.min(285,cv.height*w/cv.width);
+    pdf.addImage(cv.toDataURL('image/jpeg',0.92),'JPEG',6,6,w,h);
+    return pdf.output('blob');
+  }finally{box.remove();}
+}
+function openWa(g,who){const h=waHref(g,who);if(h)window.open(h,'_blank','noopener');else toast((who==='cnr'?'Consignor':'Consignee')+' ka mobile number nahi hai');}
+async function sharePdf(g,who,btn){
+  const key=g.no+'|'+(g.savedAt||'');
+  const send=async file=>{
+    if(navigator.canShare&&navigator.canShare({files:[file]})){
+      try{await navigator.share({files:[file],title:'GR '+g.no,text:waMsg(g,who)});return true;}
+      catch(e){if(e.name==='AbortError')return true;if(e.name==='NotAllowedError'){if(btn){btn.textContent='WhatsApp par bhejein';}toast('PDF taiyar hai — button dobara dabayein');return true;}}
+    }
+    return false;
+  };
+  if(pdfCache&&pdfCache.key===key){if(await send(pdfCache.file))return;}
+  else{
+    if(btn){btn.disabled=true;btn.dataset.t=btn.textContent;btn.textContent='PDF ban raha hai…';}
+    let blob;try{blob=await makePdf(g);}catch(e){if(btn){btn.disabled=false;btn.textContent=btn.dataset.t;}toast('PDF nahi bana (internet check karein) — bill link WhatsApp par bhej rahe hain');openWa(g,who);return;}
+    if(btn){btn.disabled=false;btn.textContent=btn.dataset.t;}
+    pdfCache={key,file:new File([blob],g.no+'.pdf',{type:'application/pdf'})};
+    if(await send(pdfCache.file))return;
+  }
+  // laptop: download the PDF and open WhatsApp with the bill link
+  dl(g.no+'.pdf',pdfCache.file,'application/pdf');openWa(g,who);
+  toast('PDF download ho gayi — WhatsApp chat mein attach kar dein. Message mein bill link bhi hai.',7000);
+}
+function renderBillPage(){
+  let g=null;try{g=billUnpack(JSON.parse(b64d(location.hash.slice(6))));if(!g||!g.no||!g.cnr||!g.cne)g=null;}catch(e){}
+  document.querySelector('.app').hidden=true;document.body.classList.remove('locked');
+  const w=document.createElement('div');w.className='billpage';
+  w.innerHTML=g?`<div class="actions" style="justify-content:center;margin:12px 0"><button class="btn primary" id="bpPrint">Print / Save as PDF</button><button class="btn" id="bpPdf">Download PDF</button></div>
+    <div id="bpWrap" style="max-width:820px;margin:0 auto;background:#fff;padding:8px"><div id="bpBill" style="width:780px">${billtyAny(g,'CONSIGNEE COPY')}</div></div>
+    <p style="text-align:center;color:var(--ink-muted);font-size:12px;margin:12px">Computer generated copy · GR ki pushti ke liye office se sampark karein: ${esc(COMPANY_INFO.phone||'')}</p>`
+    :'<p style="padding:24px;text-align:center">Ye bill link poora nahi hai — office se dobara mangwayein.</p>';
+  document.body.appendChild(w);document.title=g?'GR '+g.no+' — The Suraj Goods Carriers':'The Suraj Goods Carriers';
+  if(!g)return;
+  // show the whole bill like a document on any phone width (pinch to zoom for detail)
+  const fit=()=>{const vw=Math.min(window.innerWidth,(window.screen&&screen.width)||window.innerWidth);const avail=Math.min(820,vw-24)-16;$('bpBill').style.zoom=Math.min(1,avail/780);};fit();window.addEventListener('resize',fit);
+  $('bpPrint').onclick=()=>printHtml(billtyAny(g,'CONSIGNEE COPY'),'billty');
+  $('bpPdf').onclick=async()=>{const b=$('bpPdf');b.disabled=true;b.textContent='PDF ban raha hai…';try{dl(g.no+'.pdf',await makePdf(g),'application/pdf');}catch(e){toast('PDF nahi bana — "Print / Save as PDF" use karein');}b.disabled=false;b.textContent='Download PDF';};
+}
 function branchBoxesHtml(){
   const list=(COMPANY_INFO.branchOffices||[]);
   if(!list.length)return '';
@@ -804,7 +1496,7 @@ function branchBoxesHtml(){
   </div>`).join('');
 }
 function billtyCopy(g,label){
-  const b=branchById(g.branch)||{},sub=g.total||0,gst=g.gst||0,gTotal=g.gTotal!=null?g.gTotal:sub,c=g.charges||{};
+  const b=branchById(g.branch)||{},x=isCancelled(g),sub=g.total||0,gst=g.gst||0,gTotal=g.gTotal!=null?g.gTotal:sub,c=g.charges||{};
   return `<div class="billty">
     <div class="headrow">
       <div>${branchBoxesHtml()}</div>
@@ -823,7 +1515,7 @@ function billtyCopy(g,label){
       </div>
     </div>
     <table>
-      <tr><th>Invoice No.</th><td>${esc(g.invoice||'')}</td><th>Date</th><td>${fmtDate(g.date)}</td><th>Booking Code</th><td>${esc(b.bookingCode||'')}</td><th>G.R. No.</th><td>${esc(g.no)}</td></tr>
+      <tr><th>Invoice No.</th><td>${esc(g.invoice||'')}</td><th>Date</th><td>${fmtDate(g.date)}</td><th>Booking Code</th><td>${esc(b.bookingCode||'')}</td><th>G.R. No.</th><td><b>${esc(g.no)}</b></td></tr>
       <tr><th>Consignor / Add.</th><td colspan="7">${esc(g.cnr.name)}${g.cnr.addr?(' — '+esc(g.cnr.addr)):''}${g.cnr.mob?(' · '+esc(g.cnr.mob)):''}</td></tr>
       <tr><th>Consignee / Add.</th><td colspan="7">${esc(g.cne.name)}${g.cne.addr?(' — '+esc(g.cne.addr)):''}${g.cne.mob?(' · '+esc(g.cne.mob)):''}</td></tr>
       <tr><th>Consignor GSTIN</th><td>${esc(g.cnr.gst||'')}</td><th>Consignee GSTIN</th><td>${esc(g.cne.gst||'')}</td><th>From</th><td>${esc(g.from)}</td><th>To</th><td>${esc(g.to)}</td></tr>
@@ -836,70 +1528,92 @@ function billtyCopy(g,label){
         <th>Actual Weight (Kg)</th><td>${g.actWt||0}</td><th>Charge Weight (Kg)</th><td>${g.chWt||0}</td>
       </tr>
       <tr><th class="section" colspan="4">RATE Rs. P.</th></tr>
-      <tr><th>Freight</th><td colspan="3" class="num">₹${(c.freight||0).toFixed(2)}</td></tr>
-      <tr><th>D/D Ch.</th><td colspan="3" class="num">₹${(c.dd||0).toFixed(2)}</td></tr>
-      <tr><th>Stat. Charge</th><td colspan="3" class="num">₹${(c.stat||0).toFixed(2)}</td></tr>
-      <tr><th>COD</th><td colspan="3" class="num">₹${(c.cod||0).toFixed(2)}</td></tr>
-      <tr><th>Risk Ch.</th><td colspan="3" class="num">₹${(c.risk||0).toFixed(2)}</td></tr>
-      <tr><th>Sub Total</th><td colspan="3" class="num">₹${sub.toFixed(2)}</td></tr>
-      <tr><th>GST (${g.gstRate||0}%)</th><td colspan="3" class="num">₹${gst.toFixed(2)}</td></tr>
+      <tr><th>Freight</th><td colspan="3" class="num">₹${money(c.freight)}</td></tr>
+      <tr><th>D/D Ch.</th><td colspan="3" class="num">₹${money(c.dd)}</td></tr>
+      <tr><th>Stat. Charge</th><td colspan="3" class="num">₹${money(c.stat)}</td></tr>
+      <tr><th>COD</th><td colspan="3" class="num">₹${money(c.cod)}</td></tr>
+      <tr><th>Risk Ch.</th><td colspan="3" class="num">₹${money(c.risk)}</td></tr>
+      <tr><th>Sub Total</th><td colspan="3" class="num">₹${money(sub)}</td></tr>
+      <tr><th>GST (${g.gstRate||0}%)</th><td colspan="3" class="num">₹${money(gst)}</td></tr>
     </table>
-    <table><tr><th class="section">G. TOTAL</th><td class="num" style="font-weight:900">₹${gTotal.toFixed(2)}</td><th>Payment</th><td>${esc(g.payMode||'')}</td></tr></table>
-    <table class="remarks"><tr><th style="width:14%">REMARKS / SPECIAL<br>INSTRUCTIONS</th><td>${esc(g.remarks||'')}</td></tr></table>
+    <table><tr><th class="section">G. TOTAL</th><td class="num" style="font-weight:900">₹${money(gTotal)}</td><th>Payment</th><td>${esc(g.payMode||'')}</td></tr>
+      <tr><th>Rupees</th><td colspan="3">${esc(inWords(gTotal))}</td></tr></table>
+    <table class="remarks"><tr><th style="width:14%">REMARKS / SPECIAL<br>INSTRUCTIONS</th><td>${x?'<b>CANCELLED</b> — '+esc((g.cancel&&g.cancel.why)||'')+'. ':''}${esc(g.remarks||'')}</td></tr></table>
     <table><tr><td style="height:13px">Booking Clerk</td><td>Consignor's Signature</td><td>Driver's Signature</td></tr></table>
-    <div class="copy">🚚 SAFE | SECURE | ON TIME &nbsp;&nbsp; ${label} &nbsp;&nbsp; For THE SURAJ GOODS CARRIERS</div>
+    <div class="copy">🚚 SAFE | SECURE | ON TIME &nbsp;&nbsp; ${x?'CANCELLED — ':''}${label} &nbsp;&nbsp; For THE SURAJ GOODS CARRIERS</div>
   </div>`;
 }
-function printBillty(g){
-  if(typeof window.print!=='function'){toast('Print sirf real browser mein chalta hai');return;}
-  $('printContent').innerHTML=billtyCopy(g,'PARTY COPY')+'<div class="cutline"></div>'+billtyCopy(g,'DRIVER COPY');
-  window.print();
+function inWords(n){
+  n=r2(n);const rs=Math.floor(n),ps=Math.round((n-rs)*100);
+  const a=['','One','Two','Three','Four','Five','Six','Seven','Eight','Nine','Ten','Eleven','Twelve','Thirteen','Fourteen','Fifteen','Sixteen','Seventeen','Eighteen','Nineteen'],t=['','','Twenty','Thirty','Forty','Fifty','Sixty','Seventy','Eighty','Ninety'];
+  const two=x=>x<20?a[x]:t[Math.floor(x/10)]+(x%10?' '+a[x%10]:'');
+  const three=x=>(x>=100?a[Math.floor(x/100)]+' Hundred'+(x%100?' ':''):'')+(x%100?two(x%100):'');
+  const w=x=>{if(!x)return 'Zero';let s='';const cr=Math.floor(x/1e7);x%=1e7;const l=Math.floor(x/1e5);x%=1e5;const th=Math.floor(x/1e3);x%=1e3;
+    if(cr)s+=w(cr)+' Crore ';if(l)s+=two(l)+' Lakh ';if(th)s+=two(th)+' Thousand ';if(x)s+=three(x);return s.trim();};
+  return w(rs)+(ps?' and '+two(ps)+' Paise':'')+' Only';
 }
 
 /* ================= file backup ================= */
+function dl(name,data,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},1500);}
+function downloadCsv(name,rows){
+  const cell=v=>{v=String(v==null?'':v);if(/^[=+\-@]/.test(v)&&isNaN(+v))v="'"+v;return /[",\r\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;};
+  dl(name,'﻿'+rows.map(r=>r.map(cell).join(',')).join('\r\n'),'text/csv;charset=utf-8');toast('Excel file (CSV) download ho gayi');
+}
 $('dlBackup').onclick=()=>{
-  const data=JSON.stringify({app:'sgc-tms',version:2,branch:branch.id,branchName:branch.name,exportedAt:new Date().toISOString(),grs:db.grs.filter(g=>!g.sample),parties},null,2);
-  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type:'application/json'}));
-  a.download='SGC-'+branch.id+'-backup-'+today()+'.json';document.body.appendChild(a);a.click();a.remove();
-  db.lastFileBackup=new Date().toISOString();save();renderCloud();toast('Backup file download ho gayi');
+  if(GATE&&!user&&!offlineEmail)return;
+  const data=JSON.stringify({app:'sgc-tms',version:3,branch:branch.id,branchName:branch.name,exportedAt:nowIso(),grs:db.grs.filter(g=>!g.sample),parties,items:items.map},null,2);
+  dl('SGC-'+branch.id+'-backup-'+today()+'.json',data,'application/json');
+  db.lastFileBackup=nowIso();save();renderCloud();toast('Backup file download ho gayi');
 };
 $('restoreFile').onchange=e=>{
   const f=e.target.files[0];if(!f)return;const r=new FileReader();
   r.onload=()=>{try{
     const d=JSON.parse(r.result);if(d.app!=='sgc-tms'||!Array.isArray(d.grs))throw 0;
     if(d.branch&&d.branch!==branch.id){toast('Ye file '+(d.branchName||d.branch)+' ki hai — pehle wo office kholein');e.target.value='';return;}
+    if(!confirm(d.grs.length+' GR wali backup file ('+String(d.exportedAt||'').slice(0,10)+') restore karein? Naye/updated GR jud jayenge, kuch delete nahi hoga.')){e.target.value='';return;}
     if(db.sample){db.grs=[];db.sample=false;}
-    const m={};db.grs.forEach(g=>m[g.no]=g);let added=0;
-    d.grs.forEach(g=>{g.branch=g.branch||branch.id;if(!m[g.no]||newer(g,m[g.no])){m[g.no]=g;added++;}});
-    db.grs=Object.values(m).sort((a,b)=>String(a.no).localeCompare(String(b.no)));
-    (d.parties||[]).forEach(p=>{if(!parties.some(x=>x.name.toLowerCase()===p.name.toLowerCase()))parties.push(p);});
-    db.seq=Math.max(db.seq||0,seqFromGrs());save();saveParties();refreshParties();renderDash();if(!$('view-register').hidden)renderRegister();toast(added+' GR restore hue');if(user)fullSync();
+    let added=0;
+    d.grs.forEach(g=>{if(!g||!g.no||!g.cnr||!g.cne)return;g.branch=g.branch||branch.id;delete g.pendingNew;const i=db.grs.findIndex(x=>x.no===g.no);
+      if(i<0||(g.savedAt||'')>(db.grs[i].savedAt||'')){if(i<0)db.grs.push(g);else db.grs[i]=g;markDirty(db,g.no);added++;}});
+    (d.parties||[]).forEach(p=>{if(p&&p.name&&!findParty(p.name))upsertParty(p,true);});
+    if(d.items&&typeof d.items==='object')Object.values(d.items).forEach(it=>{if(it&&it.on)upsertItem(it.n);});
+    db.seq=Math.max(db.seq||0,seqFromGrs(db.grs));save();refreshParties();refreshView();toast(added+' GR restore hue');flushSoon();
   }catch(_){toast('Ye SGC backup file nahi hai');}e.target.value='';};
   r.readAsText(f);
 };
 
 /* ================= keys ================= */
 document.addEventListener('keydown',e=>{
-  if(e.key==='F2'){e.preventDefault();show('gr');}
-  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'&&!$('view-gr').hidden){e.preventDefault();$('grForm').requestSubmit();}
+  if(locked)return;
+  if(e.key==='F2'){e.preventDefault();if(editingNo)resetForm();show('gr');}
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='s'&&curView==='gr'){e.preventDefault();$('grForm').requestSubmit();}
   if(e.key==='F3'){e.preventDefault();show('register');}
   if(e.key==='F4'){e.preventDefault();show('customers');}
   if(e.key==='F6'){e.preventDefault();show('accounts');}
-  if(e.key==='Escape'){e.preventDefault();show('dash');}
+  if(e.key==='Escape'){const t=e.target;if(t&&/^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName)){t.blur();return;}e.preventDefault();show('dash');}
   if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='f'){
     const map={register:'regSearch',customers:'custSearch'};
-    const cur=Object.keys(map).find(v=>!$('view-'+v).hidden);
-    if(cur){e.preventDefault();$(map[cur]).focus();$(map[cur]).select();}
+    if(map[curView]){e.preventDefault();$(map[curView]).focus();$(map[curView]).select();}
   }
 });
 
+/* ================= other tabs of this app ================= */
+Store.onRemote=k=>{
+  if(k===dbKey(branch.id)){db=loadBranchDb(branch.id);refreshView();}
+  else if(k===PKEY){parties=(lsGet(PKEY)||[]).filter(p=>p&&p.name);refreshParties();refreshView();}
+  else if(k===PMKEY){pmeta=Object.assign({lastPull:0,dirty:[]},lsGet(PMKEY)||{});}
+  else if(k===SKEY){settings=Object.assign({grStart:{},dirty:[]},lsGet(SKEY)||{});refreshView();}
+  else if(k===IKEY){const it=lsGet(IKEY);if(it&&it.map){items=Object.assign({dirty:[]},it);refreshItems();}}
+};
+
 /* ================= utils ================= */
-function esc(s){return String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
-function fmtDate(d){const [y,m,dd]=String(d).split('-');return dd+'/'+m+'/'+y;}
-let tt;function toast(m){const t=$('toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,3000);}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function fmtDate(d){if(!d)return '';const [y,m,dd]=String(d).split('-');return dd&&m&&y?dd+'/'+m+'/'+y:String(d);}
+let tt;function toast(m,ms){const t=$('toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,ms||3500);}
 
 if('serviceWorker' in navigator&&location.protocol==='https:'&&CFG)navigator.serviceWorker.register('sw.js').catch(()=>{});
-refreshParties();refreshItems();refreshCityList();renderBranch();show('dash');initCloud();
+if(/^#bill=/.test(location.hash)){renderBillPage();return;} // customer's bill link: no login, no app
+refreshParties();refreshItems();refreshCityList();renderBranch();resetForm();show('dash');initCloud();
 })();
 </script>
 
