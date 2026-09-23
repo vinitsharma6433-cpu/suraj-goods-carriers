@@ -439,7 +439,10 @@ $('branchPick').onchange=e=>switchBranch(e.target.value);
 
 /* ================= views ================= */
 let lastSoon=null;
+const GATE=!!(CFG&&CFG.firebase&&CFG.firebase.apiKey); // login zaroori hai jab tak Firebase set nahi hai
+let locked=GATE;
 function show(v){
+  if(locked&&v!=='backup')v='backup';
   ['dash','gr','register','delivery','customers','accounts','backup','soon'].forEach(x=>$('view-'+x).hidden=x!==v);
   document.querySelectorAll('.nav').forEach(b=>b.classList.toggle('active',b.dataset.view===v&&(v!=='soon'||b===lastSoon)));
   $('pageTitle').textContent={dash:'Dashboard',gr:'New GR / Booking',register:'GR Register',delivery:'Delivery / POD',customers:'Customers',accounts:'Accounts',backup:'Backup & Login'}[v]||(lastSoon?lastSoon.textContent.replace(/^\S+\s/,''):'');
@@ -704,13 +707,17 @@ async function initCloud(){
       user=u;
       if(u){
         const home=userBranch();
-        if(!isAdmin()&&!home){toast(u.email+' ko kisi office ka access nahi hai');user=null;await fb.auth.signOut();return;}
+        if(!isAdmin()&&!home){toast(u.email+' ko kisi office ka access nahi hai');user=null;await fb.auth.signOut();locked=GATE;show('backup');return;}
         if(!isAdmin()&&home.id!==branch.id){save();branch=home;lsSet(BKEY,home.id);db=loadBranchDb(home.id);resetForm();}
       }
-      syncState=u?'syncing':'loggedout';renderBranch();renderDash();renderCloud();
-      if(u){await fullSync();if(isAdmin())syncOtherBranches();}
+      syncState=u?'syncing':'loggedout';
+      locked=GATE&&!u;
+      renderBranch();renderCloud();
+      if(u){await fullSync();show('dash');if(isAdmin())syncOtherBranches();}
+      else if(GATE){show('backup');}
+      else renderDash();
     });
-  }catch(e){syncState='error';renderCloud();}
+  }catch(e){syncState='error';locked=false;renderCloud();show('dash');}
 }
 const coDoc=()=>fb.fs.collection('companies').doc(COMPANY);
 const grCol=bid=>coDoc().collection('branches').doc(bid).collection('grs');
@@ -895,6 +902,7 @@ if('serviceWorker' in navigator&&location.protocol==='https:'&&CFG)navigator.ser
 refreshParties();refreshItems();refreshCityList();renderBranch();show('dash');initCloud();
 })();
 </script>
+
 
 
 
