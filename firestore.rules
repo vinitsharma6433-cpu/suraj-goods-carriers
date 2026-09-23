@@ -1,0 +1,27 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Keep these lists the same as firebase-config.js
+    function admins()  { return ['aasumalik890@gmail.com']; }
+    function staff()   { return {
+      'BC10': ['aasumalik890@gmail.com'],
+      'BC38': ['aasumalik890@gmail.com']
+    }; }
+
+    function email()   { return request.auth.token.email; }
+    function signedIn(){ return request.auth != null && request.auth.token.email_verified == true; }
+    function isAdmin() { return signedIn() && email() in admins(); }
+    function inBranch(b){ return signedIn() && b in staff() && email() in staff()[b]; }
+    function anyStaff(){ return signedIn() && (email() in staff()['BC10'] || email() in staff()['BC38']); }
+
+    // Each office's GRs: only that office's staff + admins
+    match /companies/{co}/branches/{branch}/grs/{gr} {
+      allow read, write: if isAdmin() || inBranch(branch);
+    }
+    // Shared party list: all offices
+    match /companies/{co}/parties/{p} {
+      allow read, write: if isAdmin() || anyStaff();
+    }
+  }
+}
