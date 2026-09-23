@@ -34,11 +34,11 @@ window.SGC_CONFIG = {
 
   // Paste your Firebase web config here (README step 2). Empty apiKey = offline only.
   firebase: {
-    apiKey: "",
-    authDomain: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: ""
+    apiKey: "AIzaSyA-w7giyyfPGlTVB04MMK0WAGDyMrGh_rA",
+    authDomain: "suraj-goods-carriers.firebaseapp.com",
+    projectId: "suraj-goods-carriers",
+    storageBucket: "suraj-goods-carriers.firebasestorage.app",
+    messagingSenderId: "240497710886",
+    appId: "1:240497710886:web:e9c6fdb2ad65cec938d3e7"
   }
 };
