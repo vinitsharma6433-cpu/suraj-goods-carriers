@@ -652,7 +652,12 @@ const splashShownAt=Date.now();
 function hideSplash(){const s=document.getElementById('sgcSplash');if(!s||s.dataset.gone)return;s.dataset.gone=1;
   const wait=Math.max(0,700-(Date.now()-splashShownAt)); // show at least 0.7 s so it does not just flicker
   setTimeout(()=>{s.classList.add('hide');setTimeout(()=>{s.remove();},450);},wait);}
-setTimeout(hideSplash,20000); // pure safety net so it can never get stuck forever if something goes wrong
+// Truck keeps running until the screen is tapped / clicked / a key is pressed, or 1 minute passes.
+setTimeout(hideSplash,60000);
+(()=>{const s=document.getElementById('sgcSplash');if(!s)return;
+  s.style.cursor='pointer';s.addEventListener('pointerdown',hideSplash);
+  document.addEventListener('keydown',function k(){hideSplash();document.removeEventListener('keydown',k);});
+  const tip=document.createElement('div');tip.className='sgc-sub';tip.style.cssText='margin:14px 0 0;opacity:.8';tip.textContent='Aage badhne ke liye screen par tap karein';s.appendChild(tip);})();
 /* ---------- big "GR saved" flash ---------- */
 let flashT1,flashT2;
 function showGRSaved(no,word,where){
@@ -1342,7 +1347,7 @@ function openInChrome(){
   else{try{navigator.clipboard.writeText(u);}catch(e){}toast('Link copy ho gaya — Safari/Chrome mein paste karke kholein');}
 }
 async function initCloud(){
-  if(!GATE){syncState='nosetup';renderCloud();hideSplash();return;}
+  if(!GATE){syncState='nosetup';renderCloud();return;}
   try{
     await loadScript(SDK+'firebase-app-compat.js');
     await Promise.all([loadScript(SDK+'firebase-auth-compat.js'),loadScript(SDK+'firebase-firestore-compat.js')]);
@@ -1350,7 +1355,6 @@ async function initCloud(){
     fb={auth:firebase.auth(),fs:firebase.firestore()};
     try{await fb.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);}catch(e){}
   }catch(e){
-    hideSplash();
     const last=lsGet(LUKEY);
     if(last&&last.email){offlineEmail=last.email;applyUserBranch();locked=false;syncState='offline';renderBranch();show('dash');toast('Internet nahi hai — offline chal raha hai. Internet aane par page reload karein.',6000);}
     else{syncState='error';renderCloud();$('bkLoginText').textContent='Pehli baar login ke liye internet chahiye. Internet check karke page reload karein.';$('bkLogin').hidden=true;}
@@ -1362,7 +1366,6 @@ function applyUserBranch(){if(isAdmin())return;const h=userBranch();if(h&&h.id!=
 async function onAuth(u){
   stopLive();user=u;offlineEmail='';
   if(u){
-    hideSplash(); // already logged in (session restored) — no click needed, hide now
     if(!isAdmin()&&!userBranch()){toast(u.email+' ko kisi office ka access nahi hai — admin se baat karein',8000);user=null;try{await fb.auth.signOut();}catch(e){}return;}
     lsSet(LUKEY,{email:lc(u.email),at:nowIso()});
     applyUserBranch();locked=false;syncState='syncing';
@@ -1370,7 +1373,7 @@ async function onAuth(u){
     startLive();flush();if(isAdmin())syncOtherBranches();
   }else{
     lsSet(LUKEY,null);locked=GATE;syncState='loggedout';editingNo=null;
-    renderBranch();show('backup');hideSplash(); // logged out: show the Login button, not the truck
+    renderBranch();show('backup');
   }
 }
 function login(){
