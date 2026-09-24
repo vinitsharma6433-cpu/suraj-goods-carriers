@@ -656,7 +656,7 @@ function hideSplash(){const s=document.getElementById('sgcSplash');if(!s||s.data
 setTimeout(hideSplash,60000);
 (()=>{const s=document.getElementById('sgcSplash');if(!s)return;
   s.style.cursor='pointer';s.addEventListener('pointerdown',hideSplash);
-  document.addEventListener('keydown',function k(){hideSplash();document.removeEventListener('keydown',k);});
+  document.addEventListener('keydown',function k(e){if(e.repeat||/^(Control|Shift|Alt|Meta|F5|CapsLock|Tab)$/.test(e.key)||e.ctrlKey||e.metaKey)return;hideSplash();document.removeEventListener('keydown',k);});
   const tip=document.createElement('div');tip.className='sgc-sub';tip.style.cssText='margin:14px 0 0;opacity:.8';tip.textContent='Aage badhne ke liye screen par tap karein';s.appendChild(tip);})();
 /* ---------- big "GR saved" flash ---------- */
 let flashT1,flashT2;
