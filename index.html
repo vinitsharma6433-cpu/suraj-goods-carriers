@@ -205,6 +205,43 @@ body.locked #view-backup .backup-grid{grid-template-columns:minmax(0,420px)}
 .bt2 .qr{text-align:center;display:grid;justify-items:center;gap:1px}.bt2 .qr svg{width:5.4em;height:5.4em;display:block}.bt2 .qr small{font-size:.7em}
 .bt2 .strip{background:#fff;color:#111;text-align:center;font-weight:900;padding:3px;letter-spacing:.05em;font-size:.95em}
 .billpage .bt2{font-size:11px}
+/* ---- opening truck splash ---- */
+.sgc-splash{position:fixed;inset:0;z-index:9999;background:linear-gradient(180deg,#0f1e3d 0%,#1a2d52 60%,#1f3a6b 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;transition:opacity .4s ease}
+.sgc-splash.hide{opacity:0;pointer-events:none}
+@keyframes sgcAutoHide{to{opacity:0;visibility:hidden}}
+.sgc-splash .sgc-title{color:#fff;font-size:clamp(22px,5vw,34px);font-weight:800;letter-spacing:.04em;margin-bottom:6px;text-align:center;padding:0 16px}
+.sgc-splash .sgc-title span{color:#f59e0b}
+.sgc-splash .sgc-sub{color:#9fb0cc;font-size:14px;margin-bottom:26px}
+.sgc-splash svg{width:min(420px,85vw);height:auto}
+.sgc-road{stroke:#f59e0b;stroke-width:5;stroke-dasharray:26 20;animation:sgcRoad .5s linear infinite}
+@keyframes sgcRoad{to{stroke-dashoffset:-46}}
+.sgc-wheel{transform-origin:center;transform-box:fill-box;animation:sgcSpin .7s linear infinite}
+@keyframes sgcSpin{to{transform:rotate(360deg)}}
+.sgc-truck{animation:sgcBob 1.1s ease-in-out infinite}
+@keyframes sgcBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+.sgc-puff{fill:#9fb0cc;opacity:0;animation:sgcPuff 2.2s ease-out infinite}
+.sgc-puff.p2{animation-delay:1.1s}
+@keyframes sgcPuff{0%{opacity:0;transform:translate(0,0) scale(.5)}15%{opacity:.8}100%{opacity:0;transform:translate(-46px,-30px) scale(1.6)}}
+.sgc-loadbar{width:min(260px,60vw);height:4px;background:#2b4a80;border-radius:4px;margin-top:22px;overflow:hidden}
+.sgc-loadbar i{display:block;height:100%;width:40%;background:#f59e0b;border-radius:4px;animation:sgcLoad 1.4s ease-in-out infinite}
+@keyframes sgcLoad{0%{margin-left:-40%}100%{margin-left:100%}}
+/* ---- "GR saved" flash ---- */
+.sgc-flashbg{position:fixed;inset:0;z-index:9998;pointer-events:none;background:radial-gradient(circle at 50% 45%,rgba(21,128,61,.30),rgba(21,128,61,0) 60%);opacity:0;transition:opacity .25s ease}
+.sgc-flashbg.on{opacity:1}
+.sgc-confirm{position:fixed;left:50%;top:42%;transform:translate(-50%,-50%) scale(.85);z-index:9999;background:#fff;color:#152033;border-radius:16px;box-shadow:0 18px 60px rgba(0,0,0,.28);padding:22px 30px 18px;text-align:center;min-width:240px;max-width:calc(100vw - 32px);opacity:0;pointer-events:none;transition:opacity .2s ease,transform .3s cubic-bezier(.2,1.4,.4,1)}
+.sgc-confirm.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.sgc-confirm .tick{width:54px;height:54px;margin:0 auto 8px;display:block}
+.sgc-confirm .tick circle{stroke:#15803d;stroke-width:3;fill:none;stroke-dasharray:170;stroke-dashoffset:170}
+.sgc-confirm .tick path{stroke:#15803d;stroke-width:4;fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:50;stroke-dashoffset:50}
+.sgc-confirm.on .tick circle{animation:sgcDraw .4s ease forwards}
+.sgc-confirm.on .tick path{animation:sgcDraw .3s .3s ease forwards}
+@keyframes sgcDraw{to{stroke-dashoffset:0}}
+.sgc-confirm .big{font-size:40px;font-weight:900;font-variant-numeric:tabular-nums;line-height:1.1}
+.sgc-confirm .word{font-size:15px;font-weight:700;color:#15803d;margin-top:4px}
+.sgc-confirm .where{font-size:13px;color:#5b6576;margin-top:2px}
+@media (prefers-reduced-motion:reduce){.sgc-road,.sgc-wheel,.sgc-truck,.sgc-puff,.sgc-loadbar i{animation:none}.sgc-confirm{transition:opacity .2s}.sgc-confirm .tick circle,.sgc-confirm .tick path{stroke-dashoffset:0;animation:none}}
+@media print{.sgc-splash,.sgc-flashbg,.sgc-confirm{display:none!important}}
+
 /* ---- Billty print (Party + Driver copy) ---- */
 .printdoc{display:none}
 .pv-bar{display:none}
@@ -256,6 +293,26 @@ body.locked #view-backup .backup-grid{grid-template-columns:minmax(0,420px)}
   .cutline{margin:2.5mm 0}
 }
 </style></head><body>
+<div class="sgc-splash" id="sgcSplash" aria-hidden="true">
+  <div class="sgc-title">The Suraj <span>Goods</span> Carriers</div>
+  <div class="sgc-sub">A Unique Transport System · Meerut</div>
+  <svg viewBox="0 0 420 190" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="355" cy="38" r="16" fill="#f59e0b" opacity=".9"/>
+    <circle class="sgc-puff" cx="318" cy="98" r="7"/><circle class="sgc-puff p2" cx="318" cy="98" r="5"/>
+    <g class="sgc-truck">
+      <rect x="70" y="52" width="180" height="82" rx="8" fill="#f59e0b"/>
+      <text x="160" y="100" text-anchor="middle" font-size="30" font-weight="800" fill="#0f1e3d" font-family="Arial, sans-serif">SGC</text>
+      <path d="M250 134 L250 72 L296 72 L322 100 L322 134 Z" fill="#2b4a80"/>
+      <path d="M258 80 L292 80 L308 98 L258 98 Z" fill="#bcd2ee"/>
+      <rect x="250" y="126" width="72" height="8" fill="#1a2d52"/>
+      <g class="sgc-wheel"><circle cx="120" cy="142" r="17" fill="#0b1426"/><circle cx="120" cy="142" r="7" fill="#8a8f98"/><rect x="118.6" y="126" width="2.8" height="32" fill="#8a8f98"/><rect x="104" y="140.6" width="32" height="2.8" fill="#8a8f98"/></g>
+      <g class="sgc-wheel"><circle cx="288" cy="142" r="17" fill="#0b1426"/><circle cx="288" cy="142" r="7" fill="#8a8f98"/><rect x="286.6" y="126" width="2.8" height="32" fill="#8a8f98"/><rect x="272" y="140.6" width="32" height="2.8" fill="#8a8f98"/></g>
+    </g>
+    <line class="sgc-road" x1="10" y1="162" x2="410" y2="162"/>
+  </svg>
+  <div class="sgc-loadbar"><i></i></div>
+</div>
+
 
 <div class="app">
   <aside>
@@ -512,6 +569,13 @@ body.locked #view-backup .backup-grid{grid-template-columns:minmax(0,420px)}
   </main>
 </div>
 <div class="toast" id="toast" hidden></div>
+<div class="sgc-flashbg" id="sgcFlashBg"></div>
+<div class="sgc-confirm" id="sgcConfirm" role="status" aria-live="polite">
+  <svg class="tick" viewBox="0 0 60 60" aria-hidden="true"><circle cx="30" cy="30" r="27"/><path d="M18 31 L27 40 L43 22"/></svg>
+  <div class="big" id="sgcBigNo">GR</div>
+  <div class="word" id="sgcWord">Save ho gaya ✓</div>
+  <div class="where" id="sgcWhere"></div>
+</div>
 <div class="printdoc" id="printDoc" role="dialog" aria-label="Bilti preview">
   <div class="pv-bar">
     <b>Bilti Preview</b>
@@ -583,6 +647,24 @@ const Store={cache:new Map(),db:null,bc:null,warned:false,onRemote:null,
     this.onRemote&&this.onRemote(k);
   }
 };
+/* ---------- opening truck splash (stays until party clicks Login, or auto-login settles) ---------- */
+const splashShownAt=Date.now();
+function hideSplash(){const s=document.getElementById('sgcSplash');if(!s||s.dataset.gone)return;s.dataset.gone=1;
+  const wait=Math.max(0,700-(Date.now()-splashShownAt)); // show at least 0.7 s so it does not just flicker
+  setTimeout(()=>{s.classList.add('hide');setTimeout(()=>{s.remove();},450);},wait);}
+setTimeout(hideSplash,20000); // pure safety net so it can never get stuck forever if something goes wrong
+/* ---------- big "GR saved" flash ---------- */
+let flashT1,flashT2;
+function showGRSaved(no,word,where){
+  const c=document.getElementById('sgcConfirm'),bg=document.getElementById('sgcFlashBg');if(!c||!bg)return;
+  document.getElementById('sgcBigNo').textContent='GR '+no;
+  document.getElementById('sgcWord').textContent=word;
+  document.getElementById('sgcWhere').textContent=where;
+  c.classList.remove('on');bg.classList.remove('on');void c.offsetWidth;c.classList.add('on');bg.classList.add('on');
+  try{navigator.vibrate&&navigator.vibrate([25,40,25]);}catch(e){}
+  clearTimeout(flashT1);clearTimeout(flashT2);
+  flashT1=setTimeout(()=>bg.classList.remove('on'),700);flashT2=setTimeout(()=>c.classList.remove('on'),1500);
+}
 await Store.init();
 const lsGet=k=>Store.get(k),lsSet=(k,v)=>Store.set(k,v);
 
@@ -681,7 +763,7 @@ function show(v){
   document.querySelectorAll('.nav').forEach(b=>b.classList.toggle('active',b.dataset.view===v));
   $('pageTitle').textContent=locked?'Login':(v==='gr'&&editingNo?'Edit GR':TITLES[v]);
   renderView(v);
-  if(v==='gr'){if(!editingNo&&!$('grNo').value)resetForm();setTimeout(()=>$('cnrName').focus(),0);}
+  if(v==='gr'){if(!editingNo&&!$('grNo').value)resetForm();setTimeout(()=>{askGrStartOnce();$('cnrName').focus();},0);}
 }
 function renderView(v){const f={dash:renderDash,register:renderRegister,manifest:renderManifest,delivery:renderDelivery,customers:renderCustomers,accounts:renderAccounts,reports:renderReports,backup:renderCloud}[v];if(f)f();}
 function refreshView(){
@@ -1111,7 +1193,7 @@ $('grForm').addEventListener('submit',async e=>{
       const g=db.grs.find(x=>x.no===editingNo);if(!g){toast('GR nahi mila');return;}
       Object.assign(g,fields,{savedAt:nowIso(),editedAt:nowIso(),editedBy:email()});
       markDirty(db,g.no);save();flushSoon();
-      showSaved(g,'updated');toast(g.no+' update ho gaya');resetForm();refreshCityList();return;
+      showSaved(g,'updated');showGRSaved(g.no,'Update ho gaya ✓',!GATE?'Is computer mein save':fb&&user&&navigator.onLine?'Cloud par bhi update ho raha hai':'Is device mein save — net aate hi cloud par jayega');resetForm();refreshCityList();return;
     }
     if(db.sample){db.grs=db.grs.filter(x=>!x.sample);db.sample=false;}
     const gr=Object.assign({no:nextNo(),uid:newUid(),branch:branch.id},fields,{status:'Pending',createdAt:nowIso(),savedAt:nowIso(),by:email(),pendingNew:true});
@@ -1120,7 +1202,8 @@ $('grForm').addEventListener('submit',async e=>{
       try{await withTimeout(commitGr(branch.id,gr),12000);}catch(err){}}
     // offline: no nagging — the GR is safe on this device, the ⟳ mark + banner show it is waiting, and it uploads by itself
     if(gr.pendingNew&&GATE&&!offlineTold){offlineTold=true;toast(gr.no+' is device mein save hai — internet aate hi apne aap cloud par chala jayega',6000);}
-    showSaved(gr,'saved');if(!gr.pendingNew||!(fb&&user))toast(gr.no+' save ho gaya');
+    showSaved(gr,'saved');
+    showGRSaved(gr.no,'Save ho gaya ✓',!GATE?'Is computer mein save':gr.pendingNew?'Is device mein save — net aate hi cloud par jayega':'Cloud par backup ho gaya');
     resetForm();refreshCityList();$('cnrName').focus();
   }finally{saving=false;btn.disabled=false;setFormMode();}
 });
@@ -1259,7 +1342,7 @@ function openInChrome(){
   else{try{navigator.clipboard.writeText(u);}catch(e){}toast('Link copy ho gaya — Safari/Chrome mein paste karke kholein');}
 }
 async function initCloud(){
-  if(!GATE){syncState='nosetup';renderCloud();return;}
+  if(!GATE){syncState='nosetup';renderCloud();hideSplash();return;}
   try{
     await loadScript(SDK+'firebase-app-compat.js');
     await Promise.all([loadScript(SDK+'firebase-auth-compat.js'),loadScript(SDK+'firebase-firestore-compat.js')]);
@@ -1267,6 +1350,7 @@ async function initCloud(){
     fb={auth:firebase.auth(),fs:firebase.firestore()};
     try{await fb.auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);}catch(e){}
   }catch(e){
+    hideSplash();
     const last=lsGet(LUKEY);
     if(last&&last.email){offlineEmail=last.email;applyUserBranch();locked=false;syncState='offline';renderBranch();show('dash');toast('Internet nahi hai — offline chal raha hai. Internet aane par page reload karein.',6000);}
     else{syncState='error';renderCloud();$('bkLoginText').textContent='Pehli baar login ke liye internet chahiye. Internet check karke page reload karein.';$('bkLogin').hidden=true;}
@@ -1278,6 +1362,7 @@ function applyUserBranch(){if(isAdmin())return;const h=userBranch();if(h&&h.id!=
 async function onAuth(u){
   stopLive();user=u;offlineEmail='';
   if(u){
+    hideSplash(); // already logged in (session restored) — no click needed, hide now
     if(!isAdmin()&&!userBranch()){toast(u.email+' ko kisi office ka access nahi hai — admin se baat karein',8000);user=null;try{await fb.auth.signOut();}catch(e){}return;}
     lsSet(LUKEY,{email:lc(u.email),at:nowIso()});
     applyUserBranch();locked=false;syncState='syncing';
@@ -1285,10 +1370,11 @@ async function onAuth(u){
     startLive();flush();if(isAdmin())syncOtherBranches();
   }else{
     lsSet(LUKEY,null);locked=GATE;syncState='loggedout';editingNo=null;
-    renderBranch();show('backup');
+    renderBranch();show('backup');hideSplash(); // logged out: show the Login button, not the truck
   }
 }
 function login(){
+  hideSplash(); // party ne Login dabaya — ab truck hata do
   if(INAPP){toast('WhatsApp ke andar Google login nahi chalta — Chrome mein khol rahe hain');openInChrome();return;}
   if(!fb){toast(syncState==='nosetup'?'Pehle firebase-config.js mein setup karein (README dekhein)':'Cloud load nahi hua — internet check karke page reload karein');return;}
   const p=new firebase.auth.GoogleAuthProvider();p.setCustomParameters({prompt:'select_account'});
@@ -1320,17 +1406,32 @@ function renderGrStart(){
     return `<label>${esc(b.name)}<input type="number" min="1" step="1" inputmode="numeric" data-grstart="${b.id}" value="${grStartFor(b.id)}" ${isAdmin()?'':'disabled'}></label><small style="color:var(--ink-muted)">Agla GR number: <b>${nextSeq(d,b.id)}</b>${used?' · ab tak ka sabse bada: '+used:''}</small>`;}).join('');
   $('grStartRows').innerHTML=rows;$('grStartSave').hidden=!isAdmin();
 }
+function setGrStart(bid,n){ // returns a warning text or ''
+  const used=seqFromGrs(dbFor(bid).grs);
+  settings.grStart[bid]={n,t:nowIso(),by:email()};if(!settings.dirty.includes(bid))settings.dirty.push(bid);
+  return used>=n?branchById(bid).name+' mein '+used+' tak GR ban chuke hain — agla GR '+(used+1)+' hi aayega':'';
+}
 $('grStartSave').onclick=()=>{
   if(!isAdmin())return;let msg=[];
   document.querySelectorAll('[data-grstart]').forEach(i=>{const bid=i.dataset.grstart,n=Math.floor(+i.value);
     if(!(n>=1)){msg.push(branchById(bid).name+': sahi number daalein');return;}
-    if(n===grStartFor(bid))return;
-    const used=seqFromGrs(dbFor(bid).grs);
-    if(used>=n)msg.push(branchById(bid).name+' mein '+used+' tak GR ban chuke hain — agla GR '+(used+1)+' hi aayega');
-    settings.grStart[bid]={n,t:nowIso(),by:email()};if(!settings.dirty.includes(bid))settings.dirty.push(bid);});
+    if(n===grStartFor(bid))return; // untouched office: leave it unset (it will be asked on its first GR)
+    const w=setGrStart(bid,n);if(w)msg.push(w);});
   saveSettings();flushSoon();renderGrStart();if(curView==='gr'&&!editingNo)$('grNo').value=nextNo();
   toast(msg.length?msg.join(' | '):'GR number save ho gaya — agla GR: '+nextNo(),6000);
 };
+// First New GR in an office whose GR-book number was never set: ask the admin once.
+function askGrStartOnce(){
+  const bid=branch.id;
+  if(!GATE||!user||!isAdmin()||editingNo||settings.grStart[bid]||(settings.asked||{})[bid])return;
+  settings.asked=Object.assign({},settings.asked,{[bid]:1});saveSettings();
+  const v=prompt(branch.name+' — GR book ka pehla number likhein (jo party bataye, jaise 4501).\nYe sirf ek baar poochha jayega; uske baad har GR apne aap +1 badhega.\n(Baad mein badalna ho to: Backup & Login → GR Number)',String(nextSeq(db,bid)));
+  if(v===null)return;
+  const n=Math.floor(+String(v).replace(/[^0-9]/g,''));
+  if(!(n>=1)){toast('Number sahi nahi tha — Backup & Login → GR Number mein daal sakte hain',6000);return;}
+  const w=setGrStart(bid,n);saveSettings();flushSoon();$('grNo').value=nextNo();
+  toast(w||('GR book set — ye GR number: '+nextNo()+', uske baad apne aap aage badhega'),7000);
+}
 function renderCloud(){
   const t=db.lastSync?new Date(db.lastSync).toLocaleString('en-IN',{dateStyle:'medium',timeStyle:'short'}):'kabhi nahi';
   const pend=pendingCount();
@@ -1672,7 +1773,7 @@ function fmtDate(d){if(!d)return '';const [y,m,dd]=String(d).split('-');return d
 let tt;function toast(m,ms){const t=$('toast');t.textContent=m;t.hidden=false;clearTimeout(tt);tt=setTimeout(()=>t.hidden=true,ms||3500);}
 
 if('serviceWorker' in navigator&&location.protocol==='https:'&&CFG)navigator.serviceWorker.register('sw.js').catch(()=>{});
-if(/^#bill=/.test(location.hash)){renderBillPage();return;} // customer's bill link: no login, no app
+if(/^#bill=/.test(location.hash)){renderBillPage();hideSplash();return;} // customer's bill link: no login, no app
 refreshParties();refreshItems();refreshCityList();renderBranch();resetForm();show('dash');initCloud();
 })();
 </script>
