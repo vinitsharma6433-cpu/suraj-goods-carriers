@@ -54,11 +54,21 @@ aside{background:var(--navy-900);color:var(--on-navy);padding:20px 14px;display:
 .side-bottom{margin-top:auto;font-size:12px;opacity:.9;display:grid;gap:6px;padding:0 4px}
 kbd{font-family:var(--font-mono);font-size:11px;padding:1px 6px;border-radius:var(--r-sm);background:var(--navy-700);color:var(--on-navy)}
 main{padding-block:24px;padding-inline:28px;min-width:0;display:flex;flex-direction:column;gap:20px}
+main.has-bottom-bar{padding-bottom:76px}
+.bottom-bar{position:fixed;left:240px;right:0;bottom:0;z-index:40;background:var(--surface-000);border-top:1px solid var(--line);box-shadow:0 -2px 10px rgba(15,30,61,.08);padding:10px 28px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.bottom-bar .btn{padding:10px 18px;font-size:14px}
+.bottom-bar .btn.primary{order:2}
+.bottom-bar .spacer{flex:1}
+.bottom-bar small{color:var(--ink-muted);font-size:11px}
+@media (max-width:900px){.bottom-bar{left:0;padding-inline:14px}}
 header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
 .eyebrow{font-size:11px;letter-spacing:.08em;font-weight:600;color:var(--ink-muted)}
 h1{margin:0;font-size:24px;line-height:32px}
 .btn{font-weight:600;padding:8px 16px;border-radius:var(--r-md);border:1px solid var(--line);background:var(--surface-000);cursor:pointer}
 .btn:focus-visible,.nav:focus-visible{outline:2px solid var(--sun-500);outline-offset:2px}
+/* Bottom bar: keyboard se navigate karte waqt jo button focus mein hai wo poora bhara/highlighted dikhe */
+.bottom-bar .btn:focus-visible{outline:none;background:var(--sun-500);border-color:var(--sun-500);color:#152033;box-shadow:0 0 0 3px var(--sun-100)}
+.bottom-bar .btn:disabled{opacity:.45;cursor:not-allowed}
 .btn.primary{background:var(--sun-500);border-color:var(--sun-500);color:#152033}
 .btn.ghost{background:transparent;border-color:transparent}
 .btn.small{font-size:12px;padding:4px 10px;border-radius:var(--r-sm);background:var(--surface-200);border-color:transparent}
@@ -178,8 +188,8 @@ body.locked #view-backup .backup-grid{grid-template-columns:minmax(0,420px)}
 .bt2 .t{font-size:.76em;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:#555}
 .bt2 .pn{font-size:1.2em;font-weight:900}
 .bt2 .v{font-weight:700;min-height:1.2em}
-.bt2 .sh{display:grid;grid-template-columns:.85fr .85fr 1fr 1.55fr 1.75fr .7fr;border-bottom:1px solid #111}
-.bt2 .sh>div:nth-child(4) .v,.bt2 .sh>div:nth-child(5) .v{font-weight:900;font-size:1.05em}
+.bt2 .sh{display:grid;grid-template-columns:.85fr .85fr 1fr .95fr .95fr 1.75fr .7fr;border-bottom:1px solid #111}
+.bt2 .sh>div:nth-child(4) .v,.bt2 .sh>div:nth-child(6) .v{font-weight:900;font-size:1.05em}
 .bt2 .sh>div{padding:3px 6px;font-size:1.1em;border-right:1px solid #111;min-width:0;overflow-wrap:anywhere}.bt2 .sh>div:last-child{border-right:0}
 .bt2 .pay{display:inline-block;border:1.5px solid #111;border-radius:3px;padding:0 5px;font-weight:900}
 .bt2 .mid{display:grid;grid-template-columns:1.2fr 1fr;flex:1;border-bottom:1px solid #111;min-height:0}
@@ -431,6 +441,7 @@ body.locked #view-backup .backup-grid{grid-template-columns:minmax(0,420px)}
         <datalist id="gstList"></datalist>
         <datalist id="itemsList"></datalist>
         <datalist id="cityList"></datalist>
+        <datalist id="packList"></datalist>
 
         <div class="section-title">Shipment Details</div>
         <div class="form-grid">
@@ -443,9 +454,14 @@ body.locked #view-backup .backup-grid{grid-template-columns:minmax(0,420px)}
           <label style="grid-column:span 2">E-Way Bill No.<input id="ewb" class="mono" placeholder="Optional — ek se zyada ho to comma lagayein" maxlength="300" style="font-weight:700"></label>
           <label>No. of Articles<input id="articles" type="number" min="0" step="1" inputmode="numeric" placeholder="0"></label>
           <label>Contents<input id="contents" list="itemsList" placeholder="Goods / material"></label>
+          <label>Packaging Type<input id="packType" list="packList" placeholder="Bundle / Carton / Bag..."></label>
           <label>Actual Weight (kg)<input id="actWt" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0"></label>
           <label>Charge Weight (kg)<input id="chWt" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0"></label>
-          <label>Payment<select id="payMode"><option>To Pay</option><option>Paid</option><option>TBB</option></select></label>
+          <label>Payment<select id="payMode"><option>To Pay</option><option>Paid</option><option>TBB</option></select>
+            <span id="payShowWrap" hidden style="display:flex;align-items:center;gap:5px;margin-top:5px;font-weight:400;font-size:11px;line-height:1.3;color:var(--ink-muted)"><input type="checkbox" id="payShowBilti" style="width:auto;margin:0"> Bilti print par hisaab dikhayein? (na to ₹0.00)</span>
+          </label>
+          <label>Invoice Value (₹)<input id="invoiceVal" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Is maal ka bill value"></label>
+          <label>Private Marka<input id="privateMarka" placeholder="Party ka private marka/code"></label>
         </div>
 
         <div class="charges">
@@ -454,7 +470,7 @@ body.locked #view-backup .backup-grid{grid-template-columns:minmax(0,420px)}
           <label>Stat. Charge<input id="chStat" class="charge" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0"></label>
           <label>COD<input id="chCod" class="charge" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0"></label>
           <label>Risk Charge<input id="chRisk" class="charge" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0"></label>
-          <label>GST %<input id="gstRate" type="number" min="0" max="28" step=".01" value="5" inputmode="decimal"></label>
+          <label>GST %<input id="gstRate" type="number" min="0" max="28" step=".01" value="0" inputmode="decimal" disabled title="Transport par GST nahi lagta — Consignor/Consignee khud RCM mein pay karte hain"></label>
           <div class="total"><b>Sub Total</b><strong id="grandTotal">₹0</strong></div>
           <div class="total"><b>GST</b><strong id="gstAmt">₹0</strong></div>
           <div class="total"><b>Grand Total</b><strong id="gTotal">₹0</strong></div>
@@ -486,6 +502,11 @@ body.locked #view-backup .backup-grid{grid-template-columns:minmax(0,420px)}
         <label>Date<input id="mfDate" type="date"></label>
         <label>To (route filter)<input id="mfTo" list="cityList" placeholder="Sab routes"></label>
       </div>
+      <div class="actions" style="align-items:center;flex-wrap:wrap;gap:8px">
+        <button class="btn" id="mfSelToday" type="button">📅 Aaj ki saari GR chunein</button>
+        <label style="margin:0;display:flex;align-items:center;gap:6px">Ya date se<input id="mfSelDate" type="date" style="width:auto"></label>
+        <button class="btn" id="mfSelByDate" type="button">Is date ki GR chunein</button>
+      </div>
       <div class="actions" style="align-items:center"><button class="btn primary" id="mfCreate" type="button">Manifest banayein + Print</button><span id="mfSel" class="chip sample">0 GR chune</span></div>
       <div class="table-wrap"><table>
         <thead><tr><th><input type="checkbox" id="mfAll" style="width:auto" title="Sab chunein"></th><th>GR No.</th><th>Date</th><th>Consignor</th><th>Consignee</th><th>To</th><th class="num">Articles</th><th class="num">Weight</th><th>Payment</th><th class="num">Total</th></tr></thead>
@@ -516,7 +537,7 @@ body.locked #view-backup .backup-grid{grid-template-columns:minmax(0,420px)}
         <label>Mobile<input id="custMob" inputmode="tel" maxlength="16" placeholder="Mobile"></label>
         <label>City<input id="custCity" list="cityList" placeholder="City"></label>
         <label>Address<input id="custAddr" placeholder="Address"></label>
-        <div class="full" style="grid-column:1/-1"><button type="submit" class="btn primary" id="custSave">Save Customer</button> <button type="reset" class="btn" id="custClear">Clear</button></div>
+        <div class="full" style="grid-column:1/-1"><button type="submit" class="btn primary" id="custSave">Save Customer</button> <button type="reset" class="btn" id="custClear">Clear</button> <button type="button" class="btn" id="custDelete" hidden style="color:var(--danger)">Delete Customer</button></div>
       </form>
       <div class="actions" style="margin:8px 0 -4px"><input id="custSearch" placeholder="Customer search karein" style="max-width:320px"></div>
       <div class="table-wrap"><table>
@@ -586,6 +607,12 @@ body.locked #view-backup .backup-grid{grid-template-columns:minmax(0,420px)}
           <div class="actions"><button class="btn primary" id="grStartSave" type="button">Save GR Number</button></div>
         </div>
         <div class="bk">
+          <h3>Manifest Number</h3>
+          <p>Manifest/Loading Sheet ka number bhi GR jaisa hi — jo likhenge wahi se agla manifest number shuru hoga (jaise sgc012345), uske baad apne aap aage badhega. Har office ki ginti alag.</p>
+          <div id="mfStartRows" style="display:grid;gap:6px"></div>
+          <div class="actions"><button class="btn primary" id="mfStartSave" type="button">Save Manifest Number</button></div>
+        </div>
+        <div class="bk">
           <h3>Printer</h3>
           <p>Is computer/mobile ke printer ke hisaab se Bilti ka size chunein. Print dialog mein Scale 100% rakhein.</p>
           <select id="billtyDesign"><option value="new">Bilti design — Naya</option><option value="old">Bilti design — Purana</option></select>
@@ -599,6 +626,18 @@ body.locked #view-backup .backup-grid{grid-template-columns:minmax(0,420px)}
       <div class="soon">—</div>
     </section>
   </main>
+
+  <!-- Bottom action bar: GR / Booking screen par hamesha neeche dikhta hai, scroll karne ki zaroorat nahi -->
+  <div class="bottom-bar" id="grBottomBar" hidden>
+    <button type="button" class="btn" id="bbNew">＋ New GR <small>F2</small></button>
+    <button type="button" class="btn" id="bbClear"><span id="bbClearLabel">Clear</span></button>
+    <button type="submit" form="grForm" class="btn primary" id="bbSave"><span id="bbSaveLabel">Save GR</span> <small>Ctrl+S</small></button>
+    <button type="button" class="btn" id="bbView" disabled>👁 View</button>
+    <button type="button" class="btn" id="bbEdit" disabled>✎ Edit</button>
+    <button type="button" class="btn" id="bbPrint" disabled>🖨 Print Bilti</button>
+    <div class="spacer"></div>
+    <small>Enter dabate jaao — agle field mein chala jaayega</small>
+  </div>
 </div>
 <div class="toast" id="toast" hidden></div>
 <div class="rwin" id="rmenu" hidden role="dialog" aria-modal="true" aria-labelledby="rmenuTitle">
@@ -618,6 +657,12 @@ body.locked #view-backup .backup-grid{grid-template-columns:minmax(0,420px)}
   <div class="rwin-box">
     <div class="rwin-head"><div class="rwin-t"><button type="button" class="rwin-back" id="rwinBack">☰ Reports</button><h3 id="rwinTitle">—</h3></div><button type="button" class="rwin-x" data-rclose aria-label="Band karein">✕</button></div>
     <div class="rwin-body" id="rwinBody"></div>
+  </div>
+</div>
+<div class="rwin" id="mfEditWin" hidden role="dialog" aria-modal="true" aria-labelledby="mfEditTitle">
+  <div class="rwin-box">
+    <div class="rwin-head"><div class="rwin-t"><h3 id="mfEditTitle">Manifest Edit</h3></div><button type="button" class="rwin-x" id="mfEditClose" aria-label="Band karein">✕</button></div>
+    <div class="rwin-body" id="mfEditBody"></div>
   </div>
 </div>
 <div class="sgc-flashbg" id="sgcFlashBg"></div>
@@ -816,8 +861,9 @@ function seqFromGrs(list){return (list||[]).filter(g=>!g.sample).reduce((m,g)=>M
 // GR number = plain number like the office's own GR book (e.g. 4501); each office has its own series.
 // The first number is set once in Backup & Login -> GR Number (shared by all devices through the cloud).
 const SKEY='sgc_settings';
-let settings=Object.assign({grStart:{},receipts:{},dirty:[]},lsGet(SKEY)||{});
+let settings=Object.assign({grStart:{},mfStart:{},receipts:{},dirty:[]},lsGet(SKEY)||{});
 if(!settings.receipts)settings.receipts={};
+if(!settings.mfStart)settings.mfStart={};
 function saveSettings(){lsSet(SKEY,settings);}
 function grStartFor(bid){const s=settings.grStart[bid];if(s&&+s.n>0)return +s.n;const b=(CFG&&CFG.branches||[]).find(x=>String(x.id).toUpperCase().replace(/[^A-Z0-9]/g,'')===bid);return (b&&+b.grStart>0)?+b.grStart:1;}
 function nextSeq(d,bid){return Math.max(d.seq||0,seqFromGrs(d.grs),grStartFor(bid||branch.id)-1)+1;}
@@ -842,7 +888,7 @@ function switchBranch(id,silent){
   if(!canSwitch()){renderBranch();return;}
   if(curView==='gr'&&(editingNo||!formPristine())&&!confirm('GR form mein bhara hua data hat jayega. Office badlein?')){renderBranch();return;}
   branch=b;lsSet(BKEY,b.id);db=loadBranchDb(b.id);
-  resetForm();$('savedStrip').hidden=true;renderBranch();
+  resetForm();$('savedStrip').hidden=true;['bbPrint','bbView','bbEdit'].forEach(id=>{if($(id))$(id).disabled=true;});renderBranch();
   if(user)startLive();
   renderView(curView);renderCloud();
   if(!silent)toast(b.name+' khula');
@@ -871,6 +917,9 @@ function show(v){
   $('pageTitle').textContent=locked?'Login':(v==='gr'&&editingNo?'Edit GR':TITLES[v]);
   renderView(v);
   if(v==='gr'){if(!editingNo){if(!$('grNo').value)resetForm();else $('grNo').value=nextNo();}setTimeout(()=>{askGrStartOnce();$('cnrName').focus();},0);}
+  const showBar=!locked&&v==='gr';
+  if($('grBottomBar'))$('grBottomBar').hidden=!showBar;
+  document.querySelector('main').classList.toggle('has-bottom-bar',showBar);
 }
 function renderView(v){const f={dash:renderDash,register:renderRegister,manifest:renderManifest,delivery:renderDelivery,customers:renderCustomers,accounts:renderAccounts,reports:renderReports,backup:renderCloud}[v];if(f)f();}
 function refreshView(){
@@ -996,7 +1045,10 @@ $('delRows').addEventListener('click',e=>{
   g.status='Delivered';g.pod={by,date,at:nowIso()};touch(g);
   if(byEl)byEl.value='';renderDelivery();toast(n+' delivered mark ho gaya');
 });
-$('delRows').addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.dataset.podBy!==undefined){e.preventDefault();const b=document.querySelector(`[data-pod-mark="${e.target.dataset.podBy}"]`);b&&b.click();}});
+// POD: Receiver naam -> Enter -> Date -> Enter -> Delivered mark
+$('delRows').addEventListener('keydown',e=>{if(e.key!=='Enter')return;const d=e.target.dataset;
+  if(d.podBy!==undefined){e.preventDefault();const n=document.querySelector(`[data-pod-date="${d.podBy}"]`);if(n)n.focus();else{const b=document.querySelector(`[data-pod-mark="${d.podBy}"]`);b&&b.click();}}
+  else if(d.podDate!==undefined){e.preventDefault();const b=document.querySelector(`[data-pod-mark="${d.podDate}"]`);b&&b.click();}});
 
 /* ================= Goods / Items master ================= */
 function itemNames(){return Object.values(items.map).filter(x=>x.on).map(x=>x.n).sort((a,b)=>a.localeCompare(b));}
@@ -1027,10 +1079,20 @@ function upsertParty(p,force){
   const base=i>=0?parties[i]:{};const out=Object.assign({},base);let changed=i<0;
   ['name','gst','mob','city','addr'].forEach(k=>{const v=String(p[k]||'').trim();if((force||v)&&v!==(out[k]||'')&&!(k==='name'&&i>=0&&!force)){out[k]=v;changed=true;}});
   if(!out.name)out.name=String(p.name).trim();
+  if(force&&out.deleted){delete out.deleted;changed=true;} // re-saving a deleted customer brings it back
   if(!changed)return;
   out.savedAt=nowIso();
   if(i>=0)parties[i]=out;else parties.push(out);
   if(!pmeta.dirty.includes(id))pmeta.dirty.push(id);
+  saveParties();savePm();refreshParties();flushSoon();
+}
+/* Delete = soft delete (deleted:true). GR/payment history is untouched (names are
+   stored directly on each GR/receipt, not linked to this record) — a deleted customer
+   just stops appearing in the Customers list and in the new-GR name suggestions. */
+function deleteParty(name){
+  const p=findParty(name);if(!p||p.deleted)return;
+  p.deleted=true;p.savedAt=nowIso();
+  const id=partyId(p.name);if(!pmeta.dirty.includes(id))pmeta.dirty.push(id);
   saveParties();savePm();refreshParties();flushSoon();
 }
 function custStats(name){
@@ -1040,7 +1102,7 @@ function custStats(name){
 }
 function renderCustomers(){
   const q=lc($('custSearch').value);
-  let list=parties.slice().sort((a,b)=>a.name.localeCompare(b.name));
+  let list=parties.filter(p=>!p.deleted).sort((a,b)=>a.name.localeCompare(b.name));
   if(q)list=list.filter(p=>[p.name,p.gst,p.mob,p.city,p.addr].join(' ').toLowerCase().includes(q));
   $('custRows').innerHTML=list.length?list.slice(0,500).map(p=>{const s=custStats(p.name);
     return `<tr data-cust="${esc(p.name)}" style="cursor:pointer" title="Edit karne ke liye click karein"><td>${esc(p.name)}</td><td class="mono">${esc(p.gst||'')}</td><td>${esc(p.mob||'')}</td><td>${esc(p.city||'')}</td><td>${esc(p.addr||'')}</td><td class="num">${s.grs}</td><td class="num">${inr(s.total)}</td></tr>`;
@@ -1049,8 +1111,18 @@ function renderCustomers(){
 }
 $('custRows').addEventListener('click',e=>{const r=e.target.closest('[data-cust]');if(!r)return;const p=findParty(r.dataset.cust);if(!p)return;
   $('custName').value=p.name;$('custGst').value=p.gst||'';$('custMob').value=p.mob||'';$('custCity').value=p.city||'';$('custAddr').value=p.addr||'';
-  $('custName').dataset.editing=p.name;$('custName').readOnly=true;$('custSave').textContent='Update Customer';$('custGst').focus();window.scrollTo({top:0,behavior:'smooth'});});
-$('custForm').addEventListener('reset',()=>{delete $('custName').dataset.editing;$('custName').readOnly=false;$('custSave').textContent='Save Customer';});
+  $('custName').dataset.editing=p.name;$('custName').readOnly=true;$('custSave').textContent='Update Customer';$('custDelete').hidden=false;$('custGst').focus();window.scrollTo({top:0,behavior:'smooth'});});
+$('custForm').addEventListener('reset',()=>{delete $('custName').dataset.editing;$('custName').readOnly=false;$('custSave').textContent='Save Customer';$('custDelete').hidden=true;});
+$('custDelete').addEventListener('click',()=>{
+  const name=$('custName').dataset.editing;if(!name)return;
+  const s=custStats(name);
+  const msg='"'+name+'" ko customer list se hata dein?'+(s.grs?' Iski '+s.grs+' bilti already bani hui hai — wo record surakshit rahega, bas naya GR banate waqt ye naam ab suggest nahi hoga.':'');
+  if(!confirm(msg))return;
+  deleteParty(name);
+  $('custForm').reset();
+  toast(name+' customer list se hata diya gaya');
+  renderCustomers();
+});
 $('custGst').addEventListener('input',()=>$('custGst').value=$('custGst').value.toUpperCase().replace(/\s/g,''));
 $('custForm').addEventListener('submit',e=>{
   e.preventDefault();
@@ -1200,7 +1272,9 @@ function grSlipHtml(g){
     ${row('Consignee',esc(g.cne.name)+(g.cne.mob?' · Mob '+esc(g.cne.mob):'')+(g.cne.gst?' · GSTIN '+esc(g.cne.gst):''))}
     ${row('From → To',esc(g.from)+' → '+esc(g.to)+(g.deliveryAt?' (Delivery at '+esc(g.deliveryAt)+')':''))}
     ${row('Invoice / E-Way Bill',(g.invoice||'—')+' / '+(g.ewb||'—'))}
-    ${row('Articles / Wt',(g.articles||0)+' articles · Actual '+(g.actWt||0)+' kg · Charge '+(g.chWt||0)+' kg')}
+    ${row('Invoice Value',g.invoiceVal?'₹'+money(g.invoiceVal):'—')}
+    ${row('Private Marka',esc(g.privateMarka||'—'))}
+    ${row('Articles / Wt',(g.articles||0)+' articles'+(g.packType?' ('+esc(g.packType)+')':'')+' · Actual '+(g.actWt||0)+' kg · Charge '+(g.chWt||0)+' kg')}
     ${row('Contents',esc(g.contents||''))}
     ${row('Payment Mode',esc(g.payMode||''))}
     ${row('Freight / D.D / Stat / COD / Risk',[c.freight,c.dd,c.stat,c.cod,c.risk].map(v=>'₹'+money(v||0)).join(' / '))}
@@ -1251,7 +1325,7 @@ $('rpMenuBtn').onclick=openRepMenu;
 function allPartyNames(){return cached('names',buildPartyNames);}
 function buildPartyNames(){
   const m=new Map(),add=(name,sub)=>{name=String(name||'').trim();if(!name)return;const k=lc(name);const cur=m.get(k);if(!cur)m.set(k,{name,sub:sub||''});else if(sub&&!cur.sub)cur.sub=sub;};
-  parties.forEach(p=>add(p.name,[p.city,p.mob,p.gst].filter(Boolean).join(' · ')));
+  parties.filter(p=>!p.deleted).forEach(p=>add(p.name,[p.city,p.mob,p.gst].filter(Boolean).join(' · ')));
   for(let i=db.grs.length-1;i>=0;i--){const g=db.grs[i];if(!liveGr(g))continue;
     add(g.cnr&&g.cnr.name,[g.from,g.cnr.mob].filter(Boolean).join(' · '));add(g.cne&&g.cne.name,[g.to,g.cne.mob].filter(Boolean).join(' · '));}
   branchReceipts().forEach(r=>add(r.partyName,''));
@@ -1275,7 +1349,8 @@ function nameSearch(input,onPick,opt){opt=opt||{};
   const pick=i=>{const p=list[i];if(!p)return;input.value=p.name;box.hidden=true;onPick&&onPick(p.name);};
   input.addEventListener('input',render);
   input.addEventListener('keydown',e=>{
-    if(e.key==='Enter'){e.preventDefault();if(!box.hidden&&idx>=0)pick(idx);else{box.hidden=true;onPick&&onPick(input.value.trim());}return;}
+    if(e.key==='Enter'){e.preventDefault();if(!box.hidden&&idx>=0)pick(idx);else{box.hidden=true;onPick&&onPick(input.value.trim());}
+      if(document.activeElement===input&&!e.ctrlKey&&!e.shiftKey)goNext(input);return;} // naam chunne ke baad agla khana
     if(box.hidden)return;
     if(e.key==='ArrowDown'||e.key==='ArrowUp'){e.preventDefault();idx=(idx+(e.key==='ArrowDown'?1:-1)+list.length)%list.length;paint();}
     else if(e.key==='Escape'){box.hidden=true;e.stopPropagation();}
@@ -1335,7 +1410,7 @@ REP_WIN.cust={
       <label>Party ka naam (1–2 word likhein)<input id="rw_party" data-focus placeholder="Jaise Nav Durga" value="${esc(o.party||'')}"></label>
       <label>From date<input type="date" id="rw_from" value="${esc(o.from||fyStart())}"></label>
       <label>To date<input type="date" id="rw_to" value="${esc(o.to||today())}"></label>
-      <label>&nbsp;<button class="btn primary" id="rw_go" type="button">Dekho</button></label>
+      <label>&nbsp;<button class="btn primary" id="rw_go" type="button">View</button></label>
     </div>
     <div id="rw_out"><p class="rw-note">Party ka naam likhein aur list se chunein — khata yahin khul jayega.</p></div>`,
   mount(o){
@@ -1406,7 +1481,7 @@ REP_WIN.company={
       <label>From date<input type="date" id="rw_from" data-focus value="${esc(o.from||monthStart())}"></label>
       <label>To date<input type="date" id="rw_to" value="${esc(o.to||today())}"></label>
       <label>Payment<select id="rw_pm"><option value="">Sab</option><option>Paid</option><option>To Pay</option><option>TBB</option></select></label>
-      <label>&nbsp;<button class="btn primary" id="rw_go" type="button">Dekho</button></label>
+      <label>&nbsp;<button class="btn primary" id="rw_go" type="button">View</button></label>
     </div><div id="rw_out"></div>`,
   mount(){
     const run=()=>{
@@ -1500,7 +1575,6 @@ REP_WIN.pay={
     };
     nameSearch(rw('party'),()=>{showBal();rw('amt').focus();});
     rw('party').addEventListener('change',showBal);
-    rw('amt').addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();save();}});
     rw('save').onclick=save;
     nameSearch(rw('lparty'),renderList);rw('lparty').addEventListener('input',renderList);
     ['lfrom','lto'].forEach(k=>rw(k).addEventListener('change',renderList));
@@ -1604,15 +1678,50 @@ function renderManifest(){
   $('mfAll').checked=false;mfCount();
   const list=mfAll().slice(0,60);
   $('mfList').innerHTML=list.length?list.map(({mf,grs})=>{const tp=grs.filter(g=>g.payMode==='To Pay').reduce((s,g)=>s+amtOf(g),0);const w=driverWa(mf,grs);
-    return `<tr><td class="mono">${esc(mf.no)}</td><td>${fmtDate(mf.date)}</td><td class="mono">${esc(mf.vehicle)}</td><td>${esc(mf.driver||'')}${mf.dmob?' · '+esc(mf.dmob):''}</td><td class="num">${grs.length}</td><td class="num">${inr(tp)}</td><td><div class="row-actions"><button class="btn small" data-mfprint="${esc(mf.no)}">Print</button><a class="btn small wa" ${w?`href="${esc(w)}"`:'aria-disabled="true"'} target="_blank" rel="noopener">WA Driver</a><button class="btn small" data-mfcancel="${esc(mf.no)}" style="color:var(--danger)">Cancel</button></div></td></tr>`;}).join('')
+    return `<tr><td class="mono">${esc(mf.no)}</td><td>${fmtDate(mf.date)}</td><td class="mono">${esc(mf.vehicle)}</td><td>${esc(mf.driver||'')}${mf.dmob?' · '+esc(mf.dmob):''}</td><td class="num">${grs.length}</td><td class="num">${inr(tp)}</td><td><div class="row-actions"><button class="btn small" data-mfview="${esc(mf.no)}">View</button><button class="btn small" data-mfedit="${esc(mf.no)}">Edit</button><button class="btn small" data-mfprint="${esc(mf.no)}">Print</button><a class="btn small wa" ${w?`href="${esc(w)}"`:'aria-disabled="true"'} target="_blank" rel="noopener">WA Driver</a><button class="btn small" data-mfcancel="${esc(mf.no)}" style="color:var(--danger)">Cancel</button></div></td></tr>`;}).join('')
     :'<tr><td colspan="7" class="empty">Abhi koi manifest nahi bana.</td></tr>';
 }
 function mfCount(){const n=document.querySelectorAll('#mfRows input:checked').length;$('mfSel').textContent=n+' GR chune';}
 $('mfRows').addEventListener('change',mfCount);
 $('mfAll').addEventListener('change',()=>{document.querySelectorAll('#mfRows input[data-mf]').forEach(c=>c.checked=$('mfAll').checked);mfCount();});
 $('mfTo').addEventListener('input',()=>{if(!document.querySelector('#mfRows input:checked'))renderManifest();});
+// Ek click mein "aaj ki" ya kisi bhi chuni hui date ki saari pending GR select kar do
+function mfSelectByDate(d){
+  if(!d){toast('Date chunein');return;}
+  let n=0;
+  document.querySelectorAll('#mfRows input[data-mf]').forEach(cb=>{
+    const g=db.grs.find(x=>x.no===cb.dataset.mf);
+    cb.checked=!!(g&&g.date===d);if(cb.checked)n++;
+  });
+  mfCount();
+  toast(n?n+' GR chuni gayi ('+fmtDate(d)+' ki)':'Is date ki koi pending GR nahi mili',4000);
+}
+if($('mfSelDate')&&!$('mfSelDate').value)$('mfSelDate').value=today();
+if($('mfSelToday'))$('mfSelToday').onclick=()=>mfSelectByDate(today());
+if($('mfSelByDate'))$('mfSelByDate').onclick=()=>mfSelectByDate($('mfSelDate').value);
 $('mfVehicle').addEventListener('input',()=>$('mfVehicle').value=$('mfVehicle').value.toUpperCase());
-function nextMfNo(){const n=db.grs.reduce((m,g)=>g.mf&&g.mf.no?Math.max(m,noNum(g.mf.no)):m,0)+1;return 'MF-'+branch.id+'-'+new Date().getFullYear()+'-'+String(n).padStart(4,'0');}
+// Manifest number = GR jaisa hi — admin ek baar Backup & Login -> Manifest Number mein likh de (jaise sgc012345),
+// uske baad har naya manifest apne aap trailing digits +1 karke aage badhega (sgc012346, sgc012347…).
+function mfNumBump(s){const m=/^(.*?)(\d+)$/.exec(String(s||''));if(!m)return String(s||'')+'-2';
+  const width=m[2].length,n=(+m[2])+1;return m[1]+String(n).padStart(width,'0');}
+function mfStartFor(bid){const s=settings.mfStart[bid];return (s&&s.no)?s.no:'sgc012345';}
+function mfUsedSet(bid){const d=dbFor(bid);return new Set(d.grs.filter(g=>g.mf&&g.mf.no).map(g=>g.mf.no));}
+function nextMfNo(){const bid=branch.id;let no=mfStartFor(bid);const used=mfUsedSet(bid);let guard=0;
+  while(used.has(no)&&guard<100000){no=mfNumBump(no);guard++;}return no;}
+function setMfStart(bid,no){settings.mfStart[bid]={no,t:nowIso(),by:email()};if(!settings.dirty.includes('mf:'+bid))settings.dirty.push('mf:'+bid);}
+function renderMfStart(){
+  const rows=BRANCHES.filter(b=>canUse(b.id)).map(b=>`<label>${esc(b.name)}<input type="text" data-mfstart="${b.id}" value="${esc(mfStartFor(b.id))}" ${isAdmin()?'':'disabled'}></label><small style="color:var(--ink-muted)">Agla manifest number: <b>${esc(b.id===branch.id?nextMfNo():mfStartFor(b.id))}</b></small>`).join('');
+  if($('mfStartRows'))$('mfStartRows').innerHTML=rows;if($('mfStartSave'))$('mfStartSave').hidden=!isAdmin();
+}
+if($('mfStartSave'))$('mfStartSave').onclick=()=>{
+  if(!isAdmin())return;let msg=[];
+  document.querySelectorAll('[data-mfstart]').forEach(i=>{const bid=i.dataset.mfstart,v=i.value.trim();
+    if(!v){msg.push(branchById(bid).name+': sahi number daalein');return;}
+    if(v===mfStartFor(bid))return;
+    setMfStart(bid,v);});
+  saveSettings();flushSoon();renderMfStart();
+  toast(msg.length?msg.join(' | '):'Manifest number save ho gaya — agla manifest: '+nextMfNo(),6000);
+};
 $('mfCreate').onclick=()=>{
   const nos=[...document.querySelectorAll('#mfRows input:checked')].map(c=>c.dataset.mf);
   const vehicle=$('mfVehicle').value.trim().toUpperCase().replace(/\s+/g,' '),dmob=normMob($('mfDmob').value);
@@ -1625,20 +1734,71 @@ $('mfCreate').onclick=()=>{
   ['mfVehicle','mfDriver','mfDmob'].forEach(i=>$(i).value='');$('mfTo').value='';renderManifest();toast(mf.no+' bana — '+grs.length+' GR');
 };
 $('mfList').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
-  const no=b.dataset.mfprint||b.dataset.mfcancel;const grp=mfAll().find(x=>x.mf.no===no);if(!grp)return;
+  const no=b.dataset.mfprint||b.dataset.mfcancel||b.dataset.mfview||b.dataset.mfedit;const grp=mfAll().find(x=>x.mf.no===no);if(!grp)return;
   if(b.dataset.mfprint){printManifest(grp.mf,grp.grs);return;}
+  if(b.dataset.mfview){printManifest(grp.mf,grp.grs);return;} // preview khulta hai — bina print kiye Close bhi kar sakte hain
+  if(b.dataset.mfedit){openMfEdit(no);return;}
   if(!confirm(no+' cancel karein? Iske '+grp.grs.length+' GR wapas "load karne ke liye" list mein aa jayenge.'))return;
   grp.grs.forEach(g=>{delete g.mf;g.savedAt=nowIso();markDirty(db,g.no);});save();flushSoon();renderManifest();toast(no+' cancel ho gaya');
 });
+// Manifest Edit — galti se galat GR ya galat vehicle/driver daal diya ho to yahin se theek karein (poora cancel karne ki zaroorat nahi)
+function openMfEdit(no){
+  const grp=mfAll().find(x=>x.mf.no===no);if(!grp)return;
+  const {mf,grs}=grp;
+  $('mfEditTitle').textContent='Manifest Edit — '+mf.no;
+  $('mfEditBody').innerHTML=`
+    <div class="form-grid">
+      <label>Vehicle No.<input id="mfeVehicle" class="mono" value="${esc(mf.vehicle||'')}"></label>
+      <label>Driver Name<input id="mfeDriver" value="${esc(mf.driver||'')}"></label>
+      <label>Driver Mobile<input id="mfeDmob" inputmode="tel" maxlength="16" value="${esc(mf.dmob||'')}"></label>
+    </div>
+    <div class="actions"><button class="btn primary" id="mfeSave" type="button">Vehicle/Driver Save karein</button></div>
+    <div class="section-title">Is manifest mein load GR (galat GR ho to ✕ se nikal dein)</div>
+    <div class="table-wrap"><table>
+      <thead><tr><th>GR No.</th><th>Consignee</th><th>To</th><th class="num">Articles</th><th></th></tr></thead>
+      <tbody>${grs.map(g=>`<tr><td class="mono">${esc(g.no)}</td><td>${esc(g.cne.name)}</td><td>${esc(g.to)}</td><td class="num">${g.articles||0}</td><td><button type="button" class="btn small" data-mferemove="${esc(g.no)}" style="color:var(--danger)">✕ Nikalein</button></td></tr>`).join('')}</tbody>
+    </table></div>`;
+  $('mfEditWin').hidden=false;document.body.style.overflow='hidden';
+  $('mfeSave').onclick=()=>{
+    const vehicle=$('mfeVehicle').value.trim().toUpperCase().replace(/\s+/g,' '),driver=$('mfeDriver').value.trim(),dmob=normMob($('mfeDmob').value);
+    if(!vehicle){toast('Vehicle number likhein');return;}
+    if($('mfeDmob').value.trim()&&!mobOk(dmob)){toast('Driver mobile 10 digit ka hona chahiye');return;}
+    grs.forEach(g=>{if(g.mf&&g.mf.no===no){g.mf=Object.assign({},g.mf,{vehicle,driver,dmob:mobOk(dmob)?dmob:''});g.savedAt=nowIso();markDirty(db,g.no);}});
+    save();flushSoon();renderManifest();closeMfEdit();toast(no+' update ho gaya');
+  };
+  $('mfEditBody').querySelectorAll('[data-mferemove]').forEach(btn=>{
+    btn.onclick=()=>{
+      const gno=btn.dataset.mferemove;
+      if(!confirm(gno+' ko is manifest se nikal dein? Ye GR wapas "load karne ke liye" list mein aa jayega.'))return;
+      const g=db.grs.find(x=>x.no===gno);if(g){delete g.mf;g.savedAt=nowIso();markDirty(db,g.no);}
+      save();flushSoon();renderManifest();
+      if(mfAll().find(x=>x.mf.no===no))openMfEdit(no);else closeMfEdit(); // agar sab GR nikal diye to window band kar do
+      toast(gno+' nikal diya');
+    };
+  });
+}
+function closeMfEdit(){$('mfEditWin').hidden=true;document.body.style.overflow='';}
+$('mfEditClose').onclick=closeMfEdit;
+$('mfEditWin').addEventListener('click',e=>{if(e.target.id==='mfEditWin')closeMfEdit();});
 function driverWa(mf,grs){if(!mobOk(mf.dmob||''))return '';
   const msg=['*THE SURAJ GOODS CARRIERS* — Manifest '+mf.no,'Vehicle: '+mf.vehicle+' | Date: '+fmtDate(mf.date),'',...grs.map((g,i)=>(i+1)+'. '+g.no+' → '+g.cne.name+', '+g.to+' ('+(g.articles||0)+' art'+(g.payMode==='To Pay'?', To Pay ₹'+money(amtOf(g)):'')+')'),'','Total: '+grs.length+' GR, '+grs.reduce((s,g)=>s+(g.articles||0),0)+' articles'].join('\n');
   return 'https://wa.me/91'+mf.dmob+'?text='+encodeURIComponent(msg);}
 function printManifest(mf,grs){
   grs=grs.slice().sort(cmpNo);const sum=f=>grs.reduce((s,g)=>s+f(g),0);
+  const invNos=grs.map(g=>g.invoice).filter(Boolean).join(', ');
+  const totArt=sum(g=>g.articles||0),totInvVal=sum(g=>g.invoiceVal||0),totWt=sum(g=>g.chWt||0),totPay=sum(g=>g.payMode==='To Pay'?amtOf(g):0),totVal=sum(g=>g.gTotal!=null?g.gTotal:(g.total||0));
   printHtml(`<div class="rpt">${rptHead('MANIFEST / LOADING SHEET','Manifest No. <b>'+esc(mf.no)+'</b> · Date '+fmtDate(mf.date)+' · Vehicle <b>'+esc(mf.vehicle)+'</b>'+(mf.driver?' · Driver '+esc(mf.driver):'')+(mf.dmob?' ('+esc(mf.dmob)+')':''))}
-  <table><thead><tr><th>#</th><th>GR No.</th><th>Date</th><th>Consignor</th><th>Consignee</th><th>To</th><th class="num">Art.</th><th class="num">Wt (kg)</th><th>Pay</th><th class="num">To Pay ₹</th></tr></thead>
-  <tbody>${grs.map((g,i)=>`<tr><td>${i+1}</td><td>${esc(g.no)}</td><td>${fmtDate(g.date)}</td><td>${esc(g.cnr.name)}</td><td>${esc(g.cne.name)}${g.cne.mob?' · '+esc(g.cne.mob):''}</td><td>${esc(g.deliveryAt||g.to)}</td><td class="num">${g.articles||0}</td><td class="num">${g.chWt||0}</td><td>${esc(g.payMode||'')}</td><td class="num">${g.payMode==='To Pay'?money(amtOf(g)):'—'}</td></tr>`).join('')}</tbody>
-  <tfoot><tr><td colspan="6">TOTAL — ${grs.length} GR</td><td class="num">${sum(g=>g.articles||0)}</td><td class="num">${sum(g=>g.chWt||0)}</td><td></td><td class="num">${money(sum(g=>g.payMode==='To Pay'?amtOf(g):0))}</td></tr></tfoot></table>
+  <div style="display:flex;gap:18px;flex-wrap:wrap;margin:2px 0 8px;font-size:12px">
+    <div><b>Total GR:</b> ${grs.length}</div>
+    <div><b>Total Bundle/Articles:</b> ${totArt}</div>
+    <div><b>Total Weight:</b> ${totWt} kg</div>
+    <div><b>Total Invoice Value:</b> ₹${money(totInvVal)}</div>
+    <div><b>Total Freight Value:</b> ₹${money(totVal)}</div>
+  </div>
+  <table><thead><tr><th>#</th><th>GR No.</th><th>Date</th><th>Consignor</th><th>Consignee</th><th>To</th><th>Invoice No.</th><th class="num">Art./Pkg</th><th class="num">Wt (kg)</th><th class="num">Invoice ₹</th><th>Pay</th><th class="num">To Pay ₹</th></tr></thead>
+  <tbody>${grs.map((g,i)=>`<tr><td>${i+1}</td><td>${esc(g.no)}</td><td>${fmtDate(g.date)}</td><td>${esc(g.cnr.name)}</td><td>${esc(g.cne.name)}${g.cne.mob?' · '+esc(g.cne.mob):''}</td><td>${esc(g.deliveryAt||g.to)}</td><td>${esc(g.invoice||'—')}</td><td class="num">${g.articles||0}${g.packType?' '+esc(g.packType):''}</td><td class="num">${g.chWt||0}</td><td class="num">${g.invoiceVal?money(g.invoiceVal):'—'}</td><td>${esc(g.payMode||'')}</td><td class="num">${g.payMode==='To Pay'?money(amtOf(g)):'—'}</td></tr>`).join('')}</tbody>
+  <tfoot><tr><td colspan="7">TOTAL — ${grs.length} GR</td><td class="num">${totArt}</td><td class="num">${totWt}</td><td class="num">${money(totInvVal)}</td><td></td><td class="num">${money(totPay)}</td></tr></tfoot></table>
+  ${invNos?'<div style="margin-top:6px;font-size:12px"><b>Invoice No(s):</b> '+esc(invNos)+'</div>':''}
   <div class="sign"><span>Booking Clerk</span><span>Loaded By</span><span>Driver's Signature</span></div></div>`);
 }
 
@@ -1646,13 +1806,23 @@ function printManifest(mf,grs){
 const charges=['chFreight','chDD','chStat','chCod','chRisk'];
 let editingNo=null,saving=false,lastSavedUid=null,offlineTold=false;
 function calc(){
+  // Transport par GST nahi lagta (Consignor/Consignee RCM mein khud pay karte hain) — GST hamesha 0 hi rahega
   const sub=r2(charges.reduce((s,id)=>s+Math.max(0,+$(id).value||0),0));
-  const rate=Math.min(28,Math.max(0,+$('gstRate').value||0)),gst=r2(sub*rate/100),gTotal=r2(sub+gst);
+  const rate=0,gst=0,gTotal=sub;
   $('grandTotal').textContent=inr(sub);$('gstAmt').textContent=inr(gst);$('gTotal').textContent=inr(gTotal);
   return {sub,gst,gTotal,rate};
 }
 charges.forEach(id=>$(id).addEventListener('input',calc));
 $('gstRate').addEventListener('input',calc);
+// Paid / TBB par Bilti print mein asli status dikhana hai ya "To Pay" hi rahega — hamari marzi (checkbox)
+function syncPayShow(){
+  const m=$('payMode').value;
+  if($('payShowWrap')){
+    $('payShowWrap').hidden=(m==='To Pay');
+    if($('payShowLbl'))$('payShowLbl').textContent=m;
+  }
+}
+$('payMode').addEventListener('change',syncPayShow);
 $('actWt').addEventListener('input',()=>{if(!$('chWt').dataset.touched)$('chWt').value=$('actWt').value;});
 $('chWt').addEventListener('input',()=>$('chWt').dataset.touched=1);
 function formPristine(){return !['cnrName','cneName','to','chFreight','invoice'].some(i=>$(i).value.trim());}
@@ -1660,16 +1830,21 @@ function setFormMode(){
   $('formTitle').textContent=editingNo?'Edit GR — '+editingNo:'New GR / Booking';
   $('grSubmit').textContent=editingNo?'Update GR':'Save GR';
   $('resetBtn').textContent=editingNo?'Cancel edit':'Clear';
+  if($('bbSaveLabel'))$('bbSaveLabel').textContent=editingNo?'Update GR':'Save GR';
+  if($('bbClearLabel'))$('bbClearLabel').textContent=editingNo?'Cancel edit':'Clear';
   if(curView==='gr')$('pageTitle').textContent=editingNo?'Edit GR':TITLES.gr;
 }
 function resetForm(){
   editingNo=null;
-  $('grForm').reset();$('grNo').value=nextNo();$('grDate').value=today();$('grDate').max=today();$('chWt').dataset.touched='';$('gstRate').value=5;
+  $('grForm').reset();$('grNo').value=nextNo();$('grDate').value=today();$('grDate').max=today();$('chWt').dataset.touched='';$('gstRate').value=0;
   $('from').value=branch.address||'';
   ['cnrHint','cneHint'].forEach(i=>$(i).hidden=true);
-  document.querySelectorAll('#grForm .err').forEach(x=>x.classList.remove('err'));calc();setFormMode();
+  document.querySelectorAll('#grForm .err').forEach(x=>x.classList.remove('err'));calc();setFormMode();syncPayShow();
 }
-$('resetBtn').onclick=()=>{if(!editingNo&&!formPristine()&&!confirm('Form mein bhara data hata dein?'))return;resetForm();$('savedStrip').hidden=true;$('cnrName').focus();};
+$('resetBtn').onclick=()=>{if(!editingNo&&!formPristine()&&!confirm('Form mein bhara data hata dein?'))return;resetForm();$('savedStrip').hidden=true;['bbPrint','bbView','bbEdit'].forEach(id=>{if($(id))$(id).disabled=true;});$('cnrName').focus();};
+// Bottom bar (GR screen): same actions, always visible without scrolling
+$('bbNew').onclick=()=>{if(editingNo){resetForm();$('savedStrip').hidden=true;}['bbPrint','bbView','bbEdit'].forEach(id=>{if($(id))$(id).disabled=true;});$('cnrName').focus();};
+$('bbClear').onclick=()=>$('resetBtn').click();
 function fillParty(pre,p){$(pre+'Name').value=p.name||'';$(pre+'Gst').value=p.gst||'';$(pre+'Mob').value=p.mob||'';$(pre+'Addr').value=p.addr||'';}
 function startEdit(no){
   const g=db.grs.find(x=>x.no===no);if(!g)return;
@@ -1677,11 +1852,12 @@ function startEdit(no){
   resetForm();editingNo=g.no;
   fillParty('cnr',g.cnr);fillParty('cne',g.cne);
   const set=(id,v)=>$(id).value=v==null?'':v;
-  set('grNo',g.no);set('invoice',g.invoice);set('grDate',g.date);set('from',g.from);set('to',g.to);set('deliveryAt',g.deliveryAt);set('ewb',g.ewb);
-  set('articles',g.articles||'');set('contents',g.contents);set('actWt',g.actWt||'');set('chWt',g.chWt||'');$('chWt').dataset.touched=1;set('payMode',g.payMode||'To Pay');
+  set('grNo',g.no);set('invoice',g.invoice);set('invoiceVal',g.invoiceVal||'');set('privateMarka',g.privateMarka||'');set('grDate',g.date);set('from',g.from);set('to',g.to);set('deliveryAt',g.deliveryAt);set('ewb',g.ewb);
+  set('articles',g.articles||'');set('contents',g.contents);set('packType',g.packType||'');set('actWt',g.actWt||'');set('chWt',g.chWt||'');$('chWt').dataset.touched=1;set('payMode',g.payMode||'To Pay');
+  if($('payShowBilti'))$('payShowBilti').checked=!!g.payShowBilti;syncPayShow();
   const c=g.charges||{};set('chFreight',c.freight||'');set('chDD',c.dd||'');set('chStat',c.stat||'');set('chCod',c.cod||'');set('chRisk',c.risk||'');
-  set('gstRate',g.gstRate!=null?g.gstRate:5);set('remarks',g.remarks);calc();
-  $('savedStrip').hidden=true;setFormMode();show('gr');
+  set('gstRate',0);set('remarks',g.remarks);calc();
+  $('savedStrip').hidden=true;['bbPrint','bbView','bbEdit'].forEach(id=>{if($(id))$(id).disabled=true;});setFormMode();show('gr');
 }
 const CITY_LIST=['Meerut','Delhi','New Delhi','Ghaziabad','Noida','Greater Noida','Hapur','Modinagar','Muzaffarnagar','Saharanpur','Baghpat','Bulandshahr','Aligarh','Mathura','Agra','Moradabad','Bareilly','Rampur','Haridwar','Roorkee','Dehradun','Rishikesh','Haldwani','Rudrapur','Kashipur','Bijnor','Shamli','Lucknow','Kanpur','Prayagraj','Varanasi','Gorakhpur','Jhansi','Firozabad','Etawah','Faridabad','Gurugram','Sonipat','Panipat','Karnal','Ambala','Kurukshetra','Yamunanagar','Rohtak','Hisar','Rewari','Chandigarh','Ludhiana','Jalandhar','Amritsar','Patiala','Bathinda','Jammu','Srinagar','Shimla','Solan','Baddi','Jaipur','Jodhpur','Udaipur','Kota','Ajmer','Bikaner','Alwar','Bhiwadi','Ahmedabad','Surat','Vadodara','Rajkot','Vapi','Mumbai','Pune','Nagpur','Nashik','Aurangabad','Bhiwandi','Indore','Bhopal','Gwalior','Jabalpur','Raipur','Bilaspur','Patna','Muzaffarpur','Ranchi','Jamshedpur','Dhanbad','Kolkata','Howrah','Siliguri','Guwahati','Bhubaneswar','Cuttack','Hyderabad','Vijayawada','Visakhapatnam','Bengaluru','Bangalore','Mysuru','Hubli','Chennai','Coimbatore','Madurai','Tiruppur','Kochi','Thiruvananthapuram','Kozhikode','Goa',
  'Andhra Pradesh','Arunachal Pradesh','Assam','Bihar','Chhattisgarh','Gujarat','Haryana','Himachal Pradesh','Jharkhand','Karnataka','Kerala','Madhya Pradesh','Maharashtra','Manipur','Meghalaya','Mizoram','Nagaland','Odisha','Punjab','Rajasthan','Sikkim','Tamil Nadu','Telangana','Tripura','Uttar Pradesh','Uttarakhand','West Bengal','Jammu & Kashmir','Ladakh','Puducherry'];
@@ -1689,8 +1865,14 @@ function refreshCityList(){const seen=new Set(),list=[];
   const add=c=>{c=String(c||'').trim();const k=lc(c);if(c&&!seen.has(k)){seen.add(k);list.push(c);}};
   db.grs.slice(-400).forEach(g=>{add(g.to);add(g.from);});parties.forEach(p=>add(p.city));CITY_LIST.forEach(add);
   $('cityList').innerHTML=list.map(x=>`<option value="${esc(x)}">`).join('');}
-function refreshGstList(){$('gstList').innerHTML=parties.filter(p=>p.gst).map(p=>`<option value="${esc(p.gst)}">${esc(p.name)}</option>`).join('');}
-function refreshParties(){$('partyList').innerHTML=parties.slice().sort((a,b)=>a.name.localeCompare(b.name)).map(p=>`<option value="${esc(p.name)}">${p.city?esc(p.city):''}</option>`).join('');refreshGstList();}
+// Packaging Type — jo bhi ek baar type karke bhara, wo list mein save ho jaata hai, agli baar suggestion mein khud aata hai
+const PACK_LIST=['Bundle','Carton','Box','Bag','Gunny Bag','Loose','Drum','Roll','Sack','Pallet','Crate','Barrel','Tin','Case'];
+function refreshPackList(){const seen=new Set(),list=[];
+  const add=c=>{c=String(c||'').trim();const k=lc(c);if(c&&!seen.has(k)){seen.add(k);list.push(c);}};
+  db.grs.slice(-400).forEach(g=>add(g.packType));PACK_LIST.forEach(add);
+  if($('packList'))$('packList').innerHTML=list.map(x=>`<option value="${esc(x)}">`).join('');}
+function refreshGstList(){$('gstList').innerHTML=parties.filter(p=>!p.deleted&&p.gst).map(p=>`<option value="${esc(p.gst)}">${esc(p.name)}</option>`).join('');}
+function refreshParties(){$('partyList').innerHTML=parties.filter(p=>!p.deleted).sort((a,b)=>a.name.localeCompare(b.name)).map(p=>`<option value="${esc(p.name)}">${p.city?esc(p.city):''}</option>`).join('');refreshGstList();}
 $('repeatLast').onclick=()=>{
   const last=db.grs.filter(g=>!g.sample&&!isCancelled(g)).sort((a,b)=>String(a.createdAt||a.no).localeCompare(String(b.createdAt||b.no))).slice(-1)[0];
   if(!last){toast('Is office mein pichla koi GR nahi mila');return;}
@@ -1707,7 +1889,7 @@ function wireParty(pre){
 wireParty('cnr');wireParty('cne');
 function partyMatches(text){
   const q=lc(text).split(/\s+/).filter(Boolean);if(!q.length)return [];
-  return parties.filter(p=>{const hay=lc([p.name,p.city,p.mob].join(' '));return q.every(w=>hay.includes(w));})
+  return parties.filter(p=>!p.deleted).filter(p=>{const hay=lc([p.name,p.city,p.mob].join(' '));return q.every(w=>hay.includes(w));})
     .sort((a,b)=>(lc(a.name).startsWith(q[0])?0:1)-(lc(b.name).startsWith(q[0])?0:1)||a.name.localeCompare(b.name)).slice(0,8);
 }
 function attachPartyList(pre){
@@ -1732,12 +1914,32 @@ function attachPartyList(pre){
 attachPartyList('cnr');attachPartyList('cne');
 function party(pre){return {name:$(pre+'Name').value.trim().replace(/\s+/g,' '),gst:$(pre+'Gst').value.trim().toUpperCase(),mob:normMob($(pre+'Mob').value),addr:$(pre+'Addr').value.trim()};}
 // Enter = next field (Tally style). Ctrl+S or "Save GR" saves.
+// Address/Remarks box mein bhi Enter = agla khana (nayi line ke liye Shift+Enter). Aakhri khane ke baad Enter = "Save GR" par.
+function focusField(n){n.focus();if(n.tagName==='INPUT'&&!/^(date|checkbox|radio|file)$/.test(n.type)&&n.select)try{n.select();}catch(_){}}
 $('grForm').addEventListener('keydown',e=>{
   if(e.key!=='Enter'||e.ctrlKey||e.metaKey||e.shiftKey||e.altKey||e.isComposing)return;
-  const t=e.target;if(t.tagName==='TEXTAREA'||t.tagName==='BUTTON')return;
+  const t=e.target;if(t.tagName==='BUTTON')return;
   e.preventDefault();
   const f=[...$('grForm').querySelectorAll('input,select,textarea')].filter(x=>!x.readOnly&&!x.disabled&&x.type!=='hidden'&&x.offsetParent!==null);
-  const i=f.indexOf(t);if(i>=0&&i<f.length-1){f[i+1].focus();if(f[i+1].select&&f[i+1].tagName==='INPUT'&&f[i+1].type!=='date')try{f[i+1].select();}catch(_){}}
+  const i=f.indexOf(t);if(i>=0&&i<f.length-1)focusField(f[i+1]);else if(i===f.length-1)$('grSubmit').focus();
+});
+// Baaki poori app mein bhi Enter = agla khana (Customer, Manifest, Manifest Edit, GR/Manifest Number, Reports).
+// Jahan kisi khane ka apna Enter kaam pehle se hai (POD, Add Item, party list, receipt amount) woh waisa hi rahega.
+function enterField(x){return !!x&&(x.tagName==='SELECT'||x.tagName==='TEXTAREA'||(x.tagName==='INPUT'&&!/^(button|submit|reset|file|image|hidden|checkbox|radio|search)$/.test(x.type)))&&!/Search$/.test(x.id||'');}
+function goNext(t){
+  const scope=t.closest('tbody tr,form,.rwin-box .form-grid,.bk,.rwin-box,.panel')||document.body,inRow=scope.matches('tbody tr');
+  const f=[...scope.querySelectorAll('input,select,textarea')].filter(x=>enterField(x)&&!x.readOnly&&!x.disabled&&x.offsetParent!==null&&(inRow||!x.closest('tbody')));
+  const i=f.indexOf(t);if(i<0)return false;
+  if(i<f.length-1){focusField(f[i+1]);return true;}
+  // aakhri khana: us hisse ka main button (Save / Dekho / Manifest banayein) — ek aur Enter se chal jayega
+  const outer=scope.parentElement&&scope.parentElement.closest('form,.bk,.rwin-box,.panel');
+  const pb=c=>c&&[...c.querySelectorAll('.btn.primary')].find(x=>!x.disabled&&x.offsetParent!==null);
+  const b=pb(scope)||(!inRow&&pb(outer));if(b)b.focus();return true;
+}
+document.addEventListener('keydown',e=>{
+  if(e.key!=='Enter'||e.defaultPrevented||e.ctrlKey||e.metaKey||e.shiftKey||e.altKey||e.isComposing)return;
+  const t=e.target;if(!enterField(t)||locked||$('printDoc').classList.contains('open'))return;
+  if(goNext(t))e.preventDefault();
 });
 function withTimeout(p,ms){return Promise.race([p,new Promise((_,no)=>setTimeout(()=>no(new Error('timeout')),ms))]);}
 $('grForm').addEventListener('submit',async e=>{
@@ -1758,9 +1960,9 @@ $('grForm').addEventListener('submit',async e=>{
   if(errs.length){$(errs[0][0]).focus();toast(errs[0][1]);return;}
   const amt=calc();
   if(!amt.sub&&!confirm('Freight / charges 0 hain. Phir bhi GR save karein?')){$('chFreight').focus();return;}
-  const fields={invoice:$('invoice').value.trim(),date,cnr,cne,from:$('from').value.trim(),to:$('to').value.trim(),
-    deliveryAt:$('deliveryAt').value.trim(),ewb,articles:Math.max(0,+$('articles').value||0),contents:$('contents').value.trim(),
-    actWt:Math.max(0,+$('actWt').value||0),chWt:Math.max(0,+$('chWt').value||0),payMode:$('payMode').value,
+  const fields={invoice:$('invoice').value.trim(),invoiceVal:r2(Math.max(0,+$('invoiceVal').value||0)),privateMarka:$('privateMarka').value.trim(),date,cnr,cne,from:$('from').value.trim(),to:$('to').value.trim(),
+    deliveryAt:$('deliveryAt').value.trim(),ewb,articles:Math.max(0,+$('articles').value||0),contents:$('contents').value.trim(),packType:$('packType').value.trim(),
+    actWt:Math.max(0,+$('actWt').value||0),chWt:Math.max(0,+$('chWt').value||0),payMode:$('payMode').value,payShowBilti:$('payMode').value!=='To Pay'&&!!($('payShowBilti')&&$('payShowBilti').checked),
     charges:{freight:r2(Math.max(0,+$('chFreight').value||0)),dd:r2(Math.max(0,+$('chDD').value||0)),stat:r2(Math.max(0,+$('chStat').value||0)),cod:r2(Math.max(0,+$('chCod').value||0)),risk:r2(Math.max(0,+$('chRisk').value||0))},
     gstRate:amt.rate,gst:amt.gst,total:amt.sub,gTotal:amt.gTotal,remarks:$('remarks').value.trim()};
   upsertParty(cnr);upsertParty(cne);upsertItem(fields.contents);
@@ -1770,7 +1972,7 @@ $('grForm').addEventListener('submit',async e=>{
       const g=db.grs.find(x=>x.no===editingNo);if(!g){toast('GR nahi mila');return;}
       Object.assign(g,fields,{savedAt:nowIso(),editedAt:nowIso(),editedBy:email()});
       markDirty(db,g.no);save();flushSoon();
-      showSaved(g,'updated');showGRSaved(g.no,'Update ho gaya ✓',!GATE?'Is computer mein save':fb&&user&&navigator.onLine?'Cloud par bhi update ho raha hai':'Is device mein save — net aate hi cloud par jayega');resetForm();refreshCityList();return;
+      showSaved(g,'updated');showGRSaved(g.no,'Update ho gaya ✓',!GATE?'Is computer mein save':fb&&user&&navigator.onLine?'Cloud par bhi update ho raha hai':'Is device mein save — net aate hi cloud par jayega');resetForm();refreshCityList();refreshPackList();return;
     }
     if(db.sample){db.grs=db.grs.filter(x=>!x.sample);db.sample=false;}
     const gr=Object.assign({no:nextNo(),uid:newUid(),branch:branch.id},fields,{status:'Pending',createdAt:nowIso(),savedAt:nowIso(),by:email(),pendingNew:true});
@@ -1781,16 +1983,19 @@ $('grForm').addEventListener('submit',async e=>{
     if(gr.pendingNew&&GATE&&!offlineTold){offlineTold=true;toast(gr.no+' is device mein save hai — internet aate hi apne aap cloud par chala jayega',6000);}
     showSaved(gr,'saved');
     showGRSaved(gr.no,'Save ho gaya ✓',!GATE?'Is computer mein save':gr.pendingNew?'Is device mein save — net aate hi cloud par jayega':'Cloud par backup ho gaya');
-    resetForm();refreshCityList();$('cnrName').focus();
+    resetForm();refreshCityList();refreshPackList();$('cnrName').focus();
   }finally{saving=false;btn.disabled=false;setFormMode();}
 });
 function showSaved(g,word){
   $('savedText').textContent=g.no+' '+word+':';
-  setWa($('waCnr'),waHref(g,'cnr'));setWa($('waCne'),waHref(g,'cne'));$('savedStrip').hidden=false;
+  setWa($('waCnr'),waHref(g,'cnr'));setWa($('waCne'),waHref(g,'cne'));$('savedStrip').hidden=false;['bbPrint','bbView','bbEdit'].forEach(id=>{if($(id))$(id).disabled=false;});
   const cur=()=>db.grs.find(x=>x.uid===g.uid)||g;
   $('printBilltyBtn').onclick=()=>printBillty(cur());
   $('pdfCne').onclick=()=>sharePdf(cur(),'cne',$('pdfCne'));
   $('editSaved').onclick=()=>{const x=cur();if(x)startEdit(x.no);};
+  if($('bbView'))$('bbView').onclick=()=>{const x=cur();if(x)printHtml(grSlipHtml(x));};
+  if($('bbEdit'))$('bbEdit').onclick=()=>{const x=cur();if(x)startEdit(x.no);};
+  if($('bbPrint'))$('bbPrint').onclick=()=>{if(!$('bbPrint').disabled)printBillty(cur());};
 }
 
 /* ================= Firebase: Google login + live cloud sync ================= */
@@ -1873,7 +2078,7 @@ async function backfill(bid){
       d.backfill.got=(d.backfill.got||0)+snap.size;
       if(snap.size<BACKFILL_PAGE||minMs>=before)delete d.backfill;else d.backfill.before=minMs-1;
       d.seq=Math.max(d.seq||0,seqFromGrs(d.grs));saveFor(bid,d);
-      if(bid===branch.id){refreshCityList();refreshView();}
+      if(bid===branch.id){refreshCityList();refreshPackList();refreshView();}
     }
   }catch(e){console.warn('backfill',e);}
   finally{backfilling.delete(bid);if(bid===branch.id)renderCloud();}
@@ -1895,7 +2100,7 @@ function startLive(){
     if(firstSnap){firstSnap=false;if(d.backfill)setTimeout(()=>backfill(bid),300);}
     d.seq=Math.max(d.seq||0,seqFromGrs(d.grs));d.lastSync=nowIso();saveFor(bid,d);
     if(syncState!=='error'||!d.dirty.length)syncState='ok';
-    if(ch){refreshCityList();refreshView();}else renderCloud();
+    if(ch){refreshCityList();refreshPackList();refreshView();}else renderCloud();
   },e=>syncFail(e));
   unsubParty=liveQuery(partyCol(),pmeta.lastPull).onSnapshot(snap=>{
     const firstParty=!partySynced;partySynced=true;
@@ -1903,6 +2108,7 @@ function startLive(){
     snap.docChanges().forEach(c=>{if(c.type==='removed'||pendingEcho(c.doc))return;const r=fromRemote(c.doc.data());
       if(r.srvMs)pmeta.lastPull=Math.max(pmeta.lastPull||0,r.srvMs);
       if(c.doc.id===SETTINGS_ID){let chS=false;Object.entries(r.grStart||{}).forEach(([k,v])=>{const l=settings.grStart[k];if(v&&(!l||(v.t||'')>(l.t||''))){settings.grStart[k]=v;settings.dirty=settings.dirty.filter(x=>x!==k);chS=true;}});
+        Object.entries(r.mfStart||{}).forEach(([k,v])=>{const l=settings.mfStart[k];if(v&&(!l||(v.t||'')>(l.t||''))){settings.mfStart[k]=v;settings.dirty=settings.dirty.filter(x=>x!=='mf:'+k);chS=true;}});
         Object.entries(r.receipts||{}).forEach(([k,v])=>{const l=settings.receipts[k];if(v&&(!l||(v.t||'')>(l.t||''))){settings.receipts[k]=v;settings.dirty=settings.dirty.filter(x=>x!=='rcpt:'+k);chS=true;}});
         if(chS){saveSettings();ch=true;refreshView();}return;}
       if(c.doc.id.indexOf(RC_PREFIX)===0){const id=c.doc.id.slice(RC_PREFIX.length),l=settings.receipts[id];delete r.srvMs;
@@ -1932,7 +2138,8 @@ async function flush(){
         // har payment apna alag document (~rc-<id>) — ek document 1 MB se bada nahi ho sakta
         for(const k of settings.dirty.filter(x=>x.indexOf('rcpt:')===0)){const id=k.slice(5),r=settings.receipts[id];
           try{if(r)await partyCol().doc(RC_PREFIX+id).set(toRemote(r));settings.dirty=settings.dirty.filter(x=>x!==k);}catch(e){fail=e;if(isOffline(e))break;}}
-        const keys=settings.dirty.filter(x=>x.indexOf('rcpt:')!==0),payload={grStart:{}};keys.forEach(k=>{if(settings.grStart[k])payload.grStart[k]=settings.grStart[k];});
+        const keys=settings.dirty.filter(x=>x.indexOf('rcpt:')!==0),payload={grStart:{},mfStart:{}};
+        keys.forEach(k=>{if(k.indexOf('mf:')===0){const bid=k.slice(3);if(settings.mfStart[bid])payload.mfStart[bid]=settings.mfStart[bid];}else if(settings.grStart[k])payload.grStart[k]=settings.grStart[k];});
         if(keys.length&&(!fail||!isOffline(fail))){try{await partyCol().doc(SETTINGS_ID).set(toRemote(payload),{merge:true});settings.dirty=settings.dirty.filter(k=>!keys.includes(k));}catch(e){fail=e;}}
         saveSettings();}
       if(items.dirty.length&&(!fail||!isOffline(fail))){const keys=items.dirty.slice(),payload={items:{}};keys.forEach(k=>{if(items.map[k])payload.items[k]=items.map[k];});
@@ -2069,7 +2276,7 @@ function renderCloud(){
   $('bkLogout').hidden=!user;
   $('bkLogin').textContent=INAPP?'Chrome mein kholein':'Login with Google';
   $('userBox').innerHTML=user?`${user.photoURL?`<img src="${esc(user.photoURL)}" alt="" referrerpolicy="no-referrer">`:''}<span>${esc(user.displayName||user.email)}</span>`:'';
-  if(!locked)renderGrStart();
+  if(!locked){renderGrStart();renderMfStart();}
   $('fileBkText').textContent=branch.name+' ka poora data ek .json file mein. Last file backup: '+(db.lastFileBackup?new Date(db.lastFileBackup).toLocaleDateString('en-IN'):'kabhi nahi')+'.';
   renderBanner();
 }
@@ -2100,16 +2307,23 @@ function printHtml(html,kind,title){
   const m=/<b style="font-size:13px">([^<]+)<\/b>/.exec(html);
   openPreview(html,kind||'report',{title:title||(m?m[1]+' — Print Preview':'Print Preview'),editable:false});
 }
+// Paid/TBB GR ka "hisab" (Freight/DD/Stat/COD/Risk/Sub Total/GST/Grand Total) Bilti print par dikhana hai ya 00 —
+// payShowBilti checkbox ki marzi (default: chhupa hua, sab 00 print hoga). To Pay mein hamesha asli hisab dikhta hai.
+function billShowAmt(g){return !g.payMode||g.payMode==='To Pay'||!!g.payShowBilti;}
+function billPayLabel(g){return g.payMode||'To Pay';}
 function billtyThermal(g,label,w58){
-  const b=branchById(g.branch)||{},c=g.charges||{},row=(k,v)=>`<tr><td>${k}</td><td class="r">${v}</td></tr>`;
+  const showAmt=billShowAmt(g);
+  const b=branchById(g.branch)||{},c0=g.charges||{},c=showAmt?c0:{freight:0,dd:0,stat:0,cod:0,risk:0};
+  const sub=showAmt?(g.total||0):0,gst=showAmt?(g.gst||0):0,gTotal=showAmt?(g.gTotal!=null?g.gTotal:g.total||0):0;
+  const row=(k,v)=>`<tr><td>${k}</td><td class="r">${v}</td></tr>`;
   return `<div class="thermal${w58?' w58':''}"><div class="c"><b style="font-size:1.25em">THE SURAJ GOODS CARRIERS</b><br>${esc(COMPANY_INFO.hoAddress)}<br>GSTIN ${esc(COMPANY_INFO.gstin)} · Ph ${esc(COMPANY_INFO.phone)}</div><hr>
   <div class="c"><b>${isCancelled(g)?'*** CANCELLED *** ':''}${label}</b></div>
-  <table>${row('GR No.','<b>'+esc(g.no)+'</b>')}${row('Date',fmtDate(g.date))}${row('Booking Code',esc(b.bookingCode||''))}${g.invoice?row('Invoice',esc(g.invoice)):''}${row('From',esc(g.from))}${row('To',esc(g.deliveryAt||g.to))}</table><hr>
+  <table>${row('GR No.','<b>'+esc(g.no)+'</b>')}${row('Date',fmtDate(g.date))}${row('Booking Code',esc(b.bookingCode||''))}${g.invoice?row('Invoice',esc(g.invoice)):''}${g.invoiceVal?row('Invoice Value','₹'+money(g.invoiceVal)):''}${row('From',esc(g.from))}${row('To',esc(g.deliveryAt||g.to))}</table><hr>
   <div><b>Consignor:</b> ${esc(g.cnr.name)}${g.cnr.mob?' · '+esc(g.cnr.mob):''}${g.cnr.gst?'<br>GSTIN '+esc(g.cnr.gst):''}</div>
   <div><b>Consignee:</b> ${esc(g.cne.name)}${g.cne.mob?' · '+esc(g.cne.mob):''}${g.cne.gst?'<br>GSTIN '+esc(g.cne.gst):''}</div><hr>
-  <table>${row('Articles',g.articles||0)}${g.contents?row('Contents',esc(g.contents)):''}${row('Wt Act/Chg (kg)',(g.actWt||0)+' / '+(g.chWt||0))}${g.ewb?row('E-Way Bill',esc(g.ewb)):''}</table><hr>
-  <table>${row('Freight',money(c.freight))}${c.dd?row('D/D Ch.',money(c.dd)):''}${c.stat?row('Stat. Ch.',money(c.stat)):''}${c.cod?row('COD',money(c.cod)):''}${c.risk?row('Risk Ch.',money(c.risk)):''}${row('Sub Total',money(g.total))}${row('GST '+(g.gstRate||0)+'%',money(g.gst))}${row('<b>G. TOTAL</b>','<b>₹'+money(g.gTotal)+'</b>')}${row('Payment',esc(g.payMode||''))}</table>
-  <div>${esc(inWords(g.gTotal))}</div>${g.remarks?'<div>Remarks: '+esc(g.remarks)+'</div>':''}<hr>
+  <table>${row('Articles',(g.articles||0)+(g.packType?' ('+esc(g.packType)+')':''))}${g.contents?row('Contents',esc(g.contents)):''}${row('Wt Act/Chg (kg)',(g.actWt||0)+' / '+(g.chWt||0))}${g.ewb?row('E-Way Bill',esc(g.ewb)):''}</table><hr>
+  <table>${row('Freight',money(c.freight))}${c.dd?row('D/D Ch.',money(c.dd)):''}${c.stat?row('Stat. Ch.',money(c.stat)):''}${c.cod?row('COD',money(c.cod)):''}${c.risk?row('Risk Ch.',money(c.risk)):''}${row('Sub Total',money(sub))}${row('GST '+(g.gstRate||0)+'%',money(gst))}${row('<b>G. TOTAL</b>','<b>₹'+money(gTotal)+'</b>')}${row('Payment',esc(billPayLabel(g)))}</table>
+  <div>${esc(inWords(gTotal))}</div>${g.remarks?'<div>Remarks: '+esc(g.remarks)+'</div>':''}<hr>
   <div style="font-size:.9em">Goods carried at owner's risk. No responsibility of leakage &amp; breakage.</div>
   <div style="display:flex;justify-content:space-between;margin-top:9mm"><span>Booking Clerk</span><span>Signature</span></div>
   <div class="c" style="margin-top:2mm">SAFE | SECURE | ON TIME</div></div>`;
@@ -2119,7 +2333,10 @@ const DKEY='sgc_billty_design';
 const billtyDesign=()=>lsGet(DKEY)||'new';
 function billtyNew(g,label){
   // label = copy name shown in the bottom strip (CONSIGNEE COPY / DRIVER COPY); the number box always says G.R. NO.
-  const b=branchById(g.branch)||{},c=g.charges||{},x=isCancelled(g),sub=g.total||0,gst=g.gst||0,gt=g.gTotal!=null?g.gTotal:sub;
+  const showAmt=billShowAmt(g);
+  const b=branchById(g.branch)||{},c0=g.charges||{},x=isCancelled(g);
+  const c=showAmt?c0:{freight:0,dd:0,stat:0,cod:0,risk:0};
+  const sub=showAmt?(g.total||0):0,gst=showAmt?(g.gst||0):0,gt=showAmt?(g.gTotal!=null?g.gTotal:sub):0;
   const party=(t,p)=>`<div><div class="t">${t}</div><div class="pn">${esc(p.name||'')}</div>${p.addr?`<div>${esc(p.addr)}</div>`:''}<div>${p.mob?'Mob: <b>'+esc(p.mob)+'</b>':''}${p.mob&&p.gst?' &nbsp;·&nbsp; ':''}${p.gst?'GSTIN: <b>'+esc(p.gst)+'</b>':''}</div></div>`;
   const cell=(t,v)=>`<div><div class="t">${t}</div><div class="v">${v||'&nbsp;'}</div></div>`;
   const row=(k,v,cls)=>`<tr${cls?` class="${cls}"`:''}><td>${k}</td><td class="r">₹${money(v)}</td></tr>`;
@@ -2137,10 +2354,10 @@ function billtyNew(g,label){
   </div>
   <div class="br">${(COMPANY_INFO.branchOffices||[]).map(o=>`<div><b>${esc(o.title||'BRANCH OFFICE')}:</b> ${(o.lines||[]).map(esc).join(' ')} · Mob. ${esc(o.mobile||'')}</div>`).join('')}</div>
   <div class="pp">${party('Consignor (From)',g.cnr)}${party('Consignee (To)',g.cne)}</div>
-  <div class="sh">${cell('From',esc(g.from))}${cell('To',esc(g.to))}${cell('Delivery At',esc(g.deliveryAt||g.to))}${cell('Invoice No.',esc(g.invoice||''))}${cell('E-Way Bill No.',esc(g.ewb||''))}${cell('Payment','<span class="pay">'+esc(g.payMode||'')+'</span>')}</div>
+  <div class="sh">${cell('From',esc(g.from))}${cell('To',esc(g.to))}${cell('Delivery At',esc(g.deliveryAt||g.to))}${cell('Invoice No.',esc(g.invoice||''))}${cell('Invoice Value',g.invoiceVal?'₹'+money(g.invoiceVal):'')}${cell('E-Way Bill No.',esc(g.ewb||''))}${cell('Payment','<span class="pay">'+esc(billPayLabel(g))+'</span>')}</div>
   <div class="mid">
     <div class="gd">
-      <div class="row">${cell('No. of Articles',String(g.articles||0))}${cell('Actual Wt (Kg)',String(g.actWt||0))}${cell('Charge Wt (Kg)',String(g.chWt||0))}</div>
+      <div class="row">${cell('No. of Articles',String(g.articles||0)+(g.packType?' <small style="font-size:.6em">'+esc(g.packType)+'</small>':''))}${cell('Actual Wt (Kg)',String(g.actWt||0))}${cell('Charge Wt (Kg)',String(g.chWt||0))}</div>
       ${cell('Contents — As said to be contained',esc(g.contents||''))}
       ${cell('Remarks / Special Instructions',(x?'<b>CANCELLED — '+esc((g.cancel&&g.cancel.why)||'')+'.</b> ':'')+esc(g.remarks||''))}
       <div class="terms">No responsibility of leakage &amp; breakage. We have accepted &amp; booked the consignment on the terms &amp; conditions printed overleaf. Goods carried at owner's risk. We are not responsible for illegal goods, declaration of goods, octroi, enroute taxes etc. हम माल के मालिक नहीं हैं।</div>
@@ -2153,7 +2370,7 @@ function billtyNew(g,label){
   </div>
   <div class="ft">
     <div class="gstby">GST will be paid by<br>Consignor / Consignee</div>
-    <div class="sig"><span>PRIVATE MARKA</span></div><div class="sig"><span>REMARKS</span></div><div class="sig"><span>BOOKING CLERK Signature</span></div>
+    <div class="sig"${g.privateMarka?' style="flex-direction:column;align-items:center;justify-content:flex-end;gap:3px"':''}>${g.privateMarka?'<b>'+esc(g.privateMarka)+'</b>':''}<span>PRIVATE MARKA</span></div><div class="sig"><span>REMARKS</span></div><div class="sig"><span>BOOKING CLERK Signature</span></div>
   </div>
   <div class="strip">🚚 SAFE | SECURE | ON TIME &nbsp; · &nbsp; ${x?'CANCELLED · ':''}${label} &nbsp; · &nbsp; For THE SURAJ GOODS CARRIERS</div>
 </div>`;
@@ -2215,10 +2432,10 @@ const b64e=s=>btoa(unescape(encodeURIComponent(s))).replace(/\+/g,'-').replace(/
 const b64d=s=>decodeURIComponent(escape(atob(s.replace(/-/g,'+').replace(/_/g,'/'))));
 // compact array format keeps the link (and the printed QR code) small
 function billPack(g,short){const c=g.charges||{},p=x=>[x.name||'',x.mob||'',x.gst||'',short?'':(x.addr||'')];
-  return [1,g.no,g.branch,g.date,g.invoice||'',p(g.cnr),p(g.cne),g.from||'',g.to||'',g.deliveryAt||'',g.ewb||'',g.articles||0,g.contents||'',g.actWt||0,g.chWt||0,g.payMode||'',[c.freight||0,c.dd||0,c.stat||0,c.cod||0,c.risk||0],g.gstRate||0,g.gst||0,g.total||0,g.gTotal||0,short?'':(g.remarks||''),g.status||'',(g.cancel&&g.cancel.why)||''];}
+  return [1,g.no,g.branch,g.date,g.invoice||'',p(g.cnr),p(g.cne),g.from||'',g.to||'',g.deliveryAt||'',g.ewb||'',g.articles||0,g.contents||'',g.actWt||0,g.chWt||0,g.payMode||'',[c.freight||0,c.dd||0,c.stat||0,c.cod||0,c.risk||0],g.gstRate||0,g.gst||0,g.total||0,g.gTotal||0,short?'':(g.remarks||''),g.status||'',(g.cancel&&g.cancel.why)||'',g.invoiceVal||0,g.privateMarka||'',g.payShowBilti?1:0,g.packType||''];}
 function billUnpack(a){if(!Array.isArray(a)||a[0]!==1)return a;const q=x=>({name:x[0],mob:x[1],gst:x[2],addr:x[3]});
   return {no:a[1],branch:a[2],date:a[3],invoice:a[4],cnr:q(a[5]),cne:q(a[6]),from:a[7],to:a[8],deliveryAt:a[9],ewb:a[10],articles:a[11],contents:a[12],actWt:a[13],chWt:a[14],payMode:a[15],
-    charges:{freight:a[16][0],dd:a[16][1],stat:a[16][2],cod:a[16][3],risk:a[16][4]},gstRate:a[17],gst:a[18],total:a[19],gTotal:a[20],remarks:a[21],status:a[22],cancel:a[23]?{why:a[23]}:undefined};}
+    charges:{freight:a[16][0],dd:a[16][1],stat:a[16][2],cod:a[16][3],risk:a[16][4]},gstRate:a[17],gst:a[18],total:a[19],gTotal:a[20],remarks:a[21],status:a[22],cancel:a[23]?{why:a[23]}:undefined,invoiceVal:a[24]||0,privateMarka:a[25]||'',payShowBilti:!!a[26],packType:a[27]||''};}
 const APP_URL=()=>/^https?:/.test(location.href)?location.origin+location.pathname:'https://vinitsharma6433-cpu.github.io/suraj-goods-carriers/';
 function billLink(g,short){return APP_URL()+'#bill='+b64e(JSON.stringify(billPack(g,short)));}
 /* QR code on the Billty (scan = open this bill) */
@@ -2284,7 +2501,10 @@ function branchBoxesHtml(){
   </div>`).join('');
 }
 function billtyCopy(g,label){
-  const b=branchById(g.branch)||{},x=isCancelled(g),sub=g.total||0,gst=g.gst||0,gTotal=g.gTotal!=null?g.gTotal:sub,c=g.charges||{};
+  const showAmt=billShowAmt(g);
+  const b=branchById(g.branch)||{},x=isCancelled(g);
+  const c0=g.charges||{},c=showAmt?c0:{freight:0,dd:0,stat:0,cod:0,risk:0};
+  const sub=showAmt?(g.total||0):0,gst=showAmt?(g.gst||0):0,gTotal=showAmt?(g.gTotal!=null?g.gTotal:sub):0;
   return `<div class="billty">
     <div class="headrow">
       <div>${branchBoxesHtml()}</div>
@@ -2307,8 +2527,8 @@ function billtyCopy(g,label){
       <tr><th>Consignor / Add.</th><td colspan="7">${esc(g.cnr.name)}${g.cnr.addr?(' — '+esc(g.cnr.addr)):''}${g.cnr.mob?(' · '+esc(g.cnr.mob)):''}</td></tr>
       <tr><th>Consignee / Add.</th><td colspan="7">${esc(g.cne.name)}${g.cne.addr?(' — '+esc(g.cne.addr)):''}${g.cne.mob?(' · '+esc(g.cne.mob)):''}</td></tr>
       <tr><th>Consignor GSTIN</th><td>${esc(g.cnr.gst||'')}</td><th>Consignee GSTIN</th><td>${esc(g.cne.gst||'')}</td><th>From</th><td>${esc(g.from)}</td><th>To</th><td>${esc(g.to)}</td></tr>
-      <tr><th>Delivery At</th><td>${esc(g.deliveryAt||g.to)}</td><th>E-Way Bill No.</th><td colspan="5">${esc(g.ewb||'')}</td></tr>
-      <tr><th>No. of Articles</th><td>${g.articles||0}</td><th>Contents</th><td colspan="5">AS SAID TO BE CONTAINED: ${esc(g.contents||'')}</td></tr>
+      <tr><th>Delivery At</th><td>${esc(g.deliveryAt||g.to)}</td><th>E-Way Bill No.</th><td colspan="3">${esc(g.ewb||'')}</td><th>Invoice Value</th><td>${g.invoiceVal?'₹'+money(g.invoiceVal):''}</td></tr>
+      <tr><th>No. of Articles</th><td>${g.articles||0}${g.packType?' ('+esc(g.packType)+')':''}</td><th>Contents</th><td colspan="5">AS SAID TO BE CONTAINED: ${esc(g.contents||'')}</td></tr>
     </table>
     <table class="bt-charges">
       <tr>
@@ -2324,7 +2544,7 @@ function billtyCopy(g,label){
       <tr><th>Sub Total</th><td colspan="3" class="num">₹${money(sub)}</td></tr>
       <tr><th>GST (${g.gstRate||0}%)</th><td colspan="3" class="num">₹${money(gst)}</td></tr>
     </table>
-    <table><tr><th class="section">G. TOTAL</th><td class="num" style="font-weight:900">₹${money(gTotal)}</td><th>Payment</th><td>${esc(g.payMode||'')}</td></tr>
+    <table><tr><th class="section">G. TOTAL</th><td class="num" style="font-weight:900">₹${money(gTotal)}</td><th>Payment</th><td>${esc(billPayLabel(g))}</td></tr>
       <tr><th>Rupees</th><td colspan="3">${esc(inWords(gTotal))}</td></tr></table>
     <table class="remarks"><tr><th style="width:14%">REMARKS / SPECIAL<br>INSTRUCTIONS</th><td>${x?'<b>CANCELLED</b> — '+esc((g.cancel&&g.cancel.why)||'')+'. ':''}${esc(g.remarks||'')}</td></tr></table>
     <table><tr><td style="height:13px">Booking Clerk</td><td>Consignor's Signature</td><td>Driver's Signature</td></tr></table>
@@ -2416,8 +2636,9 @@ let tt;function toast(m,ms){const t=$('toast');t.textContent=m;t.hidden=false;cl
 
 if('serviceWorker' in navigator&&location.protocol==='https:'&&CFG)navigator.serviceWorker.register('sw.js').catch(()=>{});
 if(/^#bill=/.test(location.hash)){renderBillPage();hideSplash();return;} // customer's bill link: no login, no app
-refreshParties();refreshItems();refreshCityList();renderBranch();resetForm();show('dash');initCloud();
+refreshParties();refreshItems();refreshCityList();refreshPackList();renderBranch();resetForm();show('dash');initCloud();
 })();
+
 </script>
 
 
